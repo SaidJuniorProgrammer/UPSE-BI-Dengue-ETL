@@ -1,0 +1,32 @@
+[
+    {
+        "fuente": "ops_salud_dengue",
+        "contenido_extraido": "User account menu",
+        "fecha_extraccion": "2026-06-29 22:12:25"
+    },
+    {
+        "fuente": "ops_salud_dengue",
+        "contenido_extraido": "El dengue se transmite a través de la picadura de un mosquito infectado. Es una enfermedad que afecta personas de todas las edades, con síntomas que varían entre una fiebre leve a una fiebre incapacitante, acompañado de dolor intenso de cabeza, dolor detrás de los ojos, dolor en músculos y articulaciones, y eritema. La enfermedad puede progresar a formas graves, caracterizada principalmente por choque, dificultad respiratoria y/o daño grave de órganos. El dengue tiene un comportamiento estacionario, es decir, en el hemisferio Sur la mayoría de los casos ocurren durante la primera mitad del año, en cambio, en el hemisferio Norte, los casos ocurren mayormente en la segunda mitad. Este patrón de comportamiento corresponde a los meses más cálidos y lluviosos.En las Américas, el vector principal responsable de la trasmisión del dengue es el mosquitoAedes aegypti.",
+        "fecha_extraccion": "2026-06-29 22:12:25"
+    },
+    {
+        "fuente": "ops_salud_dengue",
+        "contenido_extraido": "Los pacientes desarrollan fiebre alta y repentina. Esta fase febril aguda dura de 2 a 7 días y suele acompañarse de enrojecimiento facial, eritema, dolor corporal generalizado, mialgias, artralgias, cefalea y dolor retro-ocular. Pueden presentarse manifestaciones hemorrágicas menores, como petequias y equimosis en la piel. Los pacientes que mejoran después de que baja la fiebre, se consideran casos de dengue sin signos de alarma.",
+        "fecha_extraccion": "2026-06-29 22:12:25"
+    },
+    {
+        "fuente": "ops_salud_dengue",
+        "contenido_extraido": "Problemas que pueden presentarse en la fase febril: deshidratación; la fiebre alta puede asociarse a trastornos neurológicos, y convulsiones en los niños pequeños.",
+        "fecha_extraccion": "2026-06-29 22:12:25"
+    },
+    {
+        "fuente": "ops_salud_dengue",
+        "contenido_extraido": "Cerca de la desaparición de la fiebre, cuando la temperatura desciende a 37,5 grados centígrados o menos y se mantiene por debajo de este nivel, por lo general, en los primeros 3 a 7 días de la enfermedad, puede aumentar la permeabilidad capilar paralelamente con los niveles del hematocrito. Esto marca el comienzo de la fase crítica. Los pacientes que empeoran con la caída de la fiebre y presentan signos de alarma, son casos de dengue con signos de alarma.",
+        "fecha_extraccion": "2026-06-29 22:12:25"
+    },
+    {
+        "fuente": "ops_salud_dengue",
+        "contenido_extraido": "Problemas que pueden presentarse en la fase crítica: choque por la extravasación de plasma; hemorragias graves, compromiso serio de órganos.",
+        "fecha_extraccion": "2026-06-29 22:12:25"
+    }
+]

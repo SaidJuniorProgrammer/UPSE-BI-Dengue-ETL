@@ -1,0 +1,11 @@
+fecha,canton_residencia,sintomas_percibidos,acudio_medico,tiempo_espera_horas
+2024-06-20,LA LIBERTAD,Fiebre y dolor de cabeza,Sí,3.5
+2024-06-21,SALINAS,Solo fiebre,no,0.0
+2024-06-22,SANTA ELENA,Dolor de cuerpo,Si,4.2
+2024-06-23,LA LIBERTAD,Fiebre y dolor de cabeza,Sí,3.6
+2024-06-24,SALINAS,Solo fiebre,no,1.0
+2024-06-25,SANTA ELENA,Dolor de cuerpo,Si,4.3
+2024-06-26,LA LIBERTAD,Fiebre y dolor de cabeza,Sí,3.7
+2024-06-27,SALINAS,Solo fiebre,no,2.0
+2024-06-28,SANTA ELENA,Dolor de cuerpo,Si,4.4
+2024-06-29,LA LIBERTAD,Fiebre y dolor de cabeza,Sí,3.8
