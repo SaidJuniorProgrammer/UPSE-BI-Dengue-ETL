@@ -1,0 +1,42 @@
+[
+    {
+        "titulo": "Campañas de fumigación contra el vector del dengue se intensifican en Santa Elena",
+        "fuente": "El Universo",
+        "fecha_publicacion": "2026-06-30",
+        "canton_mencionado": "SANTA ELENA",
+        "categoria": "Salud Pública",
+        "url": "https://www.salud.gob.ec/noticias-dengue"
+    },
+    {
+        "titulo": "Ministerio de Salud alerta incremento de casos sospechosos de dengue en La Libertad",
+        "fuente": "El Comercio",
+        "fecha_publicacion": "2026-06-30",
+        "canton_mencionado": "LA LIBERTAD",
+        "categoria": "Salud Pública",
+        "url": "https://www.salud.gob.ec/noticias-dengue"
+    },
+    {
+        "titulo": "Saturación leve en centros de atención primaria en Salinas por cuadros febriles",
+        "fuente": "El Comercio",
+        "fecha_publicacion": "2026-06-30",
+        "canton_mencionado": "SALINAS",
+        "categoria": "Salud Pública",
+        "url": "https://www.salud.gob.ec/noticias-dengue"
+    },
+    {
+        "titulo": "Coordinación interinstitucional para limpieza de canales y prevención del dengue en Santa Elena",
+        "fuente": "El Universo",
+        "fecha_publicacion": "2026-06-30",
+        "canton_mencionado": "SANTA ELENA",
+        "categoria": "Salud Pública",
+        "url": "https://www.salud.gob.ec/noticias-dengue"
+    },
+    {
+        "titulo": "Medidas preventivas en farmacias y centros de salud de La Libertad ante temporada invernal",
+        "fuente": "La Hora",
+        "fecha_publicacion": "2026-06-30",
+        "canton_mencionado": "LA LIBERTAD",
+        "categoria": "Salud Pública",
+        "url": "https://www.salud.gob.ec/noticias-dengue"
+    }
+]

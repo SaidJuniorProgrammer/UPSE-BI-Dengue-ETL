@@ -1,0 +1,86 @@
+[
+    {
+        "nombre_centro": "Hospital General Liborio Panchana Sotomayor",
+        "canton": "SANTA ELENA",
+        "tipo_centro": "Hospital General",
+        "camas_totales": 40,
+        "camas_ocupadas": 20,
+        "pacientes_dengue": 2,
+        "tiempo_espera_horas": 1.3,
+        "medicos_disponibles": 34,
+        "nivel_saturacion": "BAJA",
+        "fecha_corte": "2026-06-30"
+    },
+    {
+        "nombre_centro": "Centro de Salud Manglaralto",
+        "canton": "SANTA ELENA",
+        "tipo_centro": "Centro de Salud Tipo B",
+        "camas_totales": 8,
+        "camas_ocupadas": 5,
+        "pacientes_dengue": 1,
+        "tiempo_espera_horas": 2.8,
+        "medicos_disponibles": 5,
+        "nivel_saturacion": "BAJA",
+        "fecha_corte": "2026-06-30"
+    },
+    {
+        "nombre_centro": "Centro de Salud Colonche",
+        "canton": "SANTA ELENA",
+        "tipo_centro": "Centro de Salud Tipo A",
+        "camas_totales": 10,
+        "camas_ocupadas": 9,
+        "pacientes_dengue": 3,
+        "tiempo_espera_horas": 1.3,
+        "medicos_disponibles": 6,
+        "nivel_saturacion": "ALTA",
+        "fecha_corte": "2026-06-30"
+    },
+    {
+        "nombre_centro": "Centro de Salud La Libertad",
+        "canton": "LA LIBERTAD",
+        "tipo_centro": "Centro de Salud Tipo C",
+        "camas_totales": 14,
+        "camas_ocupadas": 8,
+        "pacientes_dengue": 3,
+        "tiempo_espera_horas": 0.6,
+        "medicos_disponibles": 7,
+        "nivel_saturacion": "BAJA",
+        "fecha_corte": "2026-06-30"
+    },
+    {
+        "nombre_centro": "Hospital Básico Dr. José Garcés Rodríguez",
+        "canton": "SALINAS",
+        "tipo_centro": "Hospital Básico",
+        "camas_totales": 48,
+        "camas_ocupadas": 44,
+        "pacientes_dengue": 3,
+        "tiempo_espera_horas": 3.5,
+        "medicos_disponibles": 34,
+        "nivel_saturacion": "ALTA",
+        "fecha_corte": "2026-06-30"
+    },
+    {
+        "nombre_centro": "Centro de Salud Anconcito",
+        "canton": "SALINAS",
+        "tipo_centro": "Centro de Salud Tipo A",
+        "camas_totales": 9,
+        "camas_ocupadas": 8,
+        "pacientes_dengue": 2,
+        "tiempo_espera_horas": 3.9,
+        "medicos_disponibles": 5,
+        "nivel_saturacion": "ALTA",
+        "fecha_corte": "2026-06-30"
+    },
+    {
+        "nombre_centro": "Centro de Salud José Luis Tamayo (Muey)",
+        "canton": "SALINAS",
+        "tipo_centro": "Centro de Salud Tipo B",
+        "camas_totales": 11,
+        "camas_ocupadas": 6,
+        "pacientes_dengue": 1,
+        "tiempo_espera_horas": 4.5,
+        "medicos_disponibles": 3,
+        "nivel_saturacion": "BAJA",
+        "fecha_corte": "2026-06-30"
+    }
+]

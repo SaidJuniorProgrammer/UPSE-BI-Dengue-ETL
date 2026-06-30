@@ -1,1 +1,4 @@
-
+Timestamp,Fuente,Error,Acción tomada
+2026-06-30 01:15:17,Farmacias,5 medicamentos con precio nulo/inválido,Imputar mediana por medicamento
+2026-06-30 01:15:17,Farmacias,11 registros con cantidad_unidades nula,Imputar 0 unidades
+2026-06-30 01:15:17,Casos Oficiales,13 registros duplicados eliminados,Mantener último registro más completo

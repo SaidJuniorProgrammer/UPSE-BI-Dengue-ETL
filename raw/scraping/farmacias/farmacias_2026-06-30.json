@@ -1,0 +1,752 @@
+[
+    {
+        "cadena": "Fybeca",
+        "canton": "SANTA ELENA",
+        "medicamento": "Paracetamol 500mg Caja",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 47,
+        "precio_usd": "$2,54",
+        "fecha_vencimiento": "2027-07-13",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Fybeca",
+        "canton": "SANTA ELENA",
+        "medicamento": "Acetaminofén Jarabe Pediátrico",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": 4.0,
+        "fecha_vencimiento": "2027-11-05",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Fybeca",
+        "canton": "SANTA ELENA",
+        "medicamento": "Suero Oral Rehidratante 500ml",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 27,
+        "precio_usd": "$1,94",
+        "fecha_vencimiento": "2027-01-25",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Fybeca",
+        "canton": "SANTA ELENA",
+        "medicamento": "Paracetamol 1000mg Gotas/Sobres",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 48,
+        "precio_usd": 4.1,
+        "fecha_vencimiento": "2028-02-06",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Fybeca",
+        "canton": "SANTA ELENA",
+        "medicamento": "Repelente contra Mosquitos Aerosol",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 6,
+        "precio_usd": 6.46,
+        "fecha_vencimiento": "2027-01-22",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Fybeca",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Paracetamol 500mg Caja",
+        "stock_disponible": "NO",
+        "cantidad_unidades": null,
+        "precio_usd": 2.41,
+        "fecha_vencimiento": "2027-05-05",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Fybeca",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Acetaminofén Jarabe Pediátrico",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": 3.98,
+        "fecha_vencimiento": "2026-11-02",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Fybeca",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Suero Oral Rehidratante 500ml",
+        "stock_disponible": "NO",
+        "cantidad_unidades": null,
+        "precio_usd": 2.05,
+        "fecha_vencimiento": "2027-11-03",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Fybeca",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Paracetamol 1000mg Gotas/Sobres",
+        "stock_disponible": "NO",
+        "cantidad_unidades": null,
+        "precio_usd": "$4,06",
+        "fecha_vencimiento": "2027-01-28",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Fybeca",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Repelente contra Mosquitos Aerosol",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": 5.64,
+        "fecha_vencimiento": "2027-04-14",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Fybeca",
+        "canton": "SALINAS",
+        "medicamento": "Paracetamol 500mg Caja",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": 2.87,
+        "fecha_vencimiento": "2027-07-03",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Fybeca",
+        "canton": "SALINAS",
+        "medicamento": "Acetaminofén Jarabe Pediátrico",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": 3.91,
+        "fecha_vencimiento": "2027-01-25",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Fybeca",
+        "canton": "SALINAS",
+        "medicamento": "Suero Oral Rehidratante 500ml",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": 2.07,
+        "fecha_vencimiento": "2027-01-24",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Fybeca",
+        "canton": "SALINAS",
+        "medicamento": "Paracetamol 1000mg Gotas/Sobres",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": "$3,88",
+        "fecha_vencimiento": "2027-07-22",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Fybeca",
+        "canton": "SALINAS",
+        "medicamento": "Repelente contra Mosquitos Aerosol",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 49,
+        "precio_usd": 5.35,
+        "fecha_vencimiento": "2026-09-28",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Pharmacy's",
+        "canton": "SANTA ELENA",
+        "medicamento": "Paracetamol 500mg Caja",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 108,
+        "precio_usd": "$2,81",
+        "fecha_vencimiento": "2027-09-21",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Pharmacy's",
+        "canton": "SANTA ELENA",
+        "medicamento": "Acetaminofén Jarabe Pediátrico",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": 3.94,
+        "fecha_vencimiento": "2027-05-06",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Pharmacy's",
+        "canton": "SANTA ELENA",
+        "medicamento": "Suero Oral Rehidratante 500ml",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 115,
+        "precio_usd": 1.9,
+        "fecha_vencimiento": "2027-09-30",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Pharmacy's",
+        "canton": "SANTA ELENA",
+        "medicamento": "Paracetamol 1000mg Gotas/Sobres",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 33,
+        "precio_usd": "$3,88",
+        "fecha_vencimiento": "2027-07-25",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Pharmacy's",
+        "canton": "SANTA ELENA",
+        "medicamento": "Repelente contra Mosquitos Aerosol",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 17,
+        "precio_usd": 5.8,
+        "fecha_vencimiento": "2027-12-18",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Pharmacy's",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Paracetamol 500mg Caja",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": 2.78,
+        "fecha_vencimiento": "2027-10-18",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Pharmacy's",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Acetaminofén Jarabe Pediátrico",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": 4.09,
+        "fecha_vencimiento": "2026-12-26",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Pharmacy's",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Suero Oral Rehidratante 500ml",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 89,
+        "precio_usd": 2.02,
+        "fecha_vencimiento": "2027-10-30",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Pharmacy's",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Paracetamol 1000mg Gotas/Sobres",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": 4.56,
+        "fecha_vencimiento": "2026-11-29",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Pharmacy's",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Repelente contra Mosquitos Aerosol",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 22,
+        "precio_usd": 5.49,
+        "fecha_vencimiento": "2027-05-26",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Pharmacy's",
+        "canton": "SALINAS",
+        "medicamento": "Paracetamol 500mg Caja",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 24,
+        "precio_usd": 2.55,
+        "fecha_vencimiento": "2027-06-09",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Pharmacy's",
+        "canton": "SALINAS",
+        "medicamento": "Acetaminofén Jarabe Pediátrico",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 17,
+        "precio_usd": 3.63,
+        "fecha_vencimiento": "2027-11-04",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Pharmacy's",
+        "canton": "SALINAS",
+        "medicamento": "Suero Oral Rehidratante 500ml",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 15,
+        "precio_usd": 1.87,
+        "fecha_vencimiento": "2026-10-19",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Pharmacy's",
+        "canton": "SALINAS",
+        "medicamento": "Paracetamol 1000mg Gotas/Sobres",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": 4.78,
+        "fecha_vencimiento": "2027-03-29",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Pharmacy's",
+        "canton": "SALINAS",
+        "medicamento": "Repelente contra Mosquitos Aerosol",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 11,
+        "precio_usd": 5.91,
+        "fecha_vencimiento": "2027-09-15",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Sana Sana",
+        "canton": "SANTA ELENA",
+        "medicamento": "Paracetamol 500mg Caja",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 41,
+        "precio_usd": 2.56,
+        "fecha_vencimiento": "2027-02-11",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Sana Sana",
+        "canton": "SANTA ELENA",
+        "medicamento": "Acetaminofén Jarabe Pediátrico",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": 4.12,
+        "fecha_vencimiento": "2027-03-30",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Sana Sana",
+        "canton": "SANTA ELENA",
+        "medicamento": "Suero Oral Rehidratante 500ml",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 16,
+        "precio_usd": 1.98,
+        "fecha_vencimiento": "2027-07-21",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Sana Sana",
+        "canton": "SANTA ELENA",
+        "medicamento": "Paracetamol 1000mg Gotas/Sobres",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 50,
+        "precio_usd": "$4,74",
+        "fecha_vencimiento": "2027-10-04",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Sana Sana",
+        "canton": "SANTA ELENA",
+        "medicamento": "Repelente contra Mosquitos Aerosol",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 114,
+        "precio_usd": 6.25,
+        "fecha_vencimiento": "2027-02-01",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Sana Sana",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Paracetamol 500mg Caja",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 46,
+        "precio_usd": 2.76,
+        "fecha_vencimiento": "2027-10-02",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Sana Sana",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Acetaminofén Jarabe Pediátrico",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 26,
+        "precio_usd": "$4,02",
+        "fecha_vencimiento": "2028-01-28",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Sana Sana",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Suero Oral Rehidratante 500ml",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 28,
+        "precio_usd": 1.99,
+        "fecha_vencimiento": "2027-03-16",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Sana Sana",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Paracetamol 1000mg Gotas/Sobres",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 83,
+        "precio_usd": 4.65,
+        "fecha_vencimiento": "2027-09-25",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Sana Sana",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Repelente contra Mosquitos Aerosol",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": null,
+        "fecha_vencimiento": "2026-11-17",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Sana Sana",
+        "canton": "SALINAS",
+        "medicamento": "Paracetamol 500mg Caja",
+        "stock_disponible": "NO",
+        "cantidad_unidades": null,
+        "precio_usd": "$2,65",
+        "fecha_vencimiento": "2026-11-14",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Sana Sana",
+        "canton": "SALINAS",
+        "medicamento": "Acetaminofén Jarabe Pediátrico",
+        "stock_disponible": "NO",
+        "cantidad_unidades": null,
+        "precio_usd": null,
+        "fecha_vencimiento": "2026-11-09",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Sana Sana",
+        "canton": "SALINAS",
+        "medicamento": "Suero Oral Rehidratante 500ml",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 39,
+        "precio_usd": 2.06,
+        "fecha_vencimiento": "2027-05-28",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Sana Sana",
+        "canton": "SALINAS",
+        "medicamento": "Paracetamol 1000mg Gotas/Sobres",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 28,
+        "precio_usd": 4.29,
+        "fecha_vencimiento": "2026-10-29",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Sana Sana",
+        "canton": "SALINAS",
+        "medicamento": "Repelente contra Mosquitos Aerosol",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 34,
+        "precio_usd": 5.84,
+        "fecha_vencimiento": "2027-02-14",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Económicas",
+        "canton": "SANTA ELENA",
+        "medicamento": "Paracetamol 500mg Caja",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 28,
+        "precio_usd": 2.82,
+        "fecha_vencimiento": "2027-01-17",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Económicas",
+        "canton": "SANTA ELENA",
+        "medicamento": "Acetaminofén Jarabe Pediátrico",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": 3.79,
+        "fecha_vencimiento": "2026-11-17",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Económicas",
+        "canton": "SANTA ELENA",
+        "medicamento": "Suero Oral Rehidratante 500ml",
+        "stock_disponible": "NO",
+        "cantidad_unidades": null,
+        "precio_usd": 2.09,
+        "fecha_vencimiento": "2027-10-24",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Económicas",
+        "canton": "SANTA ELENA",
+        "medicamento": "Paracetamol 1000mg Gotas/Sobres",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 24,
+        "precio_usd": 4.48,
+        "fecha_vencimiento": "2027-10-19",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Económicas",
+        "canton": "SANTA ELENA",
+        "medicamento": "Repelente contra Mosquitos Aerosol",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 49,
+        "precio_usd": 5.45,
+        "fecha_vencimiento": "2027-09-13",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Económicas",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Paracetamol 500mg Caja",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 14,
+        "precio_usd": 2.8,
+        "fecha_vencimiento": "2027-11-20",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Económicas",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Acetaminofén Jarabe Pediátrico",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 41,
+        "precio_usd": 4.24,
+        "fecha_vencimiento": "2027-03-19",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Económicas",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Suero Oral Rehidratante 500ml",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 34,
+        "precio_usd": "$1,89",
+        "fecha_vencimiento": "2027-01-09",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Económicas",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Paracetamol 1000mg Gotas/Sobres",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 38,
+        "precio_usd": 4.28,
+        "fecha_vencimiento": "2027-08-16",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Económicas",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Repelente contra Mosquitos Aerosol",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": 5.77,
+        "fecha_vencimiento": "2028-02-17",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Económicas",
+        "canton": "SALINAS",
+        "medicamento": "Paracetamol 500mg Caja",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 110,
+        "precio_usd": "$2,58",
+        "fecha_vencimiento": "2027-04-06",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Económicas",
+        "canton": "SALINAS",
+        "medicamento": "Acetaminofén Jarabe Pediátrico",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": 3.85,
+        "fecha_vencimiento": "2027-12-17",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Económicas",
+        "canton": "SALINAS",
+        "medicamento": "Suero Oral Rehidratante 500ml",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 96,
+        "precio_usd": 1.77,
+        "fecha_vencimiento": "2026-10-17",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Económicas",
+        "canton": "SALINAS",
+        "medicamento": "Paracetamol 1000mg Gotas/Sobres",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": null,
+        "fecha_vencimiento": "2027-02-03",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Económicas",
+        "canton": "SALINAS",
+        "medicamento": "Repelente contra Mosquitos Aerosol",
+        "stock_disponible": "NO",
+        "cantidad_unidades": null,
+        "precio_usd": 5.88,
+        "fecha_vencimiento": "2026-11-21",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Cruz Azul",
+        "canton": "SANTA ELENA",
+        "medicamento": "Paracetamol 500mg Caja",
+        "stock_disponible": "NO",
+        "cantidad_unidades": null,
+        "precio_usd": 2.68,
+        "fecha_vencimiento": "2027-06-03",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Cruz Azul",
+        "canton": "SANTA ELENA",
+        "medicamento": "Acetaminofén Jarabe Pediátrico",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 117,
+        "precio_usd": 4.24,
+        "fecha_vencimiento": "2028-01-04",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Cruz Azul",
+        "canton": "SANTA ELENA",
+        "medicamento": "Suero Oral Rehidratante 500ml",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": "$1,9",
+        "fecha_vencimiento": "2026-10-10",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Cruz Azul",
+        "canton": "SANTA ELENA",
+        "medicamento": "Paracetamol 1000mg Gotas/Sobres",
+        "stock_disponible": "NO",
+        "cantidad_unidades": null,
+        "precio_usd": 3.94,
+        "fecha_vencimiento": "2027-07-30",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Cruz Azul",
+        "canton": "SANTA ELENA",
+        "medicamento": "Repelente contra Mosquitos Aerosol",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 65,
+        "precio_usd": "$6,52",
+        "fecha_vencimiento": "2028-01-12",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Cruz Azul",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Paracetamol 500mg Caja",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 47,
+        "precio_usd": 2.8,
+        "fecha_vencimiento": "2027-09-22",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Cruz Azul",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Acetaminofén Jarabe Pediátrico",
+        "stock_disponible": "NO",
+        "cantidad_unidades": null,
+        "precio_usd": null,
+        "fecha_vencimiento": "2027-04-29",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Cruz Azul",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Suero Oral Rehidratante 500ml",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 19,
+        "precio_usd": 1.95,
+        "fecha_vencimiento": "2027-07-08",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Cruz Azul",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Paracetamol 1000mg Gotas/Sobres",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": 4.62,
+        "fecha_vencimiento": "2027-07-22",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Cruz Azul",
+        "canton": "LA LIBERTAD",
+        "medicamento": "Repelente contra Mosquitos Aerosol",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": 5.7,
+        "fecha_vencimiento": "2027-02-02",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Cruz Azul",
+        "canton": "SALINAS",
+        "medicamento": "Paracetamol 500mg Caja",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 46,
+        "precio_usd": "$2,65",
+        "fecha_vencimiento": "2027-10-11",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Cruz Azul",
+        "canton": "SALINAS",
+        "medicamento": "Acetaminofén Jarabe Pediátrico",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": null,
+        "fecha_vencimiento": "2026-12-10",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Cruz Azul",
+        "canton": "SALINAS",
+        "medicamento": "Suero Oral Rehidratante 500ml",
+        "stock_disponible": "NO",
+        "cantidad_unidades": null,
+        "precio_usd": 2.16,
+        "fecha_vencimiento": "2028-01-21",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Cruz Azul",
+        "canton": "SALINAS",
+        "medicamento": "Paracetamol 1000mg Gotas/Sobres",
+        "stock_disponible": "SI",
+        "cantidad_unidades": 41,
+        "precio_usd": 3.97,
+        "fecha_vencimiento": "2027-10-11",
+        "fecha_extraccion": "2026-06-30"
+    },
+    {
+        "cadena": "Cruz Azul",
+        "canton": "SALINAS",
+        "medicamento": "Repelente contra Mosquitos Aerosol",
+        "stock_disponible": "NO",
+        "cantidad_unidades": 0,
+        "precio_usd": 6.35,
+        "fecha_vencimiento": "2028-01-20",
+        "fecha_extraccion": "2026-06-30"
+    }
+]

@@ -1,78 +1,74 @@
-# 📊 Plataforma de Inteligencia de Negocios: Gestión de Brotes de Dengue
+# Plataforma de Inteligencia de Negocios: Gestión de Brotes de Dengue
 
-**Universidad Estatal Península de Santa Elena (UPSE)** **Carrera:** Ingeniería de Software  
+**Universidad Estatal Península de Santa Elena (UPSE)**  
+**Carrera:** Ingeniería de Software  
 **Materia:** Inteligencia de Negocios  
 **Período:** 2026-1
 
-## 👥 Equipo de Desarrollo
+## Equipo de Desarrollo
 * Gino Bermudes
 * Said Pinto
 
 ---
 
-## 📝 Descripción del Proyecto
-Este repositorio contiene el pipeline de extracción, transformación y carga (ETL) desarrollado para el **Entregable 3**. El objetivo central es recolectar, limpiar e integrar datos provenientes de 7 fuentes heterogéneas relacionadas con factores climáticos, epidemiológicos y de infraestructura de salud en la provincia de Santa Elena, preparando la información para su posterior ingesta en un Data Warehouse (Modelo Estrella).
+## Descripción del Proyecto
+Este repositorio contiene el pipeline de extracción, transformación y carga (ETL) empresarial desarrollado para la recolección, limpieza, estandarización e integración de datos provenientes de 7 fuentes heterogéneas relacionadas con factores climáticos, epidemiológicos, farmacéuticos y de infraestructura hospitalaria en la provincia de Santa Elena. Los datos limpios se exportan en formato **Parquet (`.parquet`)** hacia la zona Staging para su ingesta al Data Warehouse (Modelo Estrella).
 
-## 🗂️ Arquitectura de Carpetas
+## Arquitectura de Carpetas Modular
 
-La estructura del proyecto garantiza la inmutabilidad de los datos de origen (Zona Raw) y centraliza el procesamiento automatizado hacia la Zona Staging.
+```text
+PROYECTO_BI_DENGUE/
+├── requirements.txt
+├── README.md
+│
+├── raw/                      # Zona de inmutabilidad (Datos crudos)
+│   ├── api/                  # JSONs de World Bank & OPS PLISA
+│   ├── archivos/             # Gacetas epidemiológicas MSP (CSV)
+│   ├── fuente_propia/        # Encuestas ciudadanas de percepción
+│   └── scraping/             # Extractores web especializados
+│       ├── clima/
+│       ├── farmacias/
+│       ├── infraestructura/
+│       └── noticias/
+│
+├── scripts/                  # Framework ETL Modular
+│   ├── extraction/           # Extractores por dominio (Clima, Farmacias, Hospitales, Noticias, APIs)
+│   ├── quality/              # Framework de Calidad (Estandarización INEC, Regex, Logging, Métricas)
+│   └── staging/              # Transformadores hacia Parquet y orquestador maestro
+│
+├── staging/                  # Zona Staging analítica
+│   ├── stg_*.parquet         # Dimensiones y hechos limpios
+│   ├── error_log.csv         # Registro auditable de excepciones
+│   └── reporte_calidad_*.json# Métricas globales de calidad
+│
+├── logs/                     # Registro de trazas de ejecución
+└── docs/                     # Documentación técnica (Arquitectura, Diccionario, Manual)
+```
 
-    PROYECTO_BI_DENGUE/
-    │
-    ├── .gitignore
-    ├── README.md
-    │
-    ├── raw/                      # Zona de inmutabilidad (Datos crudos)
-    │   ├── api/                  # JSON de Open-Meteo (Clima)
-    │   ├── archivos/             # Dataset oficial CSV (Ministerio de Salud)
-    │   ├── fuente_propia/        # Excel de encuestas ciudadanas anónimas
-    │   └── scraping/             # JSONs de CDC, OMS, OPS y Edición Médica
-    │
-    ├── scripts/                  # Pipeline automatizado en Python
-    │   ├── 1_extraer_api.py      # Consumo de API REST (Open-Meteo)
-    │   ├── 2_scraping_web.py     # Extracción múltiple con BeautifulSoup
-    │   └── 3_staging_etl.py      # Limpieza, deduplicación y calidad con Pandas
-    │
-    └── staging/                  # Datos limpios y listos para el Data Warehouse
-        ├── error_log.csv         # Registro auditable de excepciones
-        ├── stg_casos_...csv      # Hechos y dimensiones limpios
-        └── stg_encuestas_...csv
-
-## ⚙️ Tecnologías Utilizadas
-* **Lenguaje:** Python 3.x
+## Tecnologías Utilizadas
+* **Lenguaje:** Python 3.9+
 * **Extracción (Scraping/API):** `requests`, `beautifulsoup4`, `json`
-* **Procesamiento de Datos (Staging):** `pandas`, `openpyxl`
-* **Control de Versiones:** Git / GitHub
+* **Procesamiento y Almacenamiento Analítico:** `pandas`, `pyarrow`, `numpy`
 
-## 🚀 Instrucciones de Ejecución
-
-Para replicar el pipeline de extracción y calidad de datos de manera local, sigue estos pasos:
+## Instrucciones de Ejecución
 
 ### 1. Instalación de Dependencias
-Abre la terminal en la raíz del proyecto e instala las librerías necesarias:
-    
-    pip install pandas requests beautifulsoup4 openpyxl
+```powershell
+pip install -r requirements.txt
+```
 
-### 2. Ejecución del Pipeline (Scripts)
-Los scripts deben ejecutarse en orden para garantizar el flujo correcto de los datos. Desde la terminal en la carpeta raíz:
+### 2. Ejecución de Extractores (Zona RAW)
+Recolecta información climática, hospitalaria, mediática y epidemiológica:
+```powershell
+python scripts/extraction/extract_clima.py
+python scripts/extraction/extract_noticias.py
+python scripts/extraction/extract_farmacias.py
+python scripts/extraction/extract_infraestructura.py
+python scripts/extraction/extract_api_health.py
+```
 
-**Paso A: Extracción de la API Climática**
-    
-    python scripts/1_extraer_api.py
-
-*Resultado:* Descarga el clima histórico en `raw/api/`.
-
-**Paso B: Web Scraping de Fuentes Oficiales**
-    
-    python scripts/2_scraping_web.py
-
-*Resultado:* Extrae datos médicos y epidemiológicos guardándolos en `raw/scraping/`.
-
-**Paso C: Integración y Limpieza (ETL)**
-    
-    python scripts/3_staging_etl.py
-
-*Resultado:* Lee las 7 fuentes de la zona `raw/`, aplica reglas de estandarización, elimina valores nulos/duplicados y deposita los CSV finales limpios en la carpeta `staging/`, junto con el reporte de calidad `error_log.csv`.
-
----
-*Desarrollado para la toma de decisiones proactivas en salud pública mediante la integración de datos.*
+### 3. Ejecución del Orquestador Staging y Calidad (Zona STAGING)
+Aplica limpieza avanzada, homologación al catálogo INEC de cantones, deduplicación y exportación a Parquet:
+```powershell
+python scripts/staging/stg_all_sources.py
+```

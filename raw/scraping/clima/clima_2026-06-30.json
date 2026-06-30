@@ -1,0 +1,1001 @@
+[
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-05-31",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.9 °C",
+        "temp_minima_c": 24.5,
+        "humedad_relativa": 82.0,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-01",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.8 °C",
+        "temp_minima_c": 24.6,
+        "humedad_relativa": 80.4,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-02",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.7 °C",
+        "temp_minima_c": 24.4,
+        "humedad_relativa": 72.9,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-03",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.1 °C",
+        "temp_minima_c": 24.5,
+        "humedad_relativa": 85.7,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-04",
+        "stg_lluvia_bruta": "0.2mm",
+        "stg_temp_raw": "28.7 °C",
+        "temp_minima_c": 24.1,
+        "humedad_relativa": 76.5,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-05",
+        "stg_lluvia_bruta": "8.9mm",
+        "stg_temp_raw": "28.2 °C",
+        "temp_minima_c": 24.0,
+        "humedad_relativa": 81.9,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-06",
+        "stg_lluvia_bruta": "2.7mm",
+        "stg_temp_raw": "27.9 °C",
+        "temp_minima_c": 24.5,
+        "humedad_relativa": 80.6,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-07",
+        "stg_lluvia_bruta": "0.3mm",
+        "stg_temp_raw": "29.0 °C",
+        "temp_minima_c": 24.7,
+        "humedad_relativa": 78.0,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-08",
+        "stg_lluvia_bruta": "0.6mm",
+        "stg_temp_raw": "29.6 °C",
+        "temp_minima_c": 24.4,
+        "humedad_relativa": 82.2,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-09",
+        "stg_lluvia_bruta": "4.6mm",
+        "stg_temp_raw": "28.6 °C",
+        "temp_minima_c": 24.1,
+        "humedad_relativa": 71.5,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-10",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "27.5 °C",
+        "temp_minima_c": 24.3,
+        "humedad_relativa": 86.0,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-11",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "27.0 °C",
+        "temp_minima_c": 24.2,
+        "humedad_relativa": 77.4,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-12",
+        "stg_lluvia_bruta": "0.4mm",
+        "stg_temp_raw": "27.7 °C",
+        "temp_minima_c": 24.6,
+        "humedad_relativa": 81.5,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-13",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.9 °C",
+        "temp_minima_c": 24.4,
+        "humedad_relativa": 79.5,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-14",
+        "stg_lluvia_bruta": "0.1mm",
+        "stg_temp_raw": "28.6 °C",
+        "temp_minima_c": 24.4,
+        "humedad_relativa": 85.8,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-15",
+        "stg_lluvia_bruta": "0.5mm",
+        "stg_temp_raw": "28.6 °C",
+        "temp_minima_c": 24.5,
+        "humedad_relativa": 76.9,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-16",
+        "stg_lluvia_bruta": "0.4mm",
+        "stg_temp_raw": "28.5 °C",
+        "temp_minima_c": 24.4,
+        "humedad_relativa": 83.5,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-17",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "27.7 °C",
+        "temp_minima_c": 24.4,
+        "humedad_relativa": 70.7,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-18",
+        "stg_lluvia_bruta": "0.1mm",
+        "stg_temp_raw": "28.7 °C",
+        "temp_minima_c": 24.7,
+        "humedad_relativa": 84.6,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-19",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "29.0 °C",
+        "temp_minima_c": 24.3,
+        "humedad_relativa": 71.1,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-20",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.6 °C",
+        "temp_minima_c": 24.1,
+        "humedad_relativa": 82.6,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-21",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.8 °C",
+        "temp_minima_c": 24.1,
+        "humedad_relativa": 75.9,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-22",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.2 °C",
+        "temp_minima_c": 24.5,
+        "humedad_relativa": 79.9,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-23",
+        "stg_lluvia_bruta": "0.1mm",
+        "stg_temp_raw": "28.5 °C",
+        "temp_minima_c": 24.3,
+        "humedad_relativa": 72.7,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-24",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.6 °C",
+        "temp_minima_c": 24.6,
+        "humedad_relativa": 82.3,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-25",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.5 °C",
+        "temp_minima_c": 24.0,
+        "humedad_relativa": 80.6,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-26",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "27.6 °C",
+        "temp_minima_c": 24.2,
+        "humedad_relativa": 73.0,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-27",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.5 °C",
+        "temp_minima_c": 24.0,
+        "humedad_relativa": 72.9,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-28",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.6 °C",
+        "temp_minima_c": 24.0,
+        "humedad_relativa": 87.5,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-29",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.6 °C",
+        "temp_minima_c": 24.0,
+        "humedad_relativa": 83.8,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-06-30",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.7 °C",
+        "temp_minima_c": 24.3,
+        "humedad_relativa": 74.7,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-07-01",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.1 °C",
+        "temp_minima_c": 24.2,
+        "humedad_relativa": 75.4,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-07-02",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.9 °C",
+        "temp_minima_c": 24.2,
+        "humedad_relativa": 75.0,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-07-03",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.3 °C",
+        "temp_minima_c": 24.2,
+        "humedad_relativa": 83.5,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-07-04",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.1 °C",
+        "temp_minima_c": 24.5,
+        "humedad_relativa": 84.1,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-07-05",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.5 °C",
+        "temp_minima_c": 24.2,
+        "humedad_relativa": 84.9,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SANTA ELENA",
+        "fecha": "2026-07-06",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.9 °C",
+        "temp_minima_c": 24.6,
+        "humedad_relativa": 77.9,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-05-31",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.9 °C",
+        "temp_minima_c": 24.5,
+        "humedad_relativa": 75.7,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-01",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.8 °C",
+        "temp_minima_c": 24.6,
+        "humedad_relativa": 79.5,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-02",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.7 °C",
+        "temp_minima_c": 24.4,
+        "humedad_relativa": 80.8,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-03",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.1 °C",
+        "temp_minima_c": 24.5,
+        "humedad_relativa": 87.4,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-04",
+        "stg_lluvia_bruta": "0.2mm",
+        "stg_temp_raw": "28.7 °C",
+        "temp_minima_c": 24.1,
+        "humedad_relativa": 71.5,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-05",
+        "stg_lluvia_bruta": "8.9mm",
+        "stg_temp_raw": "28.2 °C",
+        "temp_minima_c": 24.0,
+        "humedad_relativa": 70.6,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-06",
+        "stg_lluvia_bruta": "2.7mm",
+        "stg_temp_raw": "27.9 °C",
+        "temp_minima_c": 24.5,
+        "humedad_relativa": 76.5,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-07",
+        "stg_lluvia_bruta": "0.3mm",
+        "stg_temp_raw": "29.0 °C",
+        "temp_minima_c": 24.7,
+        "humedad_relativa": 84.2,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-08",
+        "stg_lluvia_bruta": "0.6mm",
+        "stg_temp_raw": "29.6 °C",
+        "temp_minima_c": 24.4,
+        "humedad_relativa": 84.6,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-09",
+        "stg_lluvia_bruta": "4.6mm",
+        "stg_temp_raw": "28.6 °C",
+        "temp_minima_c": 24.1,
+        "humedad_relativa": 82.2,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-10",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "27.5 °C",
+        "temp_minima_c": 24.3,
+        "humedad_relativa": 81.1,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-11",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "27.0 °C",
+        "temp_minima_c": 24.2,
+        "humedad_relativa": 84.1,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-12",
+        "stg_lluvia_bruta": "0.4mm",
+        "stg_temp_raw": "27.7 °C",
+        "temp_minima_c": 24.6,
+        "humedad_relativa": 71.9,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-13",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.9 °C",
+        "temp_minima_c": 24.4,
+        "humedad_relativa": 78.8,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-14",
+        "stg_lluvia_bruta": "0.1mm",
+        "stg_temp_raw": "28.6 °C",
+        "temp_minima_c": 24.4,
+        "humedad_relativa": 71.7,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-15",
+        "stg_lluvia_bruta": "0.5mm",
+        "stg_temp_raw": "28.6 °C",
+        "temp_minima_c": 24.5,
+        "humedad_relativa": 85.4,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-16",
+        "stg_lluvia_bruta": "0.4mm",
+        "stg_temp_raw": "28.5 °C",
+        "temp_minima_c": 24.4,
+        "humedad_relativa": 80.1,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-17",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "27.7 °C",
+        "temp_minima_c": 24.4,
+        "humedad_relativa": 76.3,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-18",
+        "stg_lluvia_bruta": "0.1mm",
+        "stg_temp_raw": "28.7 °C",
+        "temp_minima_c": 24.7,
+        "humedad_relativa": 86.0,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-19",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "29.0 °C",
+        "temp_minima_c": 24.3,
+        "humedad_relativa": 75.0,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-20",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.6 °C",
+        "temp_minima_c": 24.1,
+        "humedad_relativa": 85.5,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-21",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.8 °C",
+        "temp_minima_c": 24.1,
+        "humedad_relativa": 73.4,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-22",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.2 °C",
+        "temp_minima_c": 24.5,
+        "humedad_relativa": 76.2,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-23",
+        "stg_lluvia_bruta": "0.1mm",
+        "stg_temp_raw": "28.5 °C",
+        "temp_minima_c": 24.3,
+        "humedad_relativa": 74.2,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-24",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.6 °C",
+        "temp_minima_c": 24.6,
+        "humedad_relativa": 76.7,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-25",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.5 °C",
+        "temp_minima_c": 24.0,
+        "humedad_relativa": 87.5,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-26",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "27.6 °C",
+        "temp_minima_c": 24.2,
+        "humedad_relativa": 82.2,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-27",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.5 °C",
+        "temp_minima_c": 24.0,
+        "humedad_relativa": 84.1,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-28",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.6 °C",
+        "temp_minima_c": 24.0,
+        "humedad_relativa": 87.5,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-29",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.6 °C",
+        "temp_minima_c": 24.0,
+        "humedad_relativa": 70.9,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-06-30",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.7 °C",
+        "temp_minima_c": 24.3,
+        "humedad_relativa": 80.3,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-07-01",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.1 °C",
+        "temp_minima_c": 24.2,
+        "humedad_relativa": 71.2,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-07-02",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.9 °C",
+        "temp_minima_c": 24.2,
+        "humedad_relativa": 70.5,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-07-03",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.3 °C",
+        "temp_minima_c": 24.2,
+        "humedad_relativa": 72.7,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-07-04",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.1 °C",
+        "temp_minima_c": 24.5,
+        "humedad_relativa": 73.1,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-07-05",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.5 °C",
+        "temp_minima_c": 24.2,
+        "humedad_relativa": 72.2,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "LA LIBERTAD",
+        "fecha": "2026-07-06",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.9 °C",
+        "temp_minima_c": 24.6,
+        "humedad_relativa": 82.8,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-05-31",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.8 °C",
+        "temp_minima_c": 24.4,
+        "humedad_relativa": 74.1,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-01",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.7 °C",
+        "temp_minima_c": 24.5,
+        "humedad_relativa": 70.5,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-02",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.6 °C",
+        "temp_minima_c": 24.3,
+        "humedad_relativa": 82.9,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-03",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.0 °C",
+        "temp_minima_c": 24.4,
+        "humedad_relativa": 75.7,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-04",
+        "stg_lluvia_bruta": "0.2mm",
+        "stg_temp_raw": "28.6 °C",
+        "temp_minima_c": 24.0,
+        "humedad_relativa": 80.1,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-05",
+        "stg_lluvia_bruta": "8.9mm",
+        "stg_temp_raw": "28.1 °C",
+        "temp_minima_c": 23.9,
+        "humedad_relativa": 71.4,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-06",
+        "stg_lluvia_bruta": "2.7mm",
+        "stg_temp_raw": "27.8 °C",
+        "temp_minima_c": 24.4,
+        "humedad_relativa": 86.4,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-07",
+        "stg_lluvia_bruta": "0.3mm",
+        "stg_temp_raw": "28.9 °C",
+        "temp_minima_c": 24.6,
+        "humedad_relativa": 75.3,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-08",
+        "stg_lluvia_bruta": "0.6mm",
+        "stg_temp_raw": "29.5 °C",
+        "temp_minima_c": 24.3,
+        "humedad_relativa": 83.3,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-09",
+        "stg_lluvia_bruta": "4.6mm",
+        "stg_temp_raw": "28.5 °C",
+        "temp_minima_c": 24.0,
+        "humedad_relativa": 84.4,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-10",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "27.4 °C",
+        "temp_minima_c": 24.2,
+        "humedad_relativa": 85.1,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-11",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "26.9 °C",
+        "temp_minima_c": 24.1,
+        "humedad_relativa": 77.9,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-12",
+        "stg_lluvia_bruta": "0.4mm",
+        "stg_temp_raw": "27.6 °C",
+        "temp_minima_c": 24.5,
+        "humedad_relativa": 72.5,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-13",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.8 °C",
+        "temp_minima_c": 24.3,
+        "humedad_relativa": 83.0,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-14",
+        "stg_lluvia_bruta": "0.1mm",
+        "stg_temp_raw": "28.5 °C",
+        "temp_minima_c": 24.3,
+        "humedad_relativa": 85.3,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-15",
+        "stg_lluvia_bruta": "0.5mm",
+        "stg_temp_raw": "28.5 °C",
+        "temp_minima_c": 24.4,
+        "humedad_relativa": 85.6,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-16",
+        "stg_lluvia_bruta": "0.4mm",
+        "stg_temp_raw": "28.4 °C",
+        "temp_minima_c": 24.3,
+        "humedad_relativa": 83.0,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-17",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "27.6 °C",
+        "temp_minima_c": 24.3,
+        "humedad_relativa": 73.0,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-18",
+        "stg_lluvia_bruta": "0.1mm",
+        "stg_temp_raw": "28.6 °C",
+        "temp_minima_c": 24.6,
+        "humedad_relativa": 75.7,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-19",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.9 °C",
+        "temp_minima_c": 24.2,
+        "humedad_relativa": 86.2,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-20",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.5 °C",
+        "temp_minima_c": 24.0,
+        "humedad_relativa": 79.1,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-21",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.7 °C",
+        "temp_minima_c": 24.0,
+        "humedad_relativa": 79.4,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-22",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.1 °C",
+        "temp_minima_c": 24.4,
+        "humedad_relativa": 81.4,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-23",
+        "stg_lluvia_bruta": "0.1mm",
+        "stg_temp_raw": "28.4 °C",
+        "temp_minima_c": 24.2,
+        "humedad_relativa": 77.8,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-24",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.5 °C",
+        "temp_minima_c": 24.5,
+        "humedad_relativa": 82.3,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-25",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.4 °C",
+        "temp_minima_c": 23.9,
+        "humedad_relativa": 83.2,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-26",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "27.5 °C",
+        "temp_minima_c": 24.1,
+        "humedad_relativa": 87.3,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-27",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.4 °C",
+        "temp_minima_c": 23.9,
+        "humedad_relativa": 79.6,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-28",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.5 °C",
+        "temp_minima_c": 23.9,
+        "humedad_relativa": 77.4,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-29",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.5 °C",
+        "temp_minima_c": 23.9,
+        "humedad_relativa": 70.4,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-06-30",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.6 °C",
+        "temp_minima_c": 24.2,
+        "humedad_relativa": 82.6,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-07-01",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.0 °C",
+        "temp_minima_c": 24.1,
+        "humedad_relativa": 74.6,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-07-02",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.8 °C",
+        "temp_minima_c": 24.1,
+        "humedad_relativa": 78.4,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-07-03",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.2 °C",
+        "temp_minima_c": 24.1,
+        "humedad_relativa": 87.1,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-07-04",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.0 °C",
+        "temp_minima_c": 24.4,
+        "humedad_relativa": 77.1,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-07-05",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.4 °C",
+        "temp_minima_c": 24.1,
+        "humedad_relativa": 75.9,
+        "fuente": "Open-Meteo / INAMHI"
+    },
+    {
+        "canton": "SALINAS",
+        "fecha": "2026-07-06",
+        "stg_lluvia_bruta": "0.0mm",
+        "stg_temp_raw": "28.8 °C",
+        "temp_minima_c": 24.5,
+        "humedad_relativa": 81.4,
+        "fuente": "Open-Meteo / INAMHI"
+    }
+]
