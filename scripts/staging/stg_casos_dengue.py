@@ -69,6 +69,13 @@ def procesar_stg_casos_dengue():
     if nulos_canton > 0:
         logger.log_error("Casos Oficiales", f"{nulos_canton} registros con cantón inválido/vacío", "Depurar filas")
         df = df.dropna(subset=['canton'])
+
+    # Extraer año y semana epidemiológica a partir de fecha_registro
+    if 'fecha_registro' in df.columns:
+        df['fecha_registro_dt'] = pd.to_datetime(df['fecha_registro'])
+        df['anio'] = df['fecha_registro_dt'].dt.year
+        df['semana_epidemiologica'] = df['fecha_registro_dt'].dt.isocalendar().week
+        df = df.drop(columns=['fecha_registro_dt'])
         
     # Tratamiento de nulos en serotipo_detectado (imputar "No identificado" según tabla 4.2)
     if 'serotipo_detectado' in df.columns:

@@ -1,0 +1,12 @@
+{
+    "fecha_reporte": "2026-07-06",
+    "fuentes_procesadas": 6,
+    "registros_raw": 385,
+    "registros_staging": 385,
+    "duplicados_eliminados": 0,
+    "nulos_criticos_eliminados": 0,
+    "corregidos_por_formato": 297,
+    "completitud_porcentaje": 100.0,
+    "tasa_promedio_error_porcentaje": 0.0,
+    "tasa_global_retencion_porcentaje": 100.0
+}
