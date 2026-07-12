@@ -1,0 +1,168 @@
+<!-- Cabecera Principal -->
+<div class="dashboard-header">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-7">
+        <h1 class="fw-bold mb-1" style="letter-spacing: -1px;">
+          <i class="bi bi-shield-plus text-warning me-2"></i>Monitor Epidemiológico
+        </h1>
+        <p class="text-light opacity-75 mb-0 fw-light">Sistema de Inteligencia de Negocios para el control del Dengue.</p>
+      </div>
+      
+      <!-- Controles de la Cabecera -->
+      <div class="col-md-5 text-md-end mt-3 mt-md-0 d-flex justify-content-md-end align-items-center gap-3">
+        
+        <!-- Menú Desplegable Interactivo -->
+        <div class="dropdown">
+          <button class="btn btn-light dropdown-toggle rounded-pill px-4 shadow-sm fw-bold text-primary" type="button" data-bs-toggle="dropdown">
+            <i class="bi bi-geo-alt-fill me-2"></i> {{ filtroActual }}
+          </button>
+          <ul class="dropdown-menu shadow border-0" style="border-radius: 12px;">
+            <li><a class="dropdown-item py-2" href="javascript:void(0)" (click)="filtrarPorCanton('', 'Toda la Península')"><i class="bi bi-globe-americas me-2 text-muted"></i> Toda la Península</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item py-2" href="javascript:void(0)" (click)="filtrarPorCanton('LA LIBERTAD', 'La Libertad')"><i class="bi bi-pin-map-fill me-2 text-primary"></i> La Libertad</a></li>
+            <li><a class="dropdown-item py-2" href="javascript:void(0)" (click)="filtrarPorCanton('SALINAS', 'Salinas')"><i class="bi bi-pin-map-fill me-2 text-primary"></i> Salinas</a></li>
+            <li><a class="dropdown-item py-2" href="javascript:void(0)" (click)="filtrarPorCanton('SANTA ELENA', 'Santa Elena')"><i class="bi bi-pin-map-fill me-2 text-primary"></i> Santa Elena</a></li>
+          </ul>
+        </div>
+
+        <span class="badge bg-light text-dark px-3 py-2 rounded-pill shadow-sm border">
+          <i class="bi bi-circle-fill text-success me-1" style="font-size: 0.6rem;"></i> DW Conectado
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <!-- Pestañas Operativas -->
+  <ul class="nav nav-pills justify-content-center mb-5 relative-z" id="pills-tab" role="tablist">
+    <li class="nav-item me-2" role="presentation">
+      <button class="nav-link active fw-semibold shadow-sm bg-white border" id="resumen-tab" data-bs-toggle="pill" data-bs-target="#resumen" type="button" role="tab">
+        <i class="bi bi-activity me-2 text-primary"></i> Visión General y Clima
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link fw-semibold shadow-sm bg-white border" id="infra-tab" data-bs-toggle="pill" data-bs-target="#infra" type="button" role="tab">
+        <i class="bi bi-hospital me-2 text-primary"></i> Análisis de Infraestructura
+      </button>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="pills-tabContent">
+    <!-- PESTAÑA 1: VISIÓN GENERAL -->
+    <div class="tab-pane fade show active" id="resumen" role="tabpanel">
+      <!-- KPIs -->
+      <div class="row g-4 mb-5">
+        <div class="col-xl col-md-4 col-sm-6">
+          <div class="card custom-card border-0 shadow-sm h-100 kpi-card border-dengue p-2">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">Casos Confirmados</h6>
+                <div class="bg-danger bg-opacity-10 text-danger rounded p-2"><i class="bi bi-virus"></i></div>
+              </div>
+              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px;">{{ kpis.total_casos || 0 }}</h2>
+              <small class="text-muted text-xs">Acumulado histórico</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl col-md-4 col-sm-6">
+          <div class="card custom-card border-0 shadow-sm h-100 kpi-card border-time p-2">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">Espera Clínica</h6>
+                <div class="bg-warning bg-opacity-10 text-warning rounded p-2"><i class="bi bi-clock-history"></i></div>
+              </div>
+              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px;">{{ kpis.espera_promedio || 0 }} <span class="fs-6 text-muted fw-normal">hrs</span></h2>
+              <small class="text-muted text-xs">Tiempo de atención</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl col-md-4 col-sm-6">
+          <div class="card custom-card border-0 shadow-sm h-100 kpi-card border-meds p-2">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">Stock Medicinas</h6>
+                <div class="bg-info bg-opacity-10 text-info rounded p-2"><i class="bi bi-prescription2"></i></div>
+              </div>
+              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px;">{{ kpis.disponibilidad_farmacias || 0 }}%</h2>
+              <small class="text-muted text-xs">Disponibilidad de red</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl col-md-6 col-sm-6">
+          <div class="card custom-card border-0 shadow-sm h-100 kpi-card border-beds p-2">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">Ocupación Camas</h6>
+                <div class="bg-primary bg-opacity-10 text-primary rounded p-2"><i class="bi bi-lungs"></i></div>
+              </div>
+              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px;">{{ kpis.ocupacion_hospitalaria || 0 }}%</h2>
+              <small class="text-muted text-xs">Saturación hospitalaria</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl col-md-6 col-sm-12">
+          <div class="card custom-card border-0 shadow-sm h-100 kpi-card border-weather p-2">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">Precipitación Prom.</h6>
+                <div class="bg-success bg-opacity-10 text-success rounded p-2"><i class="bi bi-cloud-drizzle"></i></div>
+              </div>
+              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px;">{{ kpis.precipitacion_promedio || 0 }} <span class="fs-6 text-muted fw-normal">mm</span></h2>
+              <small class="text-muted text-xs">Factor de riesgo</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gráficos -->
+      <div class="row g-4">
+        <div class="col-lg-8">
+          <div class="card custom-card border-0 shadow-sm h-100">
+            <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4">
+              <h5 class="fw-bold text-dark mb-0">Comportamiento Epidemiológico</h5>
+              <p class="text-muted text-xs">Correlación histórica entre casos vectoriales y picos de precipitación pluvial.</p>
+            </div>
+            <div class="card-body p-4" style="height: 350px;">
+              <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="lineChartType"></canvas>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-4">
+          <div class="card custom-card border-0 shadow-sm h-100">
+            <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4">
+              <h5 class="fw-bold text-dark mb-0">Riesgo Cantonal</h5>
+              <p class="text-muted text-xs">Distribución de casos confirmados por geografía.</p>
+            </div>
+            <div class="card-body p-4" style="height: 350px;">
+              <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="barChartType"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PESTAÑA 2: INFRAESTRUCTURA -->
+    <div class="tab-pane fade" id="infra" role="tabpanel">
+      <div class="row justify-content-center">
+        <div class="col-lg-9">
+          <div class="card custom-card border-0 shadow-sm">
+            <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4 text-center">
+              <h4 class="fw-bold text-dark mb-0">Estrés Hospitalario Multivariable</h4>
+              <p class="text-muted text-xs mt-1">Comparativa de capacidad médica operativa contra la carga de pacientes en la red MSP.</p>
+            </div>
+            <div class="card-body p-4" style="height: 550px;">
+              <canvas baseChart [data]="radarChartData" [options]="radarChartOptions" [type]="radarChartType"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

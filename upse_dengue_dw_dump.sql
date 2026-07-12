@@ -16,7 +16,7 @@ CREATE TABLE `dim_tiempo` (
   `nombre_mes` varchar(20) NOT NULL,
   PRIMARY KEY (`id_tiempo`),
   UNIQUE KEY `fecha` (`fecha`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 DROP TABLE IF EXISTS Dim_Geografia;
 CREATE TABLE `dim_geografia` (
@@ -26,7 +26,7 @@ CREATE TABLE `dim_geografia` (
   `poblacion` int NOT NULL,
   PRIMARY KEY (`id_geografia`),
   UNIQUE KEY `canton` (`canton`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 DROP TABLE IF EXISTS Dim_Clima;
 CREATE TABLE `dim_clima` (
@@ -39,7 +39,7 @@ CREATE TABLE `dim_clima` (
   `temp_minima_c` decimal(4,2) NOT NULL,
   `humedad_relativa` decimal(5,2) NOT NULL,
   PRIMARY KEY (`id_clima`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 DROP TABLE IF EXISTS Dim_Infraestructura;
 CREATE TABLE `dim_infraestructura` (
@@ -53,7 +53,7 @@ CREATE TABLE `dim_infraestructura` (
   `medicos_disponibles` int NOT NULL,
   `pacientes_dengue` int NOT NULL,
   PRIMARY KEY (`id_infraestructura`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 DROP TABLE IF EXISTS Fact_Incidencia;
 CREATE TABLE `fact_incidencia` (
@@ -75,7 +75,7 @@ CREATE TABLE `fact_incidencia` (
   CONSTRAINT `fact_incidencia_ibfk_2` FOREIGN KEY (`id_geografia`) REFERENCES `dim_geografia` (`id_geografia`),
   CONSTRAINT `fact_incidencia_ibfk_3` FOREIGN KEY (`id_clima`) REFERENCES `dim_clima` (`id_clima`),
   CONSTRAINT `fact_incidencia_ibfk_4` FOREIGN KEY (`id_infraestructura`) REFERENCES `dim_infraestructura` (`id_infraestructura`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Datos para la tabla Dim_Tiempo
 INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
