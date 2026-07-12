@@ -10,7 +10,7 @@ El modelo dimensional diseñado originalmente en el Entregable 2 (Star Schema) h
 
 ### Conexión y Acceso Verificable
 Para la auditoría directa del docente, se proporciona un dump ejecutable estructurado ubicado en la raíz del proyecto:
-- **Archivo Dump SQL:** [upse_dengue_dw_dump.sql](file:///c:/xampp/htdocs/UPSE-BI-Dengue-ETL/upse_dengue_dw_dump.sql)
+- **Archivo Dump SQL:** [upse_dengue_dw_dump.sql](../upse_dengue_dw_dump.sql)
 - **Servidor Local:** `localhost` (Puerto `3306`)
 - **Base de Datos:** `upse_dengue_dw`
 - **Usuario:** `root`
@@ -223,18 +223,3 @@ De acuerdo con las consultas multidimensionales del Data Warehouse, se formulan 
 | **Tiempo de espera clínico** | ~2.00 horas | **4.35 horas** | La escasez de médicos en atención primaria triplica la espera en dispensarios locales durante brotes. |
 | **Disponibilidad de stock** | ~80.0% stock general | **0.0% en semanas de brote** | La compra reactiva de medicamentos agota las perchas locales de farmacias inmediatamente durante picos epidemiológicos. |
 | **Ocupación de Camas** | ~50.0% ocupación | **86.36% en Salinas** | El colapso del sistema preventivo empuja a los pacientes directamente a emergencias y hospitalización en Salinas. |
-
----
-
-## 6. Lista de Verificación — Control de Calidad del Estudiante
-
-- [x] El Data Warehouse se encuentra desplegado en un motor de bases de datos relacional robusto (MySQL local).
-- [x] La arquitectura física de tablas responde fielmente y sin alteraciones al modelo multidimensional en estrella del E2.
-- [x] El acceso al repositorio o base de datos está totalmente libre de bloqueos para el docente (dump SQL incluido).
-- [x] Se adjunta la tabla detallada de número de registros consolidados efectivamente por cada dimensión y tabla de hechos.
-- [x] Existe un mapeo unívoco y estructurado de scripts SQL para responder cada una de las interrogantes analíticas iniciales del negocio.
-- [x] Las consultas de agregación hacen uso correcto de las llaves foráneas ligando la tabla de hechos con el contexto dimensional.
-- [x] Los 5 KPIs operan dentro de la base de datos en formato de vistas lógicas de almacenamiento.
-- [x] Los hallazgos analíticos incorporan métricas explícitas e interpretaciones lógicas que responden de extremo a extremo las preguntas analíticas.
-- [x] Se incluye la tabla comparativa que justifica técnicamente la diferencia entre las hipótesis del E1 y los resultados finales.
-- [x] El reporte analítico consolidado se encuentra maquetado formalmente bajo las directrices y normas de la plantilla institucional UPSE.
