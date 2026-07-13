@@ -12,6 +12,16 @@
       <!-- Controles de la Cabecera -->
       <div class="col-md-5 text-md-end mt-3 mt-md-0 d-flex justify-content-md-end align-items-center gap-3">
         
+        <!-- Riesgo Climático Semáforo -->
+        <span class="badge px-3 py-2 rounded-pill shadow-sm border fw-bold" 
+              [ngClass]="{
+                'bg-danger text-white': kpis.riesgo_climatico === 'ALTO',
+                'bg-warning text-dark': kpis.riesgo_climatico === 'MEDIO',
+                'bg-success text-white': kpis.riesgo_climatico === 'BAJO'
+              }">
+          <i class="bi bi-thermometer-sun me-1"></i> Riesgo Clima: {{ kpis.riesgo_climatico || 'BAJO' }}
+        </span>
+
         <!-- Menú Desplegable Interactivo -->
         <div class="dropdown">
           <button class="btn btn-light dropdown-toggle rounded-pill px-4 shadow-sm fw-bold text-primary" type="button" data-bs-toggle="dropdown">
@@ -23,6 +33,19 @@
             <li><a class="dropdown-item py-2" href="javascript:void(0)" (click)="filtrarPorCanton('LA LIBERTAD', 'La Libertad')"><i class="bi bi-pin-map-fill me-2 text-primary"></i> La Libertad</a></li>
             <li><a class="dropdown-item py-2" href="javascript:void(0)" (click)="filtrarPorCanton('SALINAS', 'Salinas')"><i class="bi bi-pin-map-fill me-2 text-primary"></i> Salinas</a></li>
             <li><a class="dropdown-item py-2" href="javascript:void(0)" (click)="filtrarPorCanton('SANTA ELENA', 'Santa Elena')"><i class="bi bi-pin-map-fill me-2 text-primary"></i> Santa Elena</a></li>
+          </ul>
+        </div>
+
+        <!-- Filtro de Año -->
+        <div class="dropdown">
+          <button class="btn btn-light dropdown-toggle rounded-pill px-4 shadow-sm fw-bold text-primary" type="button" data-bs-toggle="dropdown">
+            <i class="bi bi-calendar-event me-2"></i> {{ (anioActual ? 'Año: ' + anioActual : 'Todos los Años') }}
+          </button>
+          <ul class="dropdown-menu shadow border-0" style="border-radius: 12px;">
+            <li><a class="dropdown-item py-2" href="javascript:void(0)" (click)="filtrarPorAnio('')"><i class="bi bi-calendar-range me-2 text-muted"></i> Todos los Años</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item py-2" href="javascript:void(0)" (click)="filtrarPorAnio('2024')"><i class="bi bi-calendar3 me-2 text-primary"></i> 2024</a></li>
+            <li><a class="dropdown-item py-2" href="javascript:void(0)" (click)="filtrarPorAnio('2026')"><i class="bi bi-calendar3 me-2 text-primary"></i> 2026</a></li>
           </ul>
         </div>
 
@@ -62,7 +85,12 @@
                 <div class="bg-danger bg-opacity-10 text-danger rounded p-2"><i class="bi bi-virus"></i></div>
               </div>
               <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px;">{{ kpis.total_casos || 0 }}</h2>
-              <small class="text-muted text-xs">Acumulado histórico</small>
+              <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted text-xs">Acumulado</small>
+                <span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-20 text-xs fw-semibold px-2 py-0.5 rounded-pill">
+                  Tasa: {{ kpis.tasa_incidencia_100k || 0 }} /100k
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -150,8 +178,36 @@
 
     <!-- PESTAÑA 2: INFRAESTRUCTURA -->
     <div class="tab-pane fade" id="infra" role="tabpanel">
-      <div class="row justify-content-center">
+      <div class="row g-4 justify-content-center">
         <div class="col-lg-9">
+          <!-- Tarjeta de Capacidad de Camas -->
+          <div class="card custom-card border-0 shadow-sm mb-4">
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                  <h5 class="fw-bold text-dark mb-1"><i class="bi bi-hospital me-2 text-primary"></i>Capacidad de Camas Hospitalarias</h5>
+                  <p class="text-muted text-xs mb-0">Promedio de camas activas y ocupadas registradas para {{ filtroActual }}.</p>
+                </div>
+                <div class="text-end">
+                  <h3 class="fw-bold text-primary mb-0">{{ ocupacionPct }}%</h3>
+                  <small class="text-muted text-xs">Ocupación global</small>
+                </div>
+              </div>
+              <div class="progress rounded-pill mb-2" style="height: 12px;">
+                <div class="progress-bar rounded-pill bg-primary" role="progressbar" 
+                     [style.width.%]="ocupacionPct" 
+                     [attr.aria-valuenow]="ocupacionPct" 
+                     aria-valuemin="0" 
+                     aria-valuemax="100">
+                </div>
+              </div>
+              <div class="d-flex justify-content-between text-xs text-muted fw-semibold">
+                <span>Camas Ocupadas: {{ camasOcupadas }}</span>
+                <span>Capacidad Total: {{ camasTotales }}</span>
+              </div>
+            </div>
+          </div>
+
           <div class="card custom-card border-0 shadow-sm">
             <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4 text-center">
               <h4 class="fw-bold text-dark mb-0">Estrés Hospitalario Multivariable</h4>

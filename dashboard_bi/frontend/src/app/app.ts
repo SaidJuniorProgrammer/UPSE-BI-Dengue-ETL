@@ -13,8 +13,14 @@ import { DashboardService } from './services/dashboard';
 })
 export class App implements OnInit {
   kpis: any = {};
-  filtroActual: string = 'Toda la Península'; // Estado del filtro
+  filtroActual: string = 'Toda la Península'; // Estado del filtro del cantón
+  cantonActual: string = '';
+  anioActual: string = '';
 
+  // Capacity variables
+  camasTotales: number = 0;
+  camasOcupadas: number = 0;
+  ocupacionPct: number = 0;
  
   public lineChartData: ChartConfiguration['data'] = { datasets: [], labels: [] };
   public lineChartOptions: ChartConfiguration['options'] = { responsive: true, maintainAspectRatio: false };
@@ -31,43 +37,66 @@ export class App implements OnInit {
   constructor(private dashboardService: DashboardService) {}
 
   ngOnInit(): void {
-    this.cargarKpis(''); 
-    this.cargarGraficos();
+    this.actualizarTodo();
   }
 
-  // Nueva función interactiva para el menú desplegable
+  // Nueva función interactiva para filtrar por cantón
   filtrarPorCanton(canton: string, nombreVista: string) {
+    this.cantonActual = canton;
     this.filtroActual = nombreVista;
-    this.cargarKpis(canton);
+    this.actualizarTodo();
   }
 
-  cargarKpis(canton: string) {
-    this.dashboardService.getKpis(canton).subscribe(data => {
+  // Nueva función interactiva para filtrar por año
+  filtrarPorAnio(anio: string) {
+    this.anioActual = anio;
+    this.actualizarTodo();
+  }
+
+  actualizarTodo() {
+    this.cargarKpis(this.cantonActual, this.anioActual);
+    this.cargarGraficos(this.cantonActual, this.anioActual);
+  }
+
+  cargarKpis(canton: string, anio: string) {
+    this.dashboardService.getKpis(canton, anio).subscribe(data => {
       this.kpis = data || {};
     });
   }
 
-  cargarGraficos() {
-    this.dashboardService.getGraficoTemporal().subscribe((data: any[]) => {
+  cargarGraficos(canton: string, anio: string) {
+    this.dashboardService.getGraficoTemporal(canton, anio).subscribe((data: any[]) => {
       this.lineChartData = {
-        labels: data.map(d => `Sem ${d.semana_epidem}`),
+        labels: data.map(d => `${d.anio} - Sem ${d.semana_epidem} (${d.mes.substring(0, 3)})`),
         datasets: [
           { data: data.map(d => d.casos), label: 'Casos Confirmados', borderColor: '#e74c3c', fill: false, tension: 0.3 },
-          { data: data.map(d => d.lluvia), label: 'Precipitación (mm)', borderColor: '#3498db', fill: false, tension: 0.3 }
+          { data: data.map(d => d.lluvia), label: 'Precipitación (mm)', borderColor: '#3498db', fill: false, tension: 0.3 },
+          { data: data.map(d => d.alertas), label: 'Alertas de Prensa', borderColor: '#9b59b6', fill: false, tension: 0.3 }
         ]
       };
     });
 
-    this.dashboardService.getGraficoCantones().subscribe((data: any[]) => {
+    this.dashboardService.getGraficoCantones(canton, anio).subscribe((data: any[]) => {
       this.barChartData = {
         labels: data.map(d => d.canton),
         datasets: [
-          { data: data.map(d => d.casos_totales), label: 'Incidencia Vectorial', backgroundColor: '#2ecc71', borderRadius: 5 }
+          { data: data.map(d => d.tasa_incidencia_100k), label: 'Tasa de Incidencia (por 100k hab)', backgroundColor: '#e67e22', borderRadius: 5 }
         ]
       };
     });
 
-    this.dashboardService.getGraficoInfraestructura().subscribe((data: any[]) => {
+    this.dashboardService.getGraficoInfraestructura(canton, anio).subscribe((data: any[]) => {
+      // Calcular ocupación agregada
+      if (data && data.length > 0) {
+        this.camasTotales = data.reduce((acc, curr) => acc + (Number(curr.camas_totales) || 0), 0);
+        this.camasOcupadas = data.reduce((acc, curr) => acc + (Number(curr.camas_ocupadas) || 0), 0);
+        this.ocupacionPct = this.camasTotales > 0 ? Math.round((this.camasOcupadas / this.camasTotales) * 100) : 0;
+      } else {
+        this.camasTotales = 0;
+        this.camasOcupadas = 0;
+        this.ocupacionPct = 0;
+      }
+
       this.radarChartData = {
         labels: data.map(d => d.canton || 'Centro Médico'),
         datasets: [

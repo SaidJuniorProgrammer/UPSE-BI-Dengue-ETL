@@ -11,24 +11,30 @@ export class DashboardService {
 
   constructor(private http: HttpClient) { }
 
+  private buildUrl(endpoint: string, canton: string, anio: string): string {
+    let params: string[] = [];
+    if (canton) params.push(`canton=${encodeURIComponent(canton)}`);
+    if (anio) params.push(`anio=${encodeURIComponent(anio)}`);
+    return params.length > 0 ? `${this.apiUrl}/${endpoint}?${params.join('&')}` : `${this.apiUrl}/${endpoint}`;
+  }
+
   // Obtener los 5 KPIs
-  getKpis(canton: string = ''): Observable<any> {
-    const url = canton ? `${this.apiUrl}/kpis?canton=${canton}` : `${this.apiUrl}/kpis`;
-    return this.http.get<any>(url);
+  getKpis(canton: string = '', anio: string = ''): Observable<any> {
+    return this.http.get<any>(this.buildUrl('kpis', canton, anio));
   }
 
   // Obtener datos para el gráfico de líneas (Serie Temporal)
-  getGraficoTemporal(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/grafico-temporal`);
+  getGraficoTemporal(canton: string = '', anio: string = ''): Observable<any> {
+    return this.http.get<any>(this.buildUrl('grafico-temporal', canton, anio));
   }
 
   // Obtener datos para el gráfico de barras (Cantones)
-  getGraficoCantones(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/grafico-cantones`);
+  getGraficoCantones(canton: string = '', anio: string = ''): Observable<any> {
+    return this.http.get<any>(this.buildUrl('grafico-cantones', canton, anio));
   }
 
   // Obtener datos para el gráfico de infraestructura
-  getGraficoInfraestructura(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/grafico-infraestructura`);
+  getGraficoInfraestructura(canton: string = '', anio: string = ''): Observable<any> {
+    return this.http.get<any>(this.buildUrl('grafico-infraestructura', canton, anio));
   }
 }
