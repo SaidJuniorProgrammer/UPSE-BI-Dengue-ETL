@@ -122,7 +122,6 @@
 </div>
 
 <div class="container mt-5 content-wrap">
-
   <!-- Pestañas Operativas -->
   <ul
     class="nav nav-pills nav-surface justify-content-center mb-5 relative-z"
@@ -151,6 +150,19 @@
         role="tab"
       >
         <i class="bi bi-hospital me-2 text-primary"></i> Análisis de Infraestructura
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link fw-semibold shadow-sm bg-white border tab-pill"
+        id="mapa-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#mapa"
+        type="button"
+        role="tab"
+        (click)="activarMapa()"
+      >
+        <i class="bi bi-geo-alt-fill me-2 text-primary"></i> Mapa Territorial
       </button>
     </li>
   </ul>
@@ -370,6 +382,97 @@
                 [options]="radarChartOptions"
                 [type]="radarChartType"
               ></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PESTAÑA 3: MAPA TERRITORIAL -->
+    <div class="tab-pane fade" id="mapa" role="tabpanel">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <div class="card custom-card chart-card border-0 shadow-sm h-100">
+            <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4">
+              <h5 class="fw-bold text-dark mb-0">Capas Analíticas</h5>
+              <p class="text-muted text-xs">
+                Activa o desactiva cada dimensión para una lectura más limpia.
+              </p>
+            </div>
+            <div class="card-body px-4 pb-4 pt-3 d-grid gap-3">
+              <button
+                class="layer-toggle"
+                [class.layer-toggle-active]="capasMapa.casos"
+                (click)="alternarCapa('casos')"
+              >
+                <span class="layer-dot layer-dot-navy"></span>
+                Casos e incidencia
+                <span class="badge layer-badge">{{ mapaDatos.length }}</span>
+              </button>
+              <button
+                class="layer-toggle"
+                [class.layer-toggle-active]="capasMapa.lluvia"
+                (click)="alternarCapa('lluvia')"
+              >
+                <span class="layer-dot layer-dot-blue"></span>
+                Precipitación y temperatura
+                <span class="badge layer-badge">Clima</span>
+              </button>
+              <button
+                class="layer-toggle"
+                [class.layer-toggle-active]="capasMapa.infraestructura"
+                (click)="alternarCapa('infraestructura')"
+              >
+                <span class="layer-dot layer-dot-green"></span>
+                Infraestructura sanitaria
+                <span class="badge layer-badge">Red MSP</span>
+              </button>
+
+              <div class="map-legend mt-2">
+                <div class="map-legend-title">Leyenda</div>
+                <div class="legend-row">
+                  <span class="legend-swatch legend-swatch-navy"></span> Casos confirmados
+                </div>
+                <div class="legend-row">
+                  <span class="legend-swatch legend-swatch-blue"></span> Lluvia acumulada
+                </div>
+                <div class="legend-row">
+                  <span class="legend-swatch legend-swatch-green"></span> Ocupación hospitalaria
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="card custom-card chart-card border-0 shadow-sm h-100">
+            <div
+              class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center flex-wrap gap-2"
+            >
+              <div>
+                <h4 class="fw-bold text-dark mb-0">Mapa analítico de Santa Elena</h4>
+                <p class="text-muted text-xs mt-1 mb-0">
+                  Centroides por cantón con capas activables de casos, lluvia e infraestructura.
+                </p>
+              </div>
+              <div class="map-summary-inline">
+                <span
+                  ><strong>{{ mapaResumen.totalCasos }}</strong> casos</span
+                >
+                <span
+                  ><strong>{{ mapaResumen.lluviaPromedio }}</strong> mm lluvia</span
+                >
+                <span
+                  ><strong>{{ mapaResumen.ocupacionPromedio }}</strong
+                  >% ocupación</span
+                >
+              </div>
+            </div>
+            <div class="card-body p-4">
+              <div class="map-container" #mapContainer></div>
+              <div class="map-caption mt-3">
+                Punto crítico actual: <strong>{{ mapaResumen.cantonCritico }}</strong>
+              </div>
             </div>
           </div>
         </div>

@@ -1,42 +1,50 @@
-const express = require('express');
-const mysql = require('mysql2');
-const cors = require('cors');
+const express = require("express");
+const mysql = require("mysql2");
+const cors = require("cors");
 
 const app = express();
 app.use(cors());
 
 // Configuración de la conexión a tu Data Warehouse local
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'ghil3412', 
-    database: 'upse_dengue_dw'
+  host: "localhost",
+  user: "root",
+  password: "ghil3412",
+  database: "upse_dengue_dw",
 });
 
-db.connect(err => {
-    if (err) throw err;
-    console.log(' Conectado exitosamente al Data Warehouse MySQL');
+db.connect((err) => {
+  if (err) throw err;
+  console.log(" Conectado exitosamente al Data Warehouse MySQL");
 });
 
 function getFilters(req) {
-    let parts = [];
-    if (req.query.canton) {
-        parts.push(`dg.canton = '${req.query.canton}'`);
-    }
-    if (req.query.anio) {
-        parts.push(`dt.anio = ${req.query.anio}`);
-    }
-    return parts.length > 0 ? 'WHERE ' + parts.join(' AND ') : '';
+  let parts = [];
+  if (req.query.canton) {
+    parts.push(`dg.canton = '${req.query.canton}'`);
+  }
+  if (req.query.anio) {
+    parts.push(`dt.anio = ${req.query.anio}`);
+  }
+  return parts.length > 0 ? "WHERE " + parts.join(" AND ") : "";
 }
+
+const cantonCenters = {
+  "SANTA ELENA": { lat: -2.2266, lng: -80.8588 },
+  "LA LIBERTAD": { lat: -2.2336, lng: -80.9101 },
+  SALINAS: { lat: -2.2145, lng: -80.9514 },
+};
 
 // --------------------------------------------------------
 // ENDPOINT 1: Los 5 KPIs Estratégicos (Calculados en tiempo real)
 // --------------------------------------------------------
-app.get('/api/kpis', (req, res) => {
-    let filter = getFilters(req);
-    let subqueryFilter = req.query.canton ? `WHERE canton = '${req.query.canton}'` : '';
-    
-    const query = `
+app.get("/api/kpis", (req, res) => {
+  let filter = getFilters(req);
+  let subqueryFilter = req.query.canton
+    ? `WHERE canton = '${req.query.canton}'`
+    : "";
+
+  const query = `
         SELECT 
             SUM(fi.casos_confirmados) AS total_casos,
             ROUND(AVG(fi.espera_promedio_h), 2) AS espera_promedio, 
@@ -56,18 +64,18 @@ app.get('/api/kpis', (req, res) => {
         JOIN Dim_Tiempo dt ON fi.id_tiempo = dt.id_tiempo
         ${filter}
     `;
-    db.query(query, (err, results) => {
-        if (err) return res.status(500).send(err);
-        res.json(results[0]);
-    });
+  db.query(query, (err, results) => {
+    if (err) return res.status(500).send(err);
+    res.json(results[0]);
+  });
 });
 
 // --------------------------------------------------------
 // ENDPOINT 2: Gráfico de Líneas (Serie Temporal de Casos vs Clima vs Alertas)
 // --------------------------------------------------------
-app.get('/api/grafico-temporal', (req, res) => {
-    let filter = getFilters(req);
-    const query = `
+app.get("/api/grafico-temporal", (req, res) => {
+  let filter = getFilters(req);
+  const query = `
         SELECT 
             dt.anio,
             dt.semana_epidem,
@@ -83,18 +91,18 @@ app.get('/api/grafico-temporal', (req, res) => {
         GROUP BY dt.anio, dt.semana_epidem
         ORDER BY dt.anio ASC, dt.semana_epidem ASC
     `;
-    db.query(query, (err, results) => {
-        if (err) return res.status(500).send(err);
-        res.json(results);
-    });
+  db.query(query, (err, results) => {
+    if (err) return res.status(500).send(err);
+    res.json(results);
+  });
 });
 
 // --------------------------------------------------------
 // ENDPOINT 3: Gráfico de Barras (Comparativa por Cantón)
 // --------------------------------------------------------
-app.get('/api/grafico-cantones', (req, res) => {
-    let filter = getFilters(req);
-    const query = `
+app.get("/api/grafico-cantones", (req, res) => {
+  let filter = getFilters(req);
+  const query = `
         SELECT 
             dg.canton, 
             SUM(fi.casos_confirmados) AS casos_totales,
@@ -106,18 +114,18 @@ app.get('/api/grafico-cantones', (req, res) => {
         GROUP BY dg.canton
         ORDER BY casos_totales DESC
     `;
-    db.query(query, (err, results) => {
-        if (err) return res.status(500).send(err);
-        res.json(results);
-    });
+  db.query(query, (err, results) => {
+    if (err) return res.status(500).send(err);
+    res.json(results);
+  });
 });
 
 // --------------------------------------------------------
 // ENDPOINT 4: Gráfico de Dispersión/Radar (Infraestructura Médica)
 // --------------------------------------------------------
-app.get('/api/grafico-infraestructura', (req, res) => {
-    let filter = getFilters(req);
-    const query = `
+app.get("/api/grafico-infraestructura", (req, res) => {
+  let filter = getFilters(req);
+  const query = `
         SELECT 
             di.canton, 
             di.nivel_saturacion, 
@@ -132,14 +140,52 @@ app.get('/api/grafico-infraestructura', (req, res) => {
         ${filter}
         GROUP BY di.canton, di.nivel_saturacion, di.medicos_disponibles
     `;
-    db.query(query, (err, results) => {
-        if (err) return res.status(500).send(err);
-        res.json(results);
-    });
+  db.query(query, (err, results) => {
+    if (err) return res.status(500).send(err);
+    res.json(results);
+  });
+});
+
+// --------------------------------------------------------
+// ENDPOINT 5: Mapa analítico territorial
+// --------------------------------------------------------
+app.get("/api/mapa-provincia", (req, res) => {
+  let filter = getFilters(req);
+  const query = `
+        SELECT 
+            dg.canton,
+            SUM(fi.casos_confirmados) AS casos_totales,
+            ROUND((SUM(fi.casos_confirmados) / MAX(dg.poblacion)) * 100000, 2) AS tasa_incidencia_100k,
+            ROUND(AVG(dc.precipitacion_mm), 2) AS precipitacion_mm,
+            ROUND(AVG(dc.temp_maxima_c), 2) AS temp_maxima_c,
+            ROUND(AVG(di.camas_totales), 0) AS camas_totales,
+            ROUND(AVG(di.camas_ocupadas), 0) AS camas_ocupadas,
+            ROUND(AVG(di.medicos_disponibles), 0) AS medicos_disponibles,
+            ROUND(AVG(di.camas_ocupadas / di.camas_totales * 100), 2) AS ocupacion_pct,
+            MAX(di.nivel_saturacion) AS nivel_saturacion
+        FROM Fact_Incidencia fi
+        JOIN Dim_Geografia dg ON fi.id_geografia = dg.id_geografia
+        JOIN Dim_Infraestructura di ON fi.id_infraestructura = di.id_infraestructura
+        JOIN Dim_Clima dc ON fi.id_clima = dc.id_clima
+        JOIN Dim_Tiempo dt ON fi.id_tiempo = dt.id_tiempo
+        ${filter}
+        GROUP BY dg.canton
+        ORDER BY casos_totales DESC
+    `;
+  db.query(query, (err, results) => {
+    if (err) return res.status(500).send(err);
+    const data = results.map((row) => ({
+      ...row,
+      ...(cantonCenters[row.canton] || { lat: -2.22, lng: -80.9 }),
+    }));
+    res.json(data);
+  });
 });
 
 // Iniciar el servidor
 const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(` API REST de Inteligencia de Negocios corriendo en http://localhost:${PORT}`);
+  console.log(
+    ` API REST de Inteligencia de Negocios corriendo en http://localhost:${PORT}`,
+  );
 });
