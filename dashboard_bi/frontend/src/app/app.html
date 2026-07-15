@@ -1,72 +1,155 @@
 <!-- Cabecera Principal -->
 <div class="dashboard-header">
   <div class="container">
-    <div class="row align-items-center">
-      <div class="col-md-7">
-        <h1 class="fw-bold mb-1" style="letter-spacing: -1px;">
-          <i class="bi bi-shield-plus text-warning me-2"></i>Monitor Epidemiológico
-        </h1>
-        <p class="text-light opacity-75 mb-0 fw-light">Sistema de Inteligencia de Negocios para el control del Dengue.</p>
+    <div class="row align-items-center gy-4">
+      <div class="col-lg-7">
+        <div class="d-flex align-items-center gap-3 mb-3 flex-wrap">
+          <span class="brand-mark"><i class="bi bi-shield-plus"></i></span>
+          <div>
+            <h1 class="fw-bold mb-1 header-title">Monitor Epidemiológico</h1>
+            <p class="header-subtitle mb-0 fw-light">
+              Sistema de Inteligencia de Negocios para el control del Dengue.
+            </p>
+          </div>
+        </div>
       </div>
-      
+
       <!-- Controles de la Cabecera -->
-      <div class="col-md-5 text-md-end mt-3 mt-md-0 d-flex justify-content-md-end align-items-center gap-3">
-        
+      <div
+        class="col-lg-5 text-lg-end mt-3 mt-lg-0 d-flex justify-content-lg-end align-items-center gap-3 flex-wrap"
+      >
         <!-- Riesgo Climático Semáforo -->
-        <span class="badge px-3 py-2 rounded-pill shadow-sm border fw-bold" 
-              [ngClass]="{
-                'bg-danger text-white': kpis.riesgo_climatico === 'ALTO',
-                'bg-warning text-dark': kpis.riesgo_climatico === 'MEDIO',
-                'bg-success text-white': kpis.riesgo_climatico === 'BAJO'
-              }">
-          <i class="bi bi-thermometer-sun me-1"></i> Riesgo Clima: {{ kpis.riesgo_climatico || 'BAJO' }}
+        <span
+          class="badge px-3 py-2 rounded-pill shadow-sm border fw-bold status-pill"
+          [ngClass]="{
+            'status-high': kpis.riesgo_climatico === 'ALTO',
+            'status-medium': kpis.riesgo_climatico === 'MEDIO',
+            'status-low': kpis.riesgo_climatico === 'BAJO',
+          }"
+        >
+          <i class="bi bi-thermometer-sun me-1"></i> Riesgo Clima:
+          {{ kpis.riesgo_climatico || 'BAJO' }}
         </span>
 
         <!-- Menú Desplegable Interactivo -->
         <div class="dropdown">
-          <button class="btn btn-light dropdown-toggle rounded-pill px-4 shadow-sm fw-bold text-primary" type="button" data-bs-toggle="dropdown">
+          <button
+            class="btn btn-light dropdown-toggle rounded-pill px-4 shadow-sm fw-bold text-primary filter-button"
+            type="button"
+            data-bs-toggle="dropdown"
+          >
             <i class="bi bi-geo-alt-fill me-2"></i> {{ filtroActual }}
           </button>
-          <ul class="dropdown-menu shadow border-0" style="border-radius: 12px;">
-            <li><a class="dropdown-item py-2" href="javascript:void(0)" (click)="filtrarPorCanton('', 'Toda la Península')"><i class="bi bi-globe-americas me-2 text-muted"></i> Toda la Península</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item py-2" href="javascript:void(0)" (click)="filtrarPorCanton('LA LIBERTAD', 'La Libertad')"><i class="bi bi-pin-map-fill me-2 text-primary"></i> La Libertad</a></li>
-            <li><a class="dropdown-item py-2" href="javascript:void(0)" (click)="filtrarPorCanton('SALINAS', 'Salinas')"><i class="bi bi-pin-map-fill me-2 text-primary"></i> Salinas</a></li>
-            <li><a class="dropdown-item py-2" href="javascript:void(0)" (click)="filtrarPorCanton('SANTA ELENA', 'Santa Elena')"><i class="bi bi-pin-map-fill me-2 text-primary"></i> Santa Elena</a></li>
+          <ul class="dropdown-menu shadow border-0 dropdown-panel">
+            <li>
+              <a
+                class="dropdown-item py-2"
+                href="javascript:void(0)"
+                (click)="filtrarPorCanton('', 'Toda la Península')"
+                ><i class="bi bi-globe-americas me-2 text-muted"></i> Toda la Península</a
+              >
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item py-2"
+                href="javascript:void(0)"
+                (click)="filtrarPorCanton('LA LIBERTAD', 'La Libertad')"
+                ><i class="bi bi-pin-map-fill me-2 text-primary"></i> La Libertad</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item py-2"
+                href="javascript:void(0)"
+                (click)="filtrarPorCanton('SALINAS', 'Salinas')"
+                ><i class="bi bi-pin-map-fill me-2 text-primary"></i> Salinas</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item py-2"
+                href="javascript:void(0)"
+                (click)="filtrarPorCanton('SANTA ELENA', 'Santa Elena')"
+                ><i class="bi bi-pin-map-fill me-2 text-primary"></i> Santa Elena</a
+              >
+            </li>
           </ul>
         </div>
 
         <!-- Filtro de Año -->
         <div class="dropdown">
-          <button class="btn btn-light dropdown-toggle rounded-pill px-4 shadow-sm fw-bold text-primary" type="button" data-bs-toggle="dropdown">
-            <i class="bi bi-calendar-event me-2"></i> {{ (anioActual ? 'Año: ' + anioActual : 'Todos los Años') }}
+          <button
+            class="btn btn-light dropdown-toggle rounded-pill px-4 shadow-sm fw-bold text-primary filter-button"
+            type="button"
+            data-bs-toggle="dropdown"
+          >
+            <i class="bi bi-calendar-event me-2"></i>
+            {{ anioActual ? 'Año: ' + anioActual : 'Todos los Años' }}
           </button>
-          <ul class="dropdown-menu shadow border-0" style="border-radius: 12px;">
-            <li><a class="dropdown-item py-2" href="javascript:void(0)" (click)="filtrarPorAnio('')"><i class="bi bi-calendar-range me-2 text-muted"></i> Todos los Años</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item py-2" href="javascript:void(0)" (click)="filtrarPorAnio('2024')"><i class="bi bi-calendar3 me-2 text-primary"></i> 2024</a></li>
-            <li><a class="dropdown-item py-2" href="javascript:void(0)" (click)="filtrarPorAnio('2026')"><i class="bi bi-calendar3 me-2 text-primary"></i> 2026</a></li>
+          <ul class="dropdown-menu shadow border-0 dropdown-panel">
+            <li>
+              <a class="dropdown-item py-2" href="javascript:void(0)" (click)="filtrarPorAnio('')"
+                ><i class="bi bi-calendar-range me-2 text-muted"></i> Todos los Años</a
+              >
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item py-2"
+                href="javascript:void(0)"
+                (click)="filtrarPorAnio('2024')"
+                ><i class="bi bi-calendar3 me-2 text-primary"></i> 2024</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item py-2"
+                href="javascript:void(0)"
+                (click)="filtrarPorAnio('2026')"
+                ><i class="bi bi-calendar3 me-2 text-primary"></i> 2026</a
+              >
+            </li>
           </ul>
         </div>
 
         <span class="badge bg-light text-dark px-3 py-2 rounded-pill shadow-sm border">
-          <i class="bi bi-circle-fill text-success me-1" style="font-size: 0.6rem;"></i> DW Conectado
+          <i class="bi bi-circle-fill text-success me-1" style="font-size: 0.6rem"></i> DW Conectado
         </span>
       </div>
     </div>
   </div>
 </div>
 
-<div class="container mt-5">
+<div class="container mt-5 content-wrap">
+
   <!-- Pestañas Operativas -->
-  <ul class="nav nav-pills justify-content-center mb-5 relative-z" id="pills-tab" role="tablist">
+  <ul
+    class="nav nav-pills nav-surface justify-content-center mb-5 relative-z"
+    id="pills-tab"
+    role="tablist"
+  >
     <li class="nav-item me-2" role="presentation">
-      <button class="nav-link active fw-semibold shadow-sm bg-white border" id="resumen-tab" data-bs-toggle="pill" data-bs-target="#resumen" type="button" role="tab">
+      <button
+        class="nav-link active fw-semibold shadow-sm bg-white border tab-pill"
+        id="resumen-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#resumen"
+        type="button"
+        role="tab"
+      >
         <i class="bi bi-activity me-2 text-primary"></i> Visión General y Clima
       </button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link fw-semibold shadow-sm bg-white border" id="infra-tab" data-bs-toggle="pill" data-bs-target="#infra" type="button" role="tab">
+      <button
+        class="nav-link fw-semibold shadow-sm bg-white border tab-pill"
+        id="infra-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#infra"
+        type="button"
+        role="tab"
+      >
         <i class="bi bi-hospital me-2 text-primary"></i> Análisis de Infraestructura
       </button>
     </li>
@@ -78,16 +161,25 @@
       <!-- KPIs -->
       <div class="row g-4 mb-5">
         <div class="col-xl col-md-4 col-sm-6">
-          <div class="card custom-card border-0 shadow-sm h-100 kpi-card border-dengue p-2">
+          <div
+            class="card custom-card border-0 shadow-sm h-100 kpi-card metric-card metric-card-navy p-2"
+          >
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">Casos Confirmados</h6>
-                <div class="bg-danger bg-opacity-10 text-danger rounded p-2"><i class="bi bi-virus"></i></div>
+                <h6
+                  class="text-muted fw-bold mb-0 text-uppercase"
+                  style="font-size: 0.75rem; letter-spacing: 0.5px"
+                >
+                  Casos Confirmados
+                </h6>
+                <div class="metric-icon metric-icon-navy"><i class="bi bi-virus"></i></div>
               </div>
-              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px;">{{ kpis.total_casos || 0 }}</h2>
+              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px">
+                {{ kpis.total_casos || 0 }}
+              </h2>
               <div class="d-flex justify-content-between align-items-center">
                 <small class="text-muted text-xs">Acumulado</small>
-                <span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-20 text-xs fw-semibold px-2 py-0.5 rounded-pill">
+                <span class="badge metric-badge text-xs fw-semibold px-2 py-0.5 rounded-pill">
                   Tasa: {{ kpis.tasa_incidencia_100k || 0 }} /100k
                 </span>
               </div>
@@ -96,52 +188,89 @@
         </div>
 
         <div class="col-xl col-md-4 col-sm-6">
-          <div class="card custom-card border-0 shadow-sm h-100 kpi-card border-time p-2">
+          <div
+            class="card custom-card border-0 shadow-sm h-100 kpi-card metric-card metric-card-blue p-2"
+          >
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">Espera Clínica</h6>
-                <div class="bg-warning bg-opacity-10 text-warning rounded p-2"><i class="bi bi-clock-history"></i></div>
+                <h6
+                  class="text-muted fw-bold mb-0 text-uppercase"
+                  style="font-size: 0.75rem; letter-spacing: 0.5px"
+                >
+                  Espera Clínica
+                </h6>
+                <div class="metric-icon metric-icon-blue"><i class="bi bi-clock-history"></i></div>
               </div>
-              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px;">{{ kpis.espera_promedio || 0 }} <span class="fs-6 text-muted fw-normal">hrs</span></h2>
+              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px">
+                {{ kpis.espera_promedio || 0 }} <span class="fs-6 text-muted fw-normal">hrs</span>
+              </h2>
               <small class="text-muted text-xs">Tiempo de atención</small>
             </div>
           </div>
         </div>
 
         <div class="col-xl col-md-4 col-sm-6">
-          <div class="card custom-card border-0 shadow-sm h-100 kpi-card border-meds p-2">
+          <div
+            class="card custom-card border-0 shadow-sm h-100 kpi-card metric-card metric-card-green p-2"
+          >
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">Stock Medicinas</h6>
-                <div class="bg-info bg-opacity-10 text-info rounded p-2"><i class="bi bi-prescription2"></i></div>
+                <h6
+                  class="text-muted fw-bold mb-0 text-uppercase"
+                  style="font-size: 0.75rem; letter-spacing: 0.5px"
+                >
+                  Stock Medicinas
+                </h6>
+                <div class="metric-icon metric-icon-green"><i class="bi bi-prescription2"></i></div>
               </div>
-              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px;">{{ kpis.disponibilidad_farmacias || 0 }}%</h2>
+              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px">
+                {{ kpis.disponibilidad_farmacias || 0 }}%
+              </h2>
               <small class="text-muted text-xs">Disponibilidad de red</small>
             </div>
           </div>
         </div>
 
         <div class="col-xl col-md-6 col-sm-6">
-          <div class="card custom-card border-0 shadow-sm h-100 kpi-card border-beds p-2">
+          <div
+            class="card custom-card border-0 shadow-sm h-100 kpi-card metric-card metric-card-navy p-2"
+          >
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">Ocupación Camas</h6>
-                <div class="bg-primary bg-opacity-10 text-primary rounded p-2"><i class="bi bi-lungs"></i></div>
+                <h6
+                  class="text-muted fw-bold mb-0 text-uppercase"
+                  style="font-size: 0.75rem; letter-spacing: 0.5px"
+                >
+                  Ocupación Camas
+                </h6>
+                <div class="metric-icon metric-icon-blue"><i class="bi bi-lungs"></i></div>
               </div>
-              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px;">{{ kpis.ocupacion_hospitalaria || 0 }}%</h2>
+              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px">
+                {{ kpis.ocupacion_hospitalaria || 0 }}%
+              </h2>
               <small class="text-muted text-xs">Saturación hospitalaria</small>
             </div>
           </div>
         </div>
 
         <div class="col-xl col-md-6 col-sm-12">
-          <div class="card custom-card border-0 shadow-sm h-100 kpi-card border-weather p-2">
+          <div
+            class="card custom-card border-0 shadow-sm h-100 kpi-card metric-card metric-card-green p-2"
+          >
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">Precipitación Prom.</h6>
-                <div class="bg-success bg-opacity-10 text-success rounded p-2"><i class="bi bi-cloud-drizzle"></i></div>
+                <h6
+                  class="text-muted fw-bold mb-0 text-uppercase"
+                  style="font-size: 0.75rem; letter-spacing: 0.5px"
+                >
+                  Precipitación Prom.
+                </h6>
+                <div class="metric-icon metric-icon-green"><i class="bi bi-cloud-drizzle"></i></div>
               </div>
-              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px;">{{ kpis.precipitacion_promedio || 0 }} <span class="fs-6 text-muted fw-normal">mm</span></h2>
+              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px">
+                {{ kpis.precipitacion_promedio || 0 }}
+                <span class="fs-6 text-muted fw-normal">mm</span>
+              </h2>
               <small class="text-muted text-xs">Factor de riesgo</small>
             </div>
           </div>
@@ -151,25 +280,37 @@
       <!-- Gráficos -->
       <div class="row g-4">
         <div class="col-lg-8">
-          <div class="card custom-card border-0 shadow-sm h-100">
+          <div class="card custom-card chart-card border-0 shadow-sm h-100">
             <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4">
               <h5 class="fw-bold text-dark mb-0">Comportamiento Epidemiológico</h5>
-              <p class="text-muted text-xs">Correlación histórica entre casos vectoriales y picos de precipitación pluvial.</p>
+              <p class="text-muted text-xs">
+                Correlación histórica entre casos vectoriales y picos de precipitación pluvial.
+              </p>
             </div>
-            <div class="card-body p-4" style="height: 350px;">
-              <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="lineChartType"></canvas>
+            <div class="card-body p-4" style="height: 350px">
+              <canvas
+                baseChart
+                [data]="lineChartData"
+                [options]="lineChartOptions"
+                [type]="lineChartType"
+              ></canvas>
             </div>
           </div>
         </div>
-        
+
         <div class="col-lg-4">
-          <div class="card custom-card border-0 shadow-sm h-100">
+          <div class="card custom-card chart-card border-0 shadow-sm h-100">
             <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4">
               <h5 class="fw-bold text-dark mb-0">Riesgo Cantonal</h5>
               <p class="text-muted text-xs">Distribución de casos confirmados por geografía.</p>
             </div>
-            <div class="card-body p-4" style="height: 350px;">
-              <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="barChartType"></canvas>
+            <div class="card-body p-4" style="height: 350px">
+              <canvas
+                baseChart
+                [data]="barChartData"
+                [options]="barChartOptions"
+                [type]="barChartType"
+              ></canvas>
             </div>
           </div>
         </div>
@@ -181,25 +322,31 @@
       <div class="row g-4 justify-content-center">
         <div class="col-lg-9">
           <!-- Tarjeta de Capacidad de Camas -->
-          <div class="card custom-card border-0 shadow-sm mb-4">
+          <div class="card custom-card chart-card border-0 shadow-sm mb-4">
             <div class="card-body p-4">
               <div class="d-flex justify-content-between align-items-center mb-3">
                 <div>
-                  <h5 class="fw-bold text-dark mb-1"><i class="bi bi-hospital me-2 text-primary"></i>Capacidad de Camas Hospitalarias</h5>
-                  <p class="text-muted text-xs mb-0">Promedio de camas activas y ocupadas registradas para {{ filtroActual }}.</p>
+                  <h5 class="fw-bold text-dark mb-1">
+                    <i class="bi bi-hospital me-2 text-primary"></i>Capacidad de Camas Hospitalarias
+                  </h5>
+                  <p class="text-muted text-xs mb-0">
+                    Promedio de camas activas y ocupadas registradas para {{ filtroActual }}.
+                  </p>
                 </div>
                 <div class="text-end">
                   <h3 class="fw-bold text-primary mb-0">{{ ocupacionPct }}%</h3>
                   <small class="text-muted text-xs">Ocupación global</small>
                 </div>
               </div>
-              <div class="progress rounded-pill mb-2" style="height: 12px;">
-                <div class="progress-bar rounded-pill bg-primary" role="progressbar" 
-                     [style.width.%]="ocupacionPct" 
-                     [attr.aria-valuenow]="ocupacionPct" 
-                     aria-valuemin="0" 
-                     aria-valuemax="100">
-                </div>
+              <div class="progress rounded-pill mb-2" style="height: 12px">
+                <div
+                  class="progress-bar rounded-pill progress-brand"
+                  role="progressbar"
+                  [style.width.%]="ocupacionPct"
+                  [attr.aria-valuenow]="ocupacionPct"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
               </div>
               <div class="d-flex justify-content-between text-xs text-muted fw-semibold">
                 <span>Camas Ocupadas: {{ camasOcupadas }}</span>
@@ -208,13 +355,21 @@
             </div>
           </div>
 
-          <div class="card custom-card border-0 shadow-sm">
+          <div class="card custom-card chart-card border-0 shadow-sm">
             <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4 text-center">
               <h4 class="fw-bold text-dark mb-0">Estrés Hospitalario Multivariable</h4>
-              <p class="text-muted text-xs mt-1">Comparativa de capacidad médica operativa contra la carga de pacientes en la red MSP.</p>
+              <p class="text-muted text-xs mt-1">
+                Comparativa de capacidad médica operativa contra la carga de pacientes en la red
+                MSP.
+              </p>
             </div>
-            <div class="card-body p-4" style="height: 550px;">
-              <canvas baseChart [data]="radarChartData" [options]="radarChartOptions" [type]="radarChartType"></canvas>
+            <div class="card-body p-4" style="height: 550px">
+              <canvas
+                baseChart
+                [data]="radarChartData"
+                [options]="radarChartOptions"
+                [type]="radarChartType"
+              ></canvas>
             </div>
           </div>
         </div>
