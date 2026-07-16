@@ -6,7 +6,7 @@
 CREATE DATABASE IF NOT EXISTS upse_dengue_dw;
 USE upse_dengue_dw;
 
-DROP TABLE IF EXISTS Dim_Tiempo;
+DROP TABLE IF EXISTS dim_tiempo;
 CREATE TABLE `dim_tiempo` (
   `id_tiempo` int NOT NULL,
   `fecha` date NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE `dim_tiempo` (
   UNIQUE KEY `fecha` (`fecha`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-DROP TABLE IF EXISTS Dim_Geografia;
+DROP TABLE IF EXISTS dim_geografia;
 CREATE TABLE `dim_geografia` (
   `id_geografia` int NOT NULL AUTO_INCREMENT,
   `canton` varchar(100) NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE `dim_geografia` (
   UNIQUE KEY `canton` (`canton`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-DROP TABLE IF EXISTS Dim_Clima;
+DROP TABLE IF EXISTS dim_clima;
 CREATE TABLE `dim_clima` (
   `id_clima` int NOT NULL AUTO_INCREMENT,
   `canton` varchar(100) NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE `dim_clima` (
   PRIMARY KEY (`id_clima`)
 ) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-DROP TABLE IF EXISTS Dim_Infraestructura;
+DROP TABLE IF EXISTS dim_infraestructura;
 CREATE TABLE `dim_infraestructura` (
   `id_infraestructura` int NOT NULL AUTO_INCREMENT,
   `canton` varchar(100) NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE `dim_infraestructura` (
   PRIMARY KEY (`id_infraestructura`)
 ) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-DROP TABLE IF EXISTS Fact_Incidencia;
+DROP TABLE IF EXISTS fact_incidencia;
 CREATE TABLE `fact_incidencia` (
   `id_hecho` int NOT NULL AUTO_INCREMENT,
   `id_tiempo` int NOT NULL,
@@ -77,8 +77,8 @@ CREATE TABLE `fact_incidencia` (
   CONSTRAINT `fact_incidencia_ibfk_4` FOREIGN KEY (`id_infraestructura`) REFERENCES `dim_infraestructura` (`id_infraestructura`)
 ) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Datos para la tabla Dim_Tiempo
-INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
+-- Datos para la tabla dim_tiempo
+INSERT INTO `dim_tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
 (20220101, '2022-01-01', 2022, 52, 1, 'Enero'),
 (20220102, '2022-01-02', 2022, 52, 1, 'Enero'),
 (20220103, '2022-01-03', 2022, 1, 1, 'Enero'),
@@ -179,7 +179,7 @@ INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, 
 (20220408, '2022-04-08', 2022, 14, 4, 'Abril'),
 (20220409, '2022-04-09', 2022, 14, 4, 'Abril'),
 (20220410, '2022-04-10', 2022, 14, 4, 'Abril');
-INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
+INSERT INTO `dim_tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
 (20220411, '2022-04-11', 2022, 15, 4, 'Abril'),
 (20220412, '2022-04-12', 2022, 15, 4, 'Abril'),
 (20220413, '2022-04-13', 2022, 15, 4, 'Abril'),
@@ -280,7 +280,7 @@ INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, 
 (20220717, '2022-07-17', 2022, 28, 7, 'Julio'),
 (20220718, '2022-07-18', 2022, 29, 7, 'Julio'),
 (20220719, '2022-07-19', 2022, 29, 7, 'Julio');
-INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
+INSERT INTO `dim_tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
 (20220720, '2022-07-20', 2022, 29, 7, 'Julio'),
 (20220721, '2022-07-21', 2022, 29, 7, 'Julio'),
 (20220722, '2022-07-22', 2022, 29, 7, 'Julio'),
@@ -381,7 +381,7 @@ INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, 
 (20221025, '2022-10-25', 2022, 43, 10, 'Octubre'),
 (20221026, '2022-10-26', 2022, 43, 10, 'Octubre'),
 (20221027, '2022-10-27', 2022, 43, 10, 'Octubre');
-INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
+INSERT INTO `dim_tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
 (20221028, '2022-10-28', 2022, 43, 10, 'Octubre'),
 (20221029, '2022-10-29', 2022, 43, 10, 'Octubre'),
 (20221030, '2022-10-30', 2022, 43, 10, 'Octubre'),
@@ -482,7 +482,7 @@ INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, 
 (20230202, '2023-02-02', 2023, 5, 2, 'Febrero'),
 (20230203, '2023-02-03', 2023, 5, 2, 'Febrero'),
 (20230204, '2023-02-04', 2023, 5, 2, 'Febrero');
-INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
+INSERT INTO `dim_tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
 (20230205, '2023-02-05', 2023, 5, 2, 'Febrero'),
 (20230206, '2023-02-06', 2023, 6, 2, 'Febrero'),
 (20230207, '2023-02-07', 2023, 6, 2, 'Febrero'),
@@ -583,7 +583,7 @@ INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, 
 (20230513, '2023-05-13', 2023, 19, 5, 'Mayo'),
 (20230514, '2023-05-14', 2023, 19, 5, 'Mayo'),
 (20230515, '2023-05-15', 2023, 20, 5, 'Mayo');
-INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
+INSERT INTO `dim_tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
 (20230516, '2023-05-16', 2023, 20, 5, 'Mayo'),
 (20230517, '2023-05-17', 2023, 20, 5, 'Mayo'),
 (20230518, '2023-05-18', 2023, 20, 5, 'Mayo'),
@@ -684,7 +684,7 @@ INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, 
 (20230821, '2023-08-21', 2023, 34, 8, 'Agosto'),
 (20230822, '2023-08-22', 2023, 34, 8, 'Agosto'),
 (20230823, '2023-08-23', 2023, 34, 8, 'Agosto');
-INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
+INSERT INTO `dim_tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
 (20230824, '2023-08-24', 2023, 34, 8, 'Agosto'),
 (20230825, '2023-08-25', 2023, 34, 8, 'Agosto'),
 (20230826, '2023-08-26', 2023, 34, 8, 'Agosto'),
@@ -785,7 +785,7 @@ INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, 
 (20231129, '2023-11-29', 2023, 48, 11, 'Noviembre'),
 (20231130, '2023-11-30', 2023, 48, 11, 'Noviembre'),
 (20231201, '2023-12-01', 2023, 48, 12, 'Diciembre');
-INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
+INSERT INTO `dim_tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
 (20231202, '2023-12-02', 2023, 48, 12, 'Diciembre'),
 (20231203, '2023-12-03', 2023, 48, 12, 'Diciembre'),
 (20231204, '2023-12-04', 2023, 49, 12, 'Diciembre'),
@@ -886,7 +886,7 @@ INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, 
 (20240308, '2024-03-08', 2024, 10, 3, 'Marzo'),
 (20240309, '2024-03-09', 2024, 10, 3, 'Marzo'),
 (20240310, '2024-03-10', 2024, 10, 3, 'Marzo');
-INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
+INSERT INTO `dim_tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
 (20240311, '2024-03-11', 2024, 11, 3, 'Marzo'),
 (20240312, '2024-03-12', 2024, 11, 3, 'Marzo'),
 (20240313, '2024-03-13', 2024, 11, 3, 'Marzo'),
@@ -987,7 +987,7 @@ INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, 
 (20240616, '2024-06-16', 2024, 24, 6, 'Junio'),
 (20240617, '2024-06-17', 2024, 25, 6, 'Junio'),
 (20240618, '2024-06-18', 2024, 25, 6, 'Junio');
-INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
+INSERT INTO `dim_tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
 (20240619, '2024-06-19', 2024, 25, 6, 'Junio'),
 (20240620, '2024-06-20', 2024, 25, 6, 'Junio'),
 (20240621, '2024-06-21', 2024, 25, 6, 'Junio'),
@@ -1088,7 +1088,7 @@ INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, 
 (20240924, '2024-09-24', 2024, 39, 9, 'Septiembre'),
 (20240925, '2024-09-25', 2024, 39, 9, 'Septiembre'),
 (20240926, '2024-09-26', 2024, 39, 9, 'Septiembre');
-INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
+INSERT INTO `dim_tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
 (20240927, '2024-09-27', 2024, 39, 9, 'Septiembre'),
 (20240928, '2024-09-28', 2024, 39, 9, 'Septiembre'),
 (20240929, '2024-09-29', 2024, 39, 9, 'Septiembre'),
@@ -1189,7 +1189,7 @@ INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, 
 (20250102, '2025-01-02', 2025, 1, 1, 'Enero'),
 (20250103, '2025-01-03', 2025, 1, 1, 'Enero'),
 (20250104, '2025-01-04', 2025, 1, 1, 'Enero');
-INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
+INSERT INTO `dim_tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
 (20250105, '2025-01-05', 2025, 1, 1, 'Enero'),
 (20250106, '2025-01-06', 2025, 2, 1, 'Enero'),
 (20250107, '2025-01-07', 2025, 2, 1, 'Enero'),
@@ -1290,7 +1290,7 @@ INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, 
 (20250412, '2025-04-12', 2025, 15, 4, 'Abril'),
 (20250413, '2025-04-13', 2025, 15, 4, 'Abril'),
 (20250414, '2025-04-14', 2025, 16, 4, 'Abril');
-INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
+INSERT INTO `dim_tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
 (20250415, '2025-04-15', 2025, 16, 4, 'Abril'),
 (20250416, '2025-04-16', 2025, 16, 4, 'Abril'),
 (20250417, '2025-04-17', 2025, 16, 4, 'Abril'),
@@ -1391,7 +1391,7 @@ INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, 
 (20250721, '2025-07-21', 2025, 30, 7, 'Julio'),
 (20250722, '2025-07-22', 2025, 30, 7, 'Julio'),
 (20250723, '2025-07-23', 2025, 30, 7, 'Julio');
-INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
+INSERT INTO `dim_tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
 (20250724, '2025-07-24', 2025, 30, 7, 'Julio'),
 (20250725, '2025-07-25', 2025, 30, 7, 'Julio'),
 (20250726, '2025-07-26', 2025, 30, 7, 'Julio'),
@@ -1492,7 +1492,7 @@ INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, 
 (20251029, '2025-10-29', 2025, 44, 10, 'Octubre'),
 (20251030, '2025-10-30', 2025, 44, 10, 'Octubre'),
 (20251031, '2025-10-31', 2025, 44, 10, 'Octubre');
-INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
+INSERT INTO `dim_tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
 (20251101, '2025-11-01', 2025, 44, 11, 'Noviembre'),
 (20251102, '2025-11-02', 2025, 44, 11, 'Noviembre'),
 (20251103, '2025-11-03', 2025, 45, 11, 'Noviembre'),
@@ -1593,7 +1593,7 @@ INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, 
 (20260206, '2026-02-06', 2026, 6, 2, 'Febrero'),
 (20260207, '2026-02-07', 2026, 6, 2, 'Febrero'),
 (20260208, '2026-02-08', 2026, 6, 2, 'Febrero');
-INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
+INSERT INTO `dim_tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
 (20260209, '2026-02-09', 2026, 7, 2, 'Febrero'),
 (20260210, '2026-02-10', 2026, 7, 2, 'Febrero'),
 (20260211, '2026-02-11', 2026, 7, 2, 'Febrero'),
@@ -1694,7 +1694,7 @@ INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, 
 (20260517, '2026-05-17', 2026, 20, 5, 'Mayo'),
 (20260518, '2026-05-18', 2026, 21, 5, 'Mayo'),
 (20260519, '2026-05-19', 2026, 21, 5, 'Mayo');
-INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
+INSERT INTO `dim_tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
 (20260520, '2026-05-20', 2026, 21, 5, 'Mayo'),
 (20260521, '2026-05-21', 2026, 21, 5, 'Mayo'),
 (20260522, '2026-05-22', 2026, 21, 5, 'Mayo'),
@@ -1795,7 +1795,7 @@ INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, 
 (20260825, '2026-08-25', 2026, 35, 8, 'Agosto'),
 (20260826, '2026-08-26', 2026, 35, 8, 'Agosto'),
 (20260827, '2026-08-27', 2026, 35, 8, 'Agosto');
-INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
+INSERT INTO `dim_tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
 (20260828, '2026-08-28', 2026, 35, 8, 'Agosto'),
 (20260829, '2026-08-29', 2026, 35, 8, 'Agosto'),
 (20260830, '2026-08-30', 2026, 35, 8, 'Agosto'),
@@ -1896,7 +1896,7 @@ INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, 
 (20261203, '2026-12-03', 2026, 49, 12, 'Diciembre'),
 (20261204, '2026-12-04', 2026, 49, 12, 'Diciembre'),
 (20261205, '2026-12-05', 2026, 49, 12, 'Diciembre');
-INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
+INSERT INTO `dim_tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, `nombre_mes`) VALUES 
 (20261206, '2026-12-06', 2026, 49, 12, 'Diciembre'),
 (20261207, '2026-12-07', 2026, 50, 12, 'Diciembre'),
 (20261208, '2026-12-08', 2026, 50, 12, 'Diciembre'),
@@ -1924,14 +1924,14 @@ INSERT INTO `Dim_Tiempo` (`id_tiempo`, `fecha`, `anio`, `semana_epidem`, `mes`, 
 (20261230, '2026-12-30', 2026, 53, 12, 'Diciembre'),
 (20261231, '2026-12-31', 2026, 53, 12, 'Diciembre');
 
--- Datos para la tabla Dim_Geografia
-INSERT INTO `Dim_Geografia` (`id_geografia`, `canton`, `provincia`, `poblacion`) VALUES 
+-- Datos para la tabla dim_geografia
+INSERT INTO `dim_geografia` (`id_geografia`, `canton`, `provincia`, `poblacion`) VALUES 
 (1, 'SANTA ELENA', 'SANTA ELENA', 160000),
 (2, 'LA LIBERTAD', 'SANTA ELENA', 110000),
 (3, 'SALINAS', 'SANTA ELENA', 90000);
 
--- Datos para la tabla Dim_Clima
-INSERT INTO `Dim_Clima` (`id_clima`, `canton`, `semana_epidem`, `anio`, `precipitacion_mm`, `temp_maxima_c`, `temp_minima_c`, `humedad_relativa`) VALUES 
+-- Datos para la tabla dim_clima
+INSERT INTO `dim_clima` (`id_clima`, `canton`, `semana_epidem`, `anio`, `precipitacion_mm`, `temp_maxima_c`, `temp_minima_c`, `humedad_relativa`) VALUES 
 (1, 'LA LIBERTAD', 22, 2026, '0.00', '28.90', '24.50', '75.70'),
 (2, 'LA LIBERTAD', 23, 2026, '1.73', '28.49', '24.40', '78.64'),
 (3, 'LA LIBERTAD', 24, 2026, '0.81', '28.27', '24.34', '79.20'),
@@ -1976,8 +1976,8 @@ INSERT INTO `Dim_Clima` (`id_clima`, `canton`, `semana_epidem`, `anio`, `precipi
 (42, 'SANTA ELENA', 16, 2024, '0.00', '26.00', '20.00', '75.00'),
 (43, 'SALINAS', 11, 2024, '0.00', '26.00', '20.00', '75.00');
 
--- Datos para la tabla Dim_Infraestructura
-INSERT INTO `Dim_Infraestructura` (`id_infraestructura`, `canton`, `semana_epidem`, `anio`, `nivel_saturacion`, `camas_totales`, `camas_ocupadas`, `medicos_disponibles`, `pacientes_dengue`) VALUES 
+-- Datos para la tabla dim_infraestructura
+INSERT INTO `dim_infraestructura` (`id_infraestructura`, `canton`, `semana_epidem`, `anio`, `nivel_saturacion`, `camas_totales`, `camas_ocupadas`, `medicos_disponibles`, `pacientes_dengue`) VALUES 
 (1, 'LA LIBERTAD', 27, 2026, 'BAJA', 14, 8, 7, 3),
 (2, 'SALINAS', 27, 2026, 'ALTA', 22, 19, 14, 2),
 (3, 'SANTA ELENA', 27, 2026, 'BAJA', 19, 11, 15, 2),
@@ -2022,8 +2022,8 @@ INSERT INTO `Dim_Infraestructura` (`id_infraestructura`, `canton`, `semana_epide
 (42, 'LA LIBERTAD', 25, 2026, 'BAJA', 15, 5, 8, 0),
 (43, 'SALINAS', 11, 2024, 'BAJA', 15, 5, 8, 0);
 
--- Datos para la tabla Fact_Incidencia
-INSERT INTO `Fact_Incidencia` (`id_hecho`, `id_tiempo`, `id_geografia`, `id_clima`, `id_infraestructura`, `casos_confirmados`, `alertas_mediaticas`, `pct_stock_meds`, `espera_promedio_h`) VALUES 
+-- Datos para la tabla fact_incidencia
+INSERT INTO `fact_incidencia` (`id_hecho`, `id_tiempo`, `id_geografia`, `id_clima`, `id_infraestructura`, `casos_confirmados`, `alertas_mediaticas`, `pct_stock_meds`, `espera_promedio_h`) VALUES 
 (1, 20240108, 3, 22, 4, 8, 0, '0.00', '0.00'),
 (2, 20260615, 3, 11, 5, 0, 0, '0.00', '0.00'),
 (3, 20240226, 1, 23, 6, 50, 0, '0.00', '0.00'),
