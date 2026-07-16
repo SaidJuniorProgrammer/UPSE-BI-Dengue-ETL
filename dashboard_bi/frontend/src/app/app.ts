@@ -1,25 +1,18 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartData, ChartOptions } from 'chart.js';
-import { DashboardService } from './services/dashboard';
+import { DashboardService, DashboardFilters } from './services/dashboard';
 
 const BRAND = {
-  navy: '#053a90',
-  blue: '#4798e4',
-  green: '#057e3f',
-  navySoft: 'rgba(5, 58, 144, 0.14)',
-  blueSoft: 'rgba(71, 152, 228, 0.16)',
-  greenSoft: 'rgba(5, 126, 63, 0.16)',
+  navy: '#053A90',
+  navySoft: 'rgba(5, 58, 144, 0.08)',
+  blue: '#4798E4',
+  blueSoft: 'rgba(71, 152, 228, 0.12)',
+  green: '#057E3F',
+  greenSoft: 'rgba(5, 126, 63, 0.12)',
+  gray: '#667085',
 };
-
-const CANTON_CENTERS = {
-  'SANTA ELENA': { lat: -2.2266, lng: -80.8588 },
-  'LA LIBERTAD': { lat: -2.2336, lng: -80.9101 },
-  SALINAS: { lat: -2.2145, lng: -80.9514 },
-};
-
-type MapLayerKey = 'casos' | 'lluvia' | 'infraestructura';
 
 interface MapaPunto {
   canton: string;
@@ -36,6 +29,8 @@ interface MapaPunto {
   nivel_saturacion: string;
 }
 
+type MapLayerKey = 'casos' | 'lluvia' | 'infraestructura';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -45,13 +40,24 @@ interface MapaPunto {
 })
 export class App implements OnInit, AfterViewInit, OnDestroy {
   kpis: any = {};
-  filtroActual: string = 'Toda la Península'; // Estado del filtro del cantón
+  filtroActual: string = 'Nacional';
+  provinciaActual: string = '';
   cantonActual: string = '';
   anioActual: string = '';
+  enfermedadActual: string = '';
+  causaActual: string = '';
+  origenActual: string = '';
+
+  // Catálogos
+  enfermedades: any[] = [];
+  geografiaMap: any = {};
+  provinciasList: string[] = [];
+  cantonesList: string[] = [];
+
   mapaDatos: MapaPunto[] = [];
   mapaActivo = false;
   mapaCargado = false;
-  mapaCentro = { lat: -2.224, lng: -80.905, zoom: 11.4 };
+  mapaCentro = { lat: -1.8, lng: -78.5, zoom: 7.2 }; // National view zoom/coords
   capasMapa: Record<MapLayerKey, boolean> = {
     casos: true,
     lluvia: true,
@@ -71,8 +77,8 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('mapContainer') mapContainer?: ElementRef<HTMLDivElement>;
 
-  private leafletModule: typeof import('leaflet') | null = null;
-  private mapInstance: import('leaflet').Map | null = null;
+  private leafletModule: any = null;
+  private mapInstance: any = null;
 
   public lineChartData: ChartData<'line'> = { datasets: [], labels: [] };
   public lineChartOptions: ChartOptions<'line'> = {
@@ -153,6 +159,14 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   constructor(private dashboardService: DashboardService) {}
 
   ngOnInit(): void {
+    // Cargar catálogos
+    this.dashboardService.getGeografia().subscribe((geo) => {
+      this.geografiaMap = geo || {};
+      this.provinciasList = Object.keys(this.geografiaMap).sort();
+    });
+    this.dashboardService.getEnfermedades().subscribe((list) => {
+      this.enfermedades = list || [];
+    });
     this.actualizarTodo();
   }
 
@@ -169,16 +183,52 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  // Nueva función interactiva para filtrar por cantón
-  filtrarPorCanton(canton: string, nombreVista: string) {
-    this.cantonActual = canton;
-    this.filtroActual = nombreVista;
+  // Filter Handlers
+  filtrarPorProvincia(provincia: string) {
+    this.provinciaActual = provincia;
+    this.cantonActual = ''; // Reset canton
+    if (provincia) {
+      this.cantonesList = (this.geografiaMap[provincia] || []).map((c: any) => c.canton).sort();
+      this.filtroActual = `Prov. ${provincia}`;
+    } else {
+      this.cantonesList = [];
+      this.filtroActual = 'Nacional';
+    }
     this.actualizarTodo();
   }
 
-  // Nueva función interactiva para filtrar por año
+  // Nueva función interactiva para filtrar por cantón
+  filtrarPorCanton(canton: string, nombreVista?: string) {
+    this.cantonActual = canton;
+    if (nombreVista) {
+      this.filtroActual = nombreVista;
+    } else if (canton) {
+      this.filtroActual = canton;
+    } else if (this.provinciaActual) {
+      this.filtroActual = `Prov. ${this.provinciaActual}`;
+    } else {
+      this.filtroActual = 'Nacional';
+    }
+    this.actualizarTodo();
+  }
+
   filtrarPorAnio(anio: string) {
     this.anioActual = anio;
+    this.actualizarTodo();
+  }
+
+  filtrarPorEnfermedad(enfermedad: string) {
+    this.enfermedadActual = enfermedad;
+    this.actualizarTodo();
+  }
+
+  filtrarPorCausa(causa: string) {
+    this.causaActual = causa;
+    this.actualizarTodo();
+  }
+
+  filtrarPorOrigen(origen: string) {
+    this.origenActual = origen;
     this.actualizarTodo();
   }
 
@@ -196,20 +246,42 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  actualizarTodo() {
-    this.cargarKpis(this.cantonActual, this.anioActual);
-    this.cargarGraficos(this.cantonActual, this.anioActual);
-    this.cargarMapa(this.cantonActual, this.anioActual);
+  private getFiltersPayload(): DashboardFilters {
+    return {
+      provincia: this.provinciaActual || undefined,
+      canton: this.cantonActual || undefined,
+      anio: this.anioActual || undefined,
+      enfermedad: this.enfermedadActual || undefined,
+      causa: this.causaActual || undefined,
+      origen: this.origenActual || undefined,
+    };
   }
 
-  cargarKpis(canton: string, anio: string) {
-    this.dashboardService.getKpis(canton, anio).subscribe((data) => {
+  actualizarTodo() {
+    const filters = this.getFiltersPayload();
+    this.cargarKpis(filters);
+    this.cargarGraficos(filters);
+    this.cargarMapa(filters);
+  }
+
+  cargarKpis(filters: DashboardFilters) {
+    this.dashboardService.getKpis(filters).subscribe((data) => {
       this.kpis = data || {};
     });
   }
 
-  cargarGraficos(canton: string, anio: string) {
-    this.dashboardService.getGraficoTemporal(canton, anio).subscribe((data: any[]) => {
+  get urbanosPct(): number {
+    const total = (Number(this.kpis.total_casos_urbanos) || 0) + (Number(this.kpis.total_casos_rurales) || 0);
+    return total > 0 ? Math.round((Number(this.kpis.total_casos_urbanos) || 0) / total * 100) : 0;
+  }
+
+  get ruralesPct(): number {
+    const total = (Number(this.kpis.total_casos_urbanos) || 0) + (Number(this.kpis.total_casos_rurales) || 0);
+    return total > 0 ? Math.round((Number(this.kpis.total_casos_rurales) || 0) / total * 100) : 0;
+  }
+
+  cargarGraficos(filters: DashboardFilters) {
+    this.dashboardService.getGraficoTemporal(filters).subscribe((data: any[]) => {
       this.lineChartData = {
         labels: data.map((d) => `${d.anio} - Sem ${d.semana_epidem} (${d.mes.substring(0, 3)})`),
         datasets: [
@@ -247,7 +319,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       };
     });
 
-    this.dashboardService.getGraficoCantones(canton, anio).subscribe((data: any[]) => {
+    this.dashboardService.getGraficoCantones(filters).subscribe((data: any[]) => {
       this.barChartData = {
         labels: data.map((d) => d.canton),
         datasets: [
@@ -262,8 +334,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       };
     });
 
-    this.dashboardService.getGraficoInfraestructura(canton, anio).subscribe((data: any[]) => {
-      // Calcular ocupación agregada
+    this.dashboardService.getGraficoInfraestructura(filters).subscribe((data: any[]) => {
       if (data && data.length > 0) {
         this.camasTotales = data.reduce((acc, curr) => acc + (Number(curr.camas_totales) || 0), 0);
         this.camasOcupadas = data.reduce(
@@ -302,8 +373,8 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  cargarMapa(canton: string, anio: string) {
-    this.dashboardService.getMapaProvincia(canton, anio).subscribe((data: any[]) => {
+  cargarMapa(filters: DashboardFilters) {
+    this.dashboardService.getMapaProvincia(filters).subscribe((data: any[]) => {
       this.mapaDatos = (data || []).map((item) => ({
         canton: item.canton,
         lat: Number(item.lat),
@@ -388,7 +459,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     leaflet
       .tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
-        attribution: '&copy; OpenStreetMap contributors | Capas analíticas UPSE BI - Dengue',
+        attribution: '&copy; OpenStreetMap contributors | Capas analíticas UPSE BI',
       })
       .addTo(map);
 
@@ -406,7 +477,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         if (this.capasMapa.casos) {
           leaflet
             .circleMarker(coords, {
-              radius: Math.max(11, Math.min(28, punto.tasa_incidencia_100k / 2.2)),
+              radius: Math.max(8, Math.min(26, punto.tasa_incidencia_100k / 15.0)),
               color: BRAND.navy,
               weight: 2,
               fillColor: BRAND.navy,
@@ -420,8 +491,8 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
         if (this.capasMapa.lluvia) {
           leaflet
-            .circleMarker([punto.lat + 0.012, punto.lng - 0.01], {
-              radius: Math.max(10, Math.min(24, punto.precipitacion_mm / 2 + 8)),
+            .circleMarker([punto.lat + 0.015, punto.lng - 0.012], {
+              radius: Math.max(7, Math.min(22, punto.precipitacion_mm / 2 + 6)),
               color: BRAND.blue,
               weight: 2,
               fillColor: BRAND.blue,
@@ -435,8 +506,8 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
         if (this.capasMapa.infraestructura) {
           leaflet
-            .circleMarker([punto.lat - 0.01, punto.lng + 0.01], {
-              radius: Math.max(10, Math.min(26, punto.ocupacion_pct / 4 + 8)),
+            .circleMarker([punto.lat - 0.015, punto.lng + 0.012], {
+              radius: Math.max(7, Math.min(24, punto.ocupacion_pct / 4 + 6)),
               color: BRAND.green,
               weight: 2,
               fillColor: BRAND.green,
@@ -450,7 +521,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       });
 
     if (bounds.isValid()) {
-      map.fitBounds(bounds.pad(0.25));
+      map.fitBounds(bounds.pad(0.2));
     } else {
       map.setView([this.mapaCentro.lat, this.mapaCentro.lng], this.mapaCentro.zoom);
     }
