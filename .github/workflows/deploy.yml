@@ -1,0 +1,38 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH and Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: 22
+          script: |
+            cd /home/gino/apps/UPSE-BI-Dengue-ETL
+            
+            # Clean and pull latest code as user gino
+            sudo -u gino -H git reset --hard HEAD
+            sudo -u gino -H git clean -fd
+            sudo -u gino -H git pull
+            
+            # 1. Update Backend & Restart PM2
+            cd dashboard_bi/backend
+            sudo -u gino npm install
+            sudo -u gino -H pm2 restart dengue-backend
+            
+            # 2. Update Frontend & Build
+            cd ../frontend
+            sudo -u gino npm install
+            sudo -u gino npm run build
+            
+            # 3. Reload Nginx to serve new build
+            systemctl reload nginx
