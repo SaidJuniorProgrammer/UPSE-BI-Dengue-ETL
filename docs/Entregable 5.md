@@ -38,7 +38,7 @@ La investigación aplicó un enfoque cuantitativo y descriptivo, apoyado en la m
 
 **Capa Lógica (API REST):** Desarrollada en Node.js y Express.js. Se añadieron endpoints dinámicos de agregación territorial (`/api/kpis`, `/api/grafico-temporal`, `/api/grafico-etiologia`, `/api/alertas-criticas`) que extraen métricas filtradas según provincia, cantón, año, etiología o tipo de patología y devuelven estructuras en JSON con baja latencia.
 
-**Capa de Presentación:** Construida en Angular. Se estructuró un Sidebar lateral de navegación fija que distribuye el análisis en 5 vistas modulares (`*ngIf`): Visión General, Patologías, Composición Etiológica, Infraestructura y Mapa Territorial. El sistema es reactivo, usando Chart.js para renderizar diagramas temporales, radares multivariables, y diagramas de rosca etiológicos.
+**Capa de Presentación:** Construida en Angular. Se estructuró un Sidebar lateral de navegación fija que distribuye el análisis en 5 vistas modulares (`*ngIf`): Visión General, Patologías, Composición Etiológica, Infraestructura y Mapa Territorial. El sistema es reactivo, usando Chart.js para renderizar diagramas temporales, radares multivariables, y diagramas de rosca etiológicos. La plataforma está completamente desplegada en producción y es accesible para los usuarios y analistas a través del dominio público: [https://eldominiodedesarrollo.tech/](https://eldominiodedesarrollo.tech/).
 
 ## 6. Análisis y KPIs Obtenidos
 
