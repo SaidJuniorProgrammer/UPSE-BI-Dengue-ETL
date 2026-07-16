@@ -157,6 +157,24 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   };
   public radarChartType: 'radar' = 'radar';
 
+  public doughnutChartData: ChartData<'doughnut'> = { datasets: [], labels: [] };
+  public doughnutChartOptions: ChartOptions<'doughnut'> = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          color: '#102a43',
+          font: { size: 11, weight: 600 }
+        }
+      }
+    }
+  };
+  public doughnutChartType: 'doughnut' = 'doughnut';
+  
+  alertasCriticas: any[] = [];
+
   constructor(private dashboardService: DashboardService) {}
 
   ngOnInit(): void {
@@ -282,6 +300,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     this.cargarKpis(filters);
     this.cargarGraficos(filters);
     this.cargarMapa(filters);
+    this.cargarAlertas();
   }
 
   cargarKpis(filters: DashboardFilters) {
@@ -390,6 +409,31 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
           },
         ],
       };
+    });
+
+    this.dashboardService.getGraficoEtiologia(filters).subscribe((data: any[]) => {
+      // Group cases by tipo_causa
+      const etiologyMap: Record<string, number> = {};
+      data.forEach((item) => {
+        const causa = item.tipo_causa || 'Otros';
+        etiologyMap[causa] = (etiologyMap[causa] || 0) + (Number(item.casos) || 0);
+      });
+      
+      this.doughnutChartData = {
+        labels: Object.keys(etiologyMap),
+        datasets: [
+          {
+            data: Object.values(etiologyMap),
+            backgroundColor: [BRAND.navy, BRAND.blue, BRAND.green, '#ff9f43', '#ee5253'],
+          },
+        ],
+      };
+    });
+  }
+
+  cargarAlertas() {
+    this.dashboardService.getAlertasCriticas().subscribe((data) => {
+      this.alertasCriticas = data || [];
     });
   }
 

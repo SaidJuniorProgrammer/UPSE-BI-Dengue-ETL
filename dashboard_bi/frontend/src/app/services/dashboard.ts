@@ -69,4 +69,13 @@ export class DashboardService {
   getGeografia(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/geografia`);
   }
+
+  // Nuevas APIs
+  getGraficoEtiologia(filters: DashboardFilters = {}): Observable<any[]> {
+    return this.http.get<any[]>(this.buildUrl('grafico-etiologia', filters));
+  }
+
+  getAlertasCriticas(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/alertas-criticas`);
+  }
 }

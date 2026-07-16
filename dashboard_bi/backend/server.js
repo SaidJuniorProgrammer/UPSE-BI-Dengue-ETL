@@ -306,6 +306,52 @@ app.get("/api/mapa-provincia", (req, res) => {
   });
 });
 
+// --------------------------------------------------------
+// NUEVOS ENDPOINTS PARA ANALISIS AVANZADO
+// --------------------------------------------------------
+app.get("/api/grafico-etiologia", (req, res) => {
+  let filter = getFilters(req);
+  const query = `
+    SELECT 
+      de.tipo_causa,
+      de.categoria_origen,
+      SUM(fi.casos_confirmados) AS casos
+    FROM fact_incidencia fi
+    JOIN dim_enfermedad de ON fi.id_enfermedad = de.id_enfermedad
+    JOIN dim_geografia dg ON fi.id_geografia = dg.id_geografia
+    JOIN dim_tiempo dt ON fi.id_tiempo = dt.id_tiempo
+    ${filter}
+    GROUP BY de.tipo_causa, de.categoria_origen
+  `;
+  db.query(query, (err, results) => {
+    if (err) return res.status(500).send(err);
+    res.json(results);
+  });
+});
+
+app.get("/api/alertas-criticas", (req, res) => {
+  const query = `
+    SELECT 
+      dg.canton,
+      dg.provincia,
+      ROUND(AVG(di.camas_ocupadas / di.camas_totales * 100), 2) AS ocupacion_pct,
+      ROUND(AVG(fi.pct_stock_meds), 2) AS stock_pct,
+      ROUND((SUM(fi.casos_confirmados) / MAX(dg.poblacion)) * 100000, 2) AS tasa_incidencia_100k
+    FROM fact_incidencia fi
+    JOIN dim_geografia dg ON fi.id_geografia = dg.id_geografia
+    JOIN dim_infraestructura di ON fi.id_infraestructura = di.id_infraestructura
+    JOIN dim_tiempo dt ON fi.id_tiempo = dt.id_tiempo
+    GROUP BY dg.canton, dg.provincia
+    HAVING ocupacion_pct > 80.0 OR stock_pct < 60.0 OR tasa_incidencia_100k > 150.0
+    ORDER BY tasa_incidencia_100k DESC
+    LIMIT 15
+  `;
+  db.query(query, (err, results) => {
+    if (err) return res.status(500).send(err);
+    res.json(results);
+  });
+});
+
 // Iniciar el servidor
 const PORT = 3000;
 app.listen(PORT, () => {
