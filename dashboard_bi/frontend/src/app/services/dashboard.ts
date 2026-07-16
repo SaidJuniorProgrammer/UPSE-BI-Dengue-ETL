@@ -6,8 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DashboardService {
-  // La URL de tu API en Node.js
-  private apiUrl = 'http://localhost:3000/api';
+  // La URL de tu API en Node.js, dinámica según el host
+  private apiUrl = typeof window !== 'undefined' 
+    ? (window.location.origin.includes('localhost') ? 'http://localhost:3000/api' : window.location.origin + '/api')
+    : 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) {}
 

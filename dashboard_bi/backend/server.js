@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
@@ -5,12 +6,13 @@ const cors = require("cors");
 const app = express();
 app.use(cors());
 
-// Configuración de la conexión a tu Data Warehouse local
+// Configuración de la conexión al Data Warehouse
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "ghil3412",
-  database: "upse_dengue_dw",
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "ghil3412",
+  database: process.env.DB_NAME || "upse_dengue_dw",
+  port: process.env.DB_PORT || 3306,
 });
 
 db.connect((err) => {
@@ -51,17 +53,17 @@ app.get("/api/kpis", (req, res) => {
             ROUND(AVG(fi.pct_stock_meds), 2) AS disponibilidad_farmacias,
             ROUND(AVG(di.camas_ocupadas / di.camas_totales * 100), 2) AS ocupacion_hospitalaria,
             ROUND(AVG(dc.precipitacion_mm), 2) AS precipitacion_promedio,
-            ROUND((SUM(fi.casos_confirmados) / (SELECT SUM(poblacion) FROM Dim_Geografia ${subqueryFilter})) * 100000, 2) AS tasa_incidencia_100k,
+            ROUND((SUM(fi.casos_confirmados) / (SELECT SUM(poblacion) FROM dim_geografia ${subqueryFilter})) * 100000, 2) AS tasa_incidencia_100k,
             CASE 
                 WHEN AVG(dc.precipitacion_mm) > 20.00 AND AVG(dc.temp_maxima_c) > 26.00 THEN 'ALTO'
                 WHEN AVG(dc.precipitacion_mm) > 5.00 OR AVG(dc.temp_maxima_c) > 24.00 THEN 'MEDIO'
                 ELSE 'BAJO'
             END AS riesgo_climatico
-        FROM Fact_Incidencia fi
-        JOIN Dim_Geografia dg ON fi.id_geografia = dg.id_geografia
-        JOIN Dim_Infraestructura di ON fi.id_infraestructura = di.id_infraestructura
-        JOIN Dim_Clima dc ON fi.id_clima = dc.id_clima
-        JOIN Dim_Tiempo dt ON fi.id_tiempo = dt.id_tiempo
+        FROM fact_incidencia fi
+        JOIN dim_geografia dg ON fi.id_geografia = dg.id_geografia
+        JOIN dim_infraestructura di ON fi.id_infraestructura = di.id_infraestructura
+        JOIN dim_clima dc ON fi.id_clima = dc.id_clima
+        JOIN dim_tiempo dt ON fi.id_tiempo = dt.id_tiempo
         ${filter}
     `;
   db.query(query, (err, results) => {
@@ -83,10 +85,10 @@ app.get("/api/grafico-temporal", (req, res) => {
             SUM(fi.casos_confirmados) AS casos,
             ROUND(AVG(dc.precipitacion_mm), 2) AS lluvia,
             SUM(fi.alertas_mediaticas) AS alertas
-        FROM Fact_Incidencia fi
-        JOIN Dim_Tiempo dt ON fi.id_tiempo = dt.id_tiempo
-        JOIN Dim_Clima dc ON fi.id_clima = dc.id_clima
-        JOIN Dim_Geografia dg ON fi.id_geografia = dg.id_geografia
+        FROM fact_incidencia fi
+        JOIN dim_tiempo dt ON fi.id_tiempo = dt.id_tiempo
+        JOIN dim_clima dc ON fi.id_clima = dc.id_clima
+        JOIN dim_geografia dg ON fi.id_geografia = dg.id_geografia
         ${filter}
         GROUP BY dt.anio, dt.semana_epidem
         ORDER BY dt.anio ASC, dt.semana_epidem ASC
@@ -107,9 +109,9 @@ app.get("/api/grafico-cantones", (req, res) => {
             dg.canton, 
             SUM(fi.casos_confirmados) AS casos_totales,
             ROUND((SUM(fi.casos_confirmados) / MAX(dg.poblacion)) * 100000, 2) AS tasa_incidencia_100k
-        FROM Fact_Incidencia fi
-        JOIN Dim_Geografia dg ON fi.id_geografia = dg.id_geografia
-        JOIN Dim_Tiempo dt ON fi.id_tiempo = dt.id_tiempo
+        FROM fact_incidencia fi
+        JOIN dim_geografia dg ON fi.id_geografia = dg.id_geografia
+        JOIN dim_tiempo dt ON fi.id_tiempo = dt.id_tiempo
         ${filter}
         GROUP BY dg.canton
         ORDER BY casos_totales DESC
@@ -133,10 +135,10 @@ app.get("/api/grafico-infraestructura", (req, res) => {
             SUM(fi.casos_confirmados) as carga_pacientes,
             ROUND(AVG(di.camas_totales), 0) AS camas_totales,
             ROUND(AVG(di.camas_ocupadas), 0) AS camas_ocupadas
-        FROM Fact_Incidencia fi
-        JOIN Dim_Infraestructura di ON fi.id_infraestructura = di.id_infraestructura
-        JOIN Dim_Tiempo dt ON fi.id_tiempo = dt.id_tiempo
-        JOIN Dim_Geografia dg ON fi.id_geografia = dg.id_geografia
+        FROM fact_incidencia fi
+        JOIN dim_infraestructura di ON fi.id_infraestructura = di.id_infraestructura
+        JOIN dim_tiempo dt ON fi.id_tiempo = dt.id_tiempo
+        JOIN dim_geografia dg ON fi.id_geografia = dg.id_geografia
         ${filter}
         GROUP BY di.canton, di.nivel_saturacion, di.medicos_disponibles
     `;
@@ -163,11 +165,11 @@ app.get("/api/mapa-provincia", (req, res) => {
             ROUND(AVG(di.medicos_disponibles), 0) AS medicos_disponibles,
             ROUND(AVG(di.camas_ocupadas / di.camas_totales * 100), 2) AS ocupacion_pct,
             MAX(di.nivel_saturacion) AS nivel_saturacion
-        FROM Fact_Incidencia fi
-        JOIN Dim_Geografia dg ON fi.id_geografia = dg.id_geografia
-        JOIN Dim_Infraestructura di ON fi.id_infraestructura = di.id_infraestructura
-        JOIN Dim_Clima dc ON fi.id_clima = dc.id_clima
-        JOIN Dim_Tiempo dt ON fi.id_tiempo = dt.id_tiempo
+        FROM fact_incidencia fi
+        JOIN dim_geografia dg ON fi.id_geografia = dg.id_geografia
+        JOIN dim_infraestructura di ON fi.id_infraestructura = di.id_infraestructura
+        JOIN dim_clima dc ON fi.id_clima = dc.id_clima
+        JOIN dim_tiempo dt ON fi.id_tiempo = dt.id_tiempo
         ${filter}
         GROUP BY dg.canton
         ORDER BY casos_totales DESC
