@@ -350,12 +350,14 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     if (!this.leafletModule) {
       this.leafletModule = await import('leaflet');
       const leaflet = this.leafletModule;
-      delete (leaflet.Icon.Default.prototype as any)._getIconUrl;
-      leaflet.Icon.Default.mergeOptions({
-        iconRetinaUrl: 'assets/leaflet/marker-icon-2x.png',
-        iconUrl: 'assets/leaflet/marker-icon.png',
-        shadowUrl: 'assets/leaflet/marker-shadow.png',
-      });
+      if (leaflet && leaflet.Icon && leaflet.Icon.Default) {
+        delete (leaflet.Icon.Default.prototype as any)._getIconUrl;
+        leaflet.Icon.Default.mergeOptions({
+          iconRetinaUrl: 'assets/leaflet/marker-icon-2x.png',
+          iconUrl: 'assets/leaflet/marker-icon.png',
+          shadowUrl: 'assets/leaflet/marker-shadow.png',
+        });
+      }
     }
 
     return this.leafletModule;
