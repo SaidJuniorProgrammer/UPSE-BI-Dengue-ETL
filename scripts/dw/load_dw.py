@@ -19,13 +19,26 @@ RAW_DIR = os.path.join(BASE_DIR, 'raw')
 def run_sql_file(conn, sql_file_path):
     print(f"[SQL] Ejecutando script de esquema: {sql_file_path}")
     with open(sql_file_path, 'r', encoding='utf-8') as f:
-        statements = f.read().split(';')
+        schema_sql = f.read()
+        
+    # Remove single line comments
+    clean_lines = []
+    for line in schema_sql.split('\n'):
+        if not line.strip().startswith('--') and not line.strip().startswith('#'):
+            clean_lines.append(line)
+    clean_sql = '\n'.join(clean_lines)
+    
+    # Split by semicolon
+    statements = clean_sql.split(';')
         
     with conn.cursor() as cursor:
+        # Disable foreign key checks to avoid duplicate constraint errors during dropping/creation
+        cursor.execute("SET FOREIGN_KEY_CHECKS = 0;")
         for stmt in statements:
             stmt = stmt.strip()
             if stmt:
                 cursor.execute(stmt)
+        cursor.execute("SET FOREIGN_KEY_CHECKS = 1;")
     conn.commit()
 
 def get_latest_multipatologia_file():
