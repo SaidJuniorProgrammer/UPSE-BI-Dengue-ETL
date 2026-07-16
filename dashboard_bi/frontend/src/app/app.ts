@@ -346,7 +346,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  private async obtenerLeaflet() {
+  private async obtenerLeaflet(): Promise<any> {
     if (!this.leafletModule) {
       const module = await import('leaflet');
       const leaflet = (module as any).default || module;
