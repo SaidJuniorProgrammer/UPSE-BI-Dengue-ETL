@@ -1,264 +1,159 @@
-<!-- Cabecera Principal -->
-<div class="dashboard-header">
-  <div class="container">
-    <div class="row align-items-center gy-4">
-      <div class="col-lg-7">
-        <div class="d-flex align-items-center gap-3 mb-3 flex-wrap">
-          <span class="brand-mark"><i class="bi bi-shield-plus"></i></span>
-          <div>
-            <h1 class="fw-bold mb-1 header-title">Monitor Epidemiológico</h1>
-            <p class="header-subtitle mb-0 fw-light">
-              Sistema de Inteligencia de Negocios para el control del Dengue.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Controles de la Cabecera -->
-      <div
-        class="col-lg-5 text-lg-end mt-3 mt-lg-0 d-flex justify-content-lg-end align-items-center gap-3 flex-wrap"
-      >
-        <!-- Riesgo Climático Semáforo -->
-        <span
-          class="badge px-3 py-2 rounded-pill shadow-sm border fw-bold status-pill"
-          [ngClass]="{
-            'status-high': kpis.riesgo_climatico === 'ALTO',
-            'status-medium': kpis.riesgo_climatico === 'MEDIO',
-            'status-low': kpis.riesgo_climatico === 'BAJO',
-          }"
-        >
-          <i class="bi bi-thermometer-sun me-1"></i> Riesgo Clima:
-          {{ kpis.riesgo_climatico || 'BAJO' }}
-        </span>
-
-        <!-- Menú Desplegable Interactivo -->
-        <div class="dropdown">
-          <button
-            class="btn btn-light dropdown-toggle rounded-pill px-4 shadow-sm fw-bold text-primary filter-button"
-            type="button"
-            data-bs-toggle="dropdown"
-          >
-            <i class="bi bi-geo-alt-fill me-2"></i> {{ filtroActual }}
-          </button>
-          <ul class="dropdown-menu shadow border-0 dropdown-panel">
-            <li>
-              <a
-                class="dropdown-item py-2"
-                href="javascript:void(0)"
-                (click)="filtrarPorCanton('', 'Toda la Península')"
-                ><i class="bi bi-globe-americas me-2 text-muted"></i> Toda la Península</a
-              >
-            </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <a
-                class="dropdown-item py-2"
-                href="javascript:void(0)"
-                (click)="filtrarPorCanton('LA LIBERTAD', 'La Libertad')"
-                ><i class="bi bi-pin-map-fill me-2 text-primary"></i> La Libertad</a
-              >
-            </li>
-            <li>
-              <a
-                class="dropdown-item py-2"
-                href="javascript:void(0)"
-                (click)="filtrarPorCanton('SALINAS', 'Salinas')"
-                ><i class="bi bi-pin-map-fill me-2 text-primary"></i> Salinas</a
-              >
-            </li>
-            <li>
-              <a
-                class="dropdown-item py-2"
-                href="javascript:void(0)"
-                (click)="filtrarPorCanton('SANTA ELENA', 'Santa Elena')"
-                ><i class="bi bi-pin-map-fill me-2 text-primary"></i> Santa Elena</a
-              >
-            </li>
-          </ul>
-        </div>
-
-        <!-- Filtro de Año -->
-        <div class="dropdown">
-          <button
-            class="btn btn-light dropdown-toggle rounded-pill px-4 shadow-sm fw-bold text-primary filter-button"
-            type="button"
-            data-bs-toggle="dropdown"
-          >
-            <i class="bi bi-calendar-event me-2"></i>
-            {{ anioActual ? 'Año: ' + anioActual : 'Todos los Años' }}
-          </button>
-          <ul class="dropdown-menu shadow border-0 dropdown-panel">
-            <li>
-              <a class="dropdown-item py-2" href="javascript:void(0)" (click)="filtrarPorAnio('')"
-                ><i class="bi bi-calendar-range me-2 text-muted"></i> Todos los Años</a
-              >
-            </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <a
-                class="dropdown-item py-2"
-                href="javascript:void(0)"
-                (click)="filtrarPorAnio('2024')"
-                ><i class="bi bi-calendar3 me-2 text-primary"></i> 2024</a
-              >
-            </li>
-            <li>
-              <a
-                class="dropdown-item py-2"
-                href="javascript:void(0)"
-                (click)="filtrarPorAnio('2026')"
-                ><i class="bi bi-calendar3 me-2 text-primary"></i> 2026</a
-              >
-            </li>
-          </ul>
-        </div>
-
-        <span class="badge bg-light text-dark px-3 py-2 rounded-pill shadow-sm border">
-          <i class="bi bi-circle-fill text-success me-1" style="font-size: 0.6rem"></i> DW Conectado
-        </span>
+<div class="d-flex min-vh-100 bg-light flex-column flex-md-row">
+  <!-- SIDEBAR -->
+  <aside class="sidebar bg-dark text-white d-flex flex-column p-3" style="min-width: 250px; border-right: 1px solid rgba(255,255,255,0.1);">
+    <div class="d-flex align-items-center gap-2 mb-4 px-2">
+      <span class="brand-mark bg-primary text-white rounded p-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;"><i class="bi bi-shield-plus fs-5"></i></span>
+      <div>
+        <h5 class="fw-bold mb-0 text-white">EPI-Monitor</h5>
+        <small class="text-muted">Nacional Ecuador</small>
       </div>
     </div>
-  </div>
-</div>
-
-<div class="container mt-4 content-wrap">
-  <!-- Panel de Filtros Multipatología Nacional -->
-  <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
-    <h6 class="fw-bold mb-3 text-primary d-flex align-items-center gap-2">
-      <i class="bi bi-funnel-fill"></i> Filtros de Análisis Epidemiológico
-    </h6>
-    <div class="row g-3">
-      <!-- Provincia -->
-      <div class="col-md-6 col-lg-2">
-        <label class="form-label text-muted fw-semibold small mb-1">Provincia</label>
-        <select class="form-select border rounded-pill shadow-none px-3" [value]="provinciaActual" (change)="filtrarPorProvincia($any($event.target).value)">
-          <option value="">-- Todas --</option>
-          <option *ngFor="let prov of provinciasList" [value]="prov">{{ prov }}</option>
-        </select>
-      </div>
-
-      <!-- Cantón -->
-      <div class="col-md-6 col-lg-2">
-        <label class="form-label text-muted fw-semibold small mb-1">Cantón</label>
-        <select class="form-select border rounded-pill shadow-none px-3" [value]="cantonActual" (change)="filtrarPorCanton($any($event.target).value)" [disabled]="!provinciaActual">
-          <option value="">-- Todos --</option>
-          <option *ngFor="let cant of cantonesList" [value]="cant">{{ cant }}</option>
-        </select>
-      </div>
-
-      <!-- Año -->
-      <div class="col-md-4 col-lg-2">
-        <label class="form-label text-muted fw-semibold small mb-1">Año</label>
-        <select class="form-select border rounded-pill shadow-none px-3" [value]="anioActual" (change)="filtrarPorAnio($any($event.target).value)">
-          <option value="">-- Todos --</option>
-          <option value="2024">2024</option>
-          <option value="2025">2025</option>
-          <option value="2026">2026</option>
-        </select>
-      </div>
-
-      <!-- Enfermedad -->
-      <div class="col-md-8 col-lg-3">
-        <label class="form-label text-muted fw-semibold small mb-1">Enfermedad</label>
-        <select class="form-select border rounded-pill shadow-none px-3" [value]="enfermedadActual" (change)="filtrarPorEnfermedad($any($event.target).value)">
-          <option value="">-- Todas --</option>
-          <option *ngFor="let enf of enfermedades" [value]="enf.nombre_enfermedad">{{ enf.nombre_enfermedad }} ({{ enf.cie10 }})</option>
-        </select>
-      </div>
-
-      <!-- Causa -->
-      <div class="col-md-6 col-lg-1.5">
-        <label class="form-label text-muted fw-semibold small mb-1">Etiología</label>
-        <select class="form-select border rounded-pill shadow-none px-3" [value]="causaActual" (change)="filtrarPorCausa($any($event.target).value)">
-          <option value="">-- Todas --</option>
-          <option value="Virus">Virus</option>
-          <option value="Bacteria">Bacteria</option>
-          <option value="Hongo">Hongo</option>
-          <option value="Parásito">Parásito</option>
-          <option value="Genético">Genético</option>
-        </select>
-      </div>
-
-      <!-- Origen -->
-      <div class="col-md-6 col-lg-1.5">
-        <label class="form-label text-muted fw-semibold small mb-1">Origen</label>
-        <select class="form-select border rounded-pill shadow-none px-3" [value]="origenActual" (change)="filtrarPorOrigen($any($event.target).value)">
-          <option value="">-- Todos --</option>
-          <option value="Adquirida">Adquirida</option>
-          <option value="Hereditaria">Hereditaria</option>
-          <option value="Congénita">Congénita</option>
-        </select>
+    
+    <ul class="nav nav-pills flex-column mb-auto gap-1">
+      <li class="nav-item">
+        <a class="nav-link text-white cursor-pointer py-2 px-3 rounded-pill d-flex align-items-center" [class.active]="seccionActiva === 'resumen'" (click)="irASeccion('resumen')" style="cursor: pointer;">
+          <i class="bi bi-grid-1x2 me-2"></i> Visión General
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white cursor-pointer py-2 px-3 rounded-pill d-flex align-items-center" [class.active]="seccionActiva === 'patologias'" (click)="irASeccion('patologias')" style="cursor: pointer;">
+          <i class="bi bi-virus me-2"></i> Patologías
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white cursor-pointer py-2 px-3 rounded-pill d-flex align-items-center" [class.active]="seccionActiva === 'infraestructura'" (click)="irASeccion('infraestructura')" style="cursor: pointer;">
+          <i class="bi bi-hospital me-2"></i> Infraestructura
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white cursor-pointer py-2 px-3 rounded-pill d-flex align-items-center" [class.active]="seccionActiva === 'mapa'" (click)="irASeccion('mapa')" style="cursor: pointer;">
+          <i class="bi bi-geo-alt me-2"></i> Mapa Territorial
+        </a>
+      </li>
+    </ul>
+    
+    <div class="mt-auto px-2 pt-3 border-top border-secondary">
+      <div class="d-flex align-items-center gap-2 text-muted small">
+        <i class="bi bi-circle-fill text-success" style="font-size: 0.6rem"></i>
+        <span>DW Conectado</span>
       </div>
     </div>
-  </div>
+  </aside>
 
-  <!-- Pestañas Operativas -->
-  <ul
-    class="nav nav-pills nav-surface justify-content-center mb-5 relative-z"
-    id="pills-tab"
-    role="tablist"
-  >
-    <li class="nav-item me-2" role="presentation">
-      <button
-        class="nav-link active fw-semibold shadow-sm bg-white border tab-pill"
-        id="resumen-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#resumen"
-        type="button"
-        role="tab"
-      >
-        <i class="bi bi-activity me-2 text-primary"></i> Visión General y Clima
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button
-        class="nav-link fw-semibold shadow-sm bg-white border tab-pill"
-        id="infra-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#infra"
-        type="button"
-        role="tab"
-      >
-        <i class="bi bi-hospital me-2 text-primary"></i> Análisis de Infraestructura
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button
-        class="nav-link fw-semibold shadow-sm bg-white border tab-pill"
-        id="mapa-tab"
-        data-bs-toggle="pill"
-        data-bs-target="#mapa"
-        type="button"
-        role="tab"
-        (click)="activarMapa()"
-      >
-        <i class="bi bi-geo-alt-fill me-2 text-primary"></i> Mapa Territorial
-      </button>
-    </li>
-  </ul>
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-grow-1 p-4 main-content" style="max-height: 100vh; overflow-y: auto;">
+    <!-- Top Header -->
+    <header class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3 pb-3 border-bottom">
+      <div>
+        <h2 class="fw-bold text-dark mb-1">
+          <span *ngIf="seccionActiva === 'resumen'">Visión General Epidemiológica</span>
+          <span *ngIf="seccionActiva === 'patologias'">Distribución de Patologías y Etiología</span>
+          <span *ngIf="seccionActiva === 'infraestructura'">Infraestructura Hospitalaria</span>
+          <span *ngIf="seccionActiva === 'mapa'">Mapa Territorial y Análisis Geográfico</span>
+        </h2>
+        <p class="text-muted mb-0 small">Filtro activo: <strong>{{ filtroActual }}</strong></p>
+      </div>
 
-  <div class="tab-content" id="pills-tabContent">
-    <!-- PESTAÑA 1: VISIÓN GENERAL -->
-    <div class="tab-pane fade show active" id="resumen" role="tabpanel">
+      <!-- Climatic Risk badge -->
+      <span class="badge px-3 py-2 rounded-pill shadow-sm border fw-bold status-pill"
+        [ngClass]="{
+          'status-high': kpis.riesgo_climatico === 'ALTO',
+          'status-medium': kpis.riesgo_climatico === 'MEDIO',
+          'status-low': kpis.riesgo_climatico === 'BAJO'
+        }">
+        <i class="bi bi-thermometer-sun me-1"></i> Riesgo Clima: {{ kpis.riesgo_climatico || 'BAJO' }}
+      </span>
+    </header>
+
+    <!-- Filters Section -->
+    <div class="card border-0 shadow-sm rounded-4 p-3 mb-4 bg-white">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+        <h6 class="fw-bold mb-0 text-primary d-flex align-items-center gap-2">
+          <i class="bi bi-funnel-fill"></i> Filtros de Análisis
+        </h6>
+        <button class="btn btn-outline-danger btn-sm rounded-pill px-3" (click)="limpiarFiltros()">
+          <i class="bi bi-x-circle me-1"></i> Limpiar Filtros
+        </button>
+      </div>
+      
+      <div class="row g-2">
+        <!-- Provincia -->
+        <div class="col-md-4 col-lg-2">
+          <label class="form-label text-muted fw-semibold small mb-1">Provincia</label>
+          <select class="form-select border rounded-pill shadow-none px-3" [value]="provinciaActual" (change)="filtrarPorProvincia($any($event.target).value)">
+            <option value="">-- Todas --</option>
+            <option *ngFor="let prov of provinciasList" [value]="prov">{{ prov }}</option>
+          </select>
+        </div>
+
+        <!-- Cantón -->
+        <div class="col-md-4 col-lg-2">
+          <label class="form-label text-muted fw-semibold small mb-1">Cantón</label>
+          <select class="form-select border rounded-pill shadow-none px-3" [value]="cantonActual" (change)="filtrarPorCanton($any($event.target).value)" [disabled]="!provinciaActual">
+            <option value="">-- Todos --</option>
+            <option *ngFor="let cant of cantonesList" [value]="cant">{{ cant }}</option>
+          </select>
+        </div>
+
+        <!-- Año -->
+        <div class="col-md-4 col-lg-1.5">
+          <label class="form-label text-muted fw-semibold small mb-1">Año</label>
+          <select class="form-select border rounded-pill shadow-none px-3" [value]="anioActual" (change)="filtrarPorAnio($any($event.target).value)">
+            <option value="">-- Todos --</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+          </select>
+        </div>
+
+        <!-- Enfermedad -->
+        <div class="col-md-6 col-lg-2.5">
+          <label class="form-label text-muted fw-semibold small mb-1">Enfermedad</label>
+          <select class="form-select border rounded-pill shadow-none px-3" [value]="enfermedadActual" (change)="filtrarPorEnfermedad($any($event.target).value)">
+            <option value="">-- Todas --</option>
+            <option *ngFor="let enf of enfermedades" [value]="enf.nombre_enfermedad">{{ enf.nombre_enfermedad }} ({{ enf.cie10 }})</option>
+          </select>
+        </div>
+
+        <!-- Etiología -->
+        <div class="col-md-3 col-lg-2">
+          <label class="form-label text-muted fw-semibold small mb-1">Etiología</label>
+          <select class="form-select border rounded-pill shadow-none px-3" [value]="causaActual" (change)="filtrarPorCausa($any($event.target).value)">
+            <option value="">-- Todas --</option>
+            <option value="Virus">Virus</option>
+            <option value="Bacteria">Bacteria</option>
+            <option value="Hongo">Hongo</option>
+            <option value="Parásito">Parásito</option>
+            <option value="Genético">Genético</option>
+          </select>
+        </div>
+
+        <!-- Origen -->
+        <div class="col-md-3 col-lg-2">
+          <label class="form-label text-muted fw-semibold small mb-1">Origen</label>
+          <select class="form-select border rounded-pill shadow-none px-3" [value]="origenActual" (change)="filtrarPorOrigen($any($event.target).value)">
+            <option value="">-- Todos --</option>
+            <option value="Adquirida">Adquirida</option>
+            <option value="Hereditaria">Hereditaria</option>
+            <option value="Congénita">Congénita</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 1: VISIÓN GENERAL -->
+    <div *ngIf="seccionActiva === 'resumen'">
       <!-- KPIs -->
-      <div class="row g-4 mb-5">
-        <div class="col-xl col-md-4 col-sm-6">
-          <div
-            class="card custom-card border-0 shadow-sm h-100 kpi-card metric-card metric-card-navy p-2"
-          >
+      <div class="row g-4 mb-4">
+        <!-- Casos -->
+        <div class="col-xl-3 col-md-6">
+          <div class="card custom-card border-0 shadow-sm h-100 metric-card metric-card-navy p-2">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6
-                  class="text-muted fw-bold mb-0 text-uppercase"
-                  style="font-size: 0.75rem; letter-spacing: 0.5px"
-                >
-                  Casos Confirmados
-                </h6>
+                <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px">Casos Confirmados</h6>
                 <div class="metric-icon metric-icon-navy"><i class="bi bi-virus"></i></div>
               </div>
-              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px">
-                {{ kpis.total_casos || 0 }}
-              </h2>
+              <h2 class="fw-bold text-dark mb-1">{{ kpis.total_casos || 0 }}</h2>
               <div class="d-flex justify-content-between align-items-center mb-2">
                 <small class="text-muted text-xs">Acumulado</small>
                 <span class="badge metric-badge text-xs fw-semibold px-2 py-0.5 rounded-pill">
@@ -271,149 +166,117 @@
                   <span>Rural: <strong>{{ kpis.total_casos_rurales || 0 }}</strong> ({{ ruralesPct }}%)</span>
                 </div>
                 <div class="progress rounded-pill bg-light" style="height: 5px;">
-                  <div class="progress-bar bg-primary" role="progressbar" [style.width.%]="urbanosPct" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                  <div class="progress-bar bg-success" role="progressbar" [style.width.%]="ruralesPct" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar bg-primary" role="progressbar" [style.width.%]="urbanosPct"></div>
+                  <div class="progress-bar bg-success" role="progressbar" [style.width.%]="ruralesPct"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col-xl col-md-4 col-sm-6">
-          <div
-            class="card custom-card border-0 shadow-sm h-100 kpi-card metric-card metric-card-blue p-2"
-          >
+        <!-- Espera Clínica -->
+        <div class="col-xl-3 col-md-6">
+          <div class="card custom-card border-0 shadow-sm h-100 metric-card metric-card-blue p-2">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6
-                  class="text-muted fw-bold mb-0 text-uppercase"
-                  style="font-size: 0.75rem; letter-spacing: 0.5px"
-                >
-                  Espera Clínica
-                </h6>
+                <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px">Espera Clínica</h6>
                 <div class="metric-icon metric-icon-blue"><i class="bi bi-clock-history"></i></div>
               </div>
-              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px">
-                {{ kpis.espera_promedio || 0 }} <span class="fs-6 text-muted fw-normal">hrs</span>
-              </h2>
-              <small class="text-muted text-xs">Tiempo de atención</small>
+              <h2 class="fw-bold text-dark mb-1">{{ kpis.espera_promedio || 0 }} <span class="fs-6 text-muted fw-normal">hrs</span></h2>
+              <small class="text-muted text-xs">Tiempo promedio de atención</small>
             </div>
           </div>
         </div>
 
-        <div class="col-xl col-md-4 col-sm-6">
-          <div
-            class="card custom-card border-0 shadow-sm h-100 kpi-card metric-card metric-card-green p-2"
-          >
+        <!-- Stock Medicinas -->
+        <div class="col-xl-3 col-md-6">
+          <div class="card custom-card border-0 shadow-sm h-100 metric-card metric-card-green p-2">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6
-                  class="text-muted fw-bold mb-0 text-uppercase"
-                  style="font-size: 0.75rem; letter-spacing: 0.5px"
-                >
-                  Stock Medicinas
-                </h6>
+                <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px">Stock Medicinas</h6>
                 <div class="metric-icon metric-icon-green"><i class="bi bi-prescription2"></i></div>
               </div>
-              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px">
-                {{ kpis.disponibilidad_farmacias || 0 }}%
-              </h2>
-              <small class="text-muted text-xs">Disponibilidad de red</small>
+              <h2 class="fw-bold text-dark mb-1">{{ kpis.disponibilidad_farmacias || 0 }}%</h2>
+              <small class="text-muted text-xs">Disponibilidad en farmacias</small>
             </div>
           </div>
         </div>
 
-        <div class="col-xl col-md-6 col-sm-6">
-          <div
-            class="card custom-card border-0 shadow-sm h-100 kpi-card metric-card metric-card-navy p-2"
-          >
+        <!-- Ocupación Camas -->
+        <div class="col-xl-3 col-md-6">
+          <div class="card custom-card border-0 shadow-sm h-100 metric-card metric-card-navy p-2">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6
-                  class="text-muted fw-bold mb-0 text-uppercase"
-                  style="font-size: 0.75rem; letter-spacing: 0.5px"
-                >
-                  Ocupación Camas
-                </h6>
+                <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px">Ocupación Camas</h6>
                 <div class="metric-icon metric-icon-blue"><i class="bi bi-lungs"></i></div>
               </div>
-              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px">
-                {{ kpis.ocupacion_hospitalaria || 0 }}%
-              </h2>
+              <h2 class="fw-bold text-dark mb-1">{{ kpis.ocupacion_hospitalaria || 0 }}%</h2>
               <small class="text-muted text-xs">Saturación hospitalaria</small>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xl col-md-6 col-sm-12">
-          <div
-            class="card custom-card border-0 shadow-sm h-100 kpi-card metric-card metric-card-green p-2"
-          >
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6
-                  class="text-muted fw-bold mb-0 text-uppercase"
-                  style="font-size: 0.75rem; letter-spacing: 0.5px"
-                >
-                  Precipitación Prom.
-                </h6>
-                <div class="metric-icon metric-icon-green"><i class="bi bi-cloud-drizzle"></i></div>
-              </div>
-              <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -1px">
-                {{ kpis.precipitacion_promedio || 0 }}
-                <span class="fs-6 text-muted fw-normal">mm</span>
-              </h2>
-              <small class="text-muted text-xs">Factor de riesgo</small>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Gráficos -->
+      <!-- Temporal Chart -->
+      <div class="card custom-card chart-card border-0 shadow-sm mb-4">
+        <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4">
+          <h5 class="fw-bold text-dark mb-0">Evolución de Casos y Factores Externos</h5>
+          <p class="text-muted text-xs">Monitoreo histórico de casos confirmados cruzados con lluvia y alertas de prensa.</p>
+        </div>
+        <div class="card-body p-4" style="height: 400px">
+          <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="'line'"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 2: PATOLOGÍAS -->
+    <div *ngIf="seccionActiva === 'patologias'">
       <div class="row g-4">
-        <div class="col-lg-8">
+        <div class="col-lg-7">
           <div class="card custom-card chart-card border-0 shadow-sm h-100">
             <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4">
-              <h5 class="fw-bold text-dark mb-0">Comportamiento Epidemiológico</h5>
-              <p class="text-muted text-xs">
-                Correlación histórica entre casos vectoriales y picos de precipitación pluvial.
-              </p>
+              <h5 class="fw-bold text-dark mb-0">Distribución de Incidencia Relativa por Territorio</h5>
+              <p class="text-muted text-xs">Tasa de incidencia por cada 100,000 habitantes.</p>
             </div>
-            <div class="card-body p-4" style="height: 350px">
-              <canvas
-                baseChart
-                [data]="lineChartData"
-                [options]="lineChartOptions"
-                [type]="lineChartType"
-              ></canvas>
+            <div class="card-body p-4" style="height: 450px">
+              <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="barChartType"></canvas>
             </div>
           </div>
         </div>
-
-        <div class="col-lg-4">
-          <div class="card custom-card chart-card border-0 shadow-sm h-100">
-            <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4">
-              <h5 class="fw-bold text-dark mb-0">Riesgo Cantonal</h5>
-              <p class="text-muted text-xs">Distribución de casos confirmados por geografía.</p>
-            </div>
-            <div class="card-body p-4" style="height: 350px">
-              <canvas
-                baseChart
-                [data]="barChartData"
-                [options]="barChartOptions"
-                [type]="barChartType"
-              ></canvas>
+        
+        <div class="col-lg-5">
+          <div class="card custom-card border-0 shadow-sm h-100 p-3 bg-white">
+            <h5 class="fw-bold text-dark mb-3"><i class="bi bi-virus me-2 text-primary"></i>Resumen del Catálogo</h5>
+            <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+              <table class="table table-hover align-middle table-sm">
+                <thead>
+                  <tr class="text-muted small">
+                    <th>Enfermedad</th>
+                    <th>Etiología</th>
+                    <th>Origen</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let enf of enfermedades">
+                    <td>
+                      <div class="fw-bold" style="font-size: 0.85rem;">{{ enf.nombre_enfermedad }}</div>
+                      <small class="text-muted">{{ enf.cie10 }}</small>
+                    </td>
+                    <td><span class="badge bg-light text-dark">{{ enf.tipo_causa }}</span></td>
+                    <td><span class="badge bg-light text-secondary">{{ enf.categoria_origen }}</span></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- PESTAÑA 2: INFRAESTRUCTURA -->
-    <div class="tab-pane fade" id="infra" role="tabpanel">
+    <!-- SECCIÓN 3: INFRAESTRUCTURA -->
+    <div *ngIf="seccionActiva === 'infraestructura'">
       <div class="row g-4 justify-content-center">
-        <div class="col-lg-9">
-          <!-- Tarjeta de Capacidad de Camas -->
+        <div class="col-lg-10">
           <div class="card custom-card chart-card border-0 shadow-sm mb-4">
             <div class="card-body p-4">
               <div class="d-flex justify-content-between align-items-center mb-3">
@@ -421,9 +284,7 @@
                   <h5 class="fw-bold text-dark mb-1">
                     <i class="bi bi-hospital me-2 text-primary"></i>Capacidad de Camas Hospitalarias
                   </h5>
-                  <p class="text-muted text-xs mb-0">
-                    Promedio de camas activas y ocupadas registradas para {{ filtroActual }}.
-                  </p>
+                  <p class="text-muted text-xs mb-0">Promedio de camas activas y ocupadas registradas.</p>
                 </div>
                 <div class="text-end">
                   <h3 class="fw-bold text-primary mb-0">{{ ocupacionPct }}%</h3>
@@ -431,14 +292,7 @@
                 </div>
               </div>
               <div class="progress rounded-pill mb-2" style="height: 12px">
-                <div
-                  class="progress-bar rounded-pill progress-brand"
-                  role="progressbar"
-                  [style.width.%]="ocupacionPct"
-                  [attr.aria-valuenow]="ocupacionPct"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                ></div>
+                <div class="progress-bar rounded-pill progress-brand" role="progressbar" [style.width.%]="ocupacionPct" [attr.aria-valuenow]="ocupacionPct" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
               <div class="d-flex justify-content-between text-xs text-muted fw-semibold">
                 <span>Camas Ocupadas: {{ camasOcupadas }}</span>
@@ -450,59 +304,37 @@
           <div class="card custom-card chart-card border-0 shadow-sm">
             <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4 text-center">
               <h4 class="fw-bold text-dark mb-0">Estrés Hospitalario Multivariable</h4>
-              <p class="text-muted text-xs mt-1">
-                Comparativa de capacidad médica operativa contra la carga de pacientes en la red
-                MSP.
-              </p>
+              <p class="text-muted text-xs mt-1">Comparativa de capacidad médica operativa contra la carga de pacientes en la red MSP.</p>
             </div>
-            <div class="card-body p-4" style="height: 550px">
-              <canvas
-                baseChart
-                [data]="radarChartData"
-                [options]="radarChartOptions"
-                [type]="radarChartType"
-              ></canvas>
+            <div class="card-body p-4" style="height: 480px">
+              <canvas baseChart [data]="radarChartData" [options]="radarChartOptions" [type]="radarChartType"></canvas>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- PESTAÑA 3: MAPA TERRITORIAL -->
-    <div class="tab-pane fade" id="mapa" role="tabpanel">
+    <!-- SECCIÓN 4: MAPA TERRITORIAL -->
+    <div *ngIf="seccionActiva === 'mapa'">
       <div class="row g-4">
         <div class="col-lg-4">
           <div class="card custom-card chart-card border-0 shadow-sm h-100">
             <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4">
               <h5 class="fw-bold text-dark mb-0">Capas Analíticas</h5>
-              <p class="text-muted text-xs">
-                Activa o desactiva cada dimensión para una lectura más limpia.
-              </p>
+              <p class="text-muted text-xs">Activa o desactiva cada dimensión para una lectura más limpia.</p>
             </div>
             <div class="card-body px-4 pb-4 pt-3 d-grid gap-3">
-              <button
-                class="layer-toggle"
-                [class.layer-toggle-active]="capasMapa.casos"
-                (click)="alternarCapa('casos')"
-              >
+              <button class="layer-toggle" [class.layer-toggle-active]="capasMapa.casos" (click)="alternarCapa('casos')">
                 <span class="layer-dot layer-dot-navy"></span>
                 Casos e incidencia
                 <span class="badge layer-badge">{{ mapaDatos.length }}</span>
               </button>
-              <button
-                class="layer-toggle"
-                [class.layer-toggle-active]="capasMapa.lluvia"
-                (click)="alternarCapa('lluvia')"
-              >
+              <button class="layer-toggle" [class.layer-toggle-active]="capasMapa.lluvia" (click)="alternarCapa('lluvia')">
                 <span class="layer-dot layer-dot-blue"></span>
                 Precipitación y temperatura
                 <span class="badge layer-badge">Clima</span>
               </button>
-              <button
-                class="layer-toggle"
-                [class.layer-toggle-active]="capasMapa.infraestructura"
-                (click)="alternarCapa('infraestructura')"
-              >
+              <button class="layer-toggle" [class.layer-toggle-active]="capasMapa.infraestructura" (click)="alternarCapa('infraestructura')">
                 <span class="layer-dot layer-dot-green"></span>
                 Infraestructura sanitaria
                 <span class="badge layer-badge">Red MSP</span>
@@ -510,15 +342,9 @@
 
               <div class="map-legend mt-2">
                 <div class="map-legend-title">Leyenda</div>
-                <div class="legend-row">
-                  <span class="legend-swatch legend-swatch-navy"></span> Casos confirmados
-                </div>
-                <div class="legend-row">
-                  <span class="legend-swatch legend-swatch-blue"></span> Lluvia acumulada
-                </div>
-                <div class="legend-row">
-                  <span class="legend-swatch legend-swatch-green"></span> Ocupación hospitalaria
-                </div>
+                <div class="legend-row"><span class="legend-swatch legend-swatch-navy"></span> Casos confirmados</div>
+                <div class="legend-row"><span class="legend-swatch legend-swatch-blue"></span> Lluvia acumulada</div>
+                <div class="legend-row"><span class="legend-swatch legend-swatch-green"></span> Ocupación hospitalaria</div>
               </div>
             </div>
           </div>
@@ -526,30 +352,19 @@
 
         <div class="col-lg-8">
           <div class="card custom-card chart-card border-0 shadow-sm h-100">
-            <div
-              class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center flex-wrap gap-2"
-            >
+            <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
               <div>
-                <h4 class="fw-bold text-dark mb-0">Mapa analítico de Santa Elena</h4>
-                <p class="text-muted text-xs mt-1 mb-0">
-                  Centroides por cantón con capas activables de casos, lluvia e infraestructura.
-                </p>
+                <h4 class="fw-bold text-dark mb-0">Mapa analítico nacional</h4>
+                <p class="text-muted text-xs mt-1 mb-0">Centroides con capas activables de casos, lluvia e infraestructura.</p>
               </div>
               <div class="map-summary-inline">
-                <span
-                  ><strong>{{ mapaResumen.totalCasos }}</strong> casos</span
-                >
-                <span
-                  ><strong>{{ mapaResumen.lluviaPromedio }}</strong> mm lluvia</span
-                >
-                <span
-                  ><strong>{{ mapaResumen.ocupacionPromedio }}</strong
-                  >% ocupación</span
-                >
+                <span><strong>{{ mapaResumen.totalCasos }}</strong> casos</span>
+                <span><strong>{{ mapaResumen.lluviaPromedio }}</strong> mm lluvia</span>
+                <span><strong>{{ mapaResumen.ocupacionPromedio }}</strong>% ocupación</span>
               </div>
             </div>
             <div class="card-body p-4">
-              <div class="map-container" #mapContainer></div>
+              <div class="map-container" #mapContainer style="height: 400px; min-height: 400px; border-radius: 12px;"></div>
               <div class="map-caption mt-3">
                 Punto crítico actual: <strong>{{ mapaResumen.cantonCritico }}</strong>
               </div>
@@ -558,5 +373,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </main>
 </div>

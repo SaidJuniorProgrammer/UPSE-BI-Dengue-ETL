@@ -39,6 +39,7 @@ type MapLayerKey = 'casos' | 'lluvia' | 'infraestructura';
   styleUrl: './app.css',
 })
 export class App implements OnInit, AfterViewInit, OnDestroy {
+  seccionActiva: string = 'resumen';
   kpis: any = {};
   filtroActual: string = 'Nacional';
   provinciaActual: string = '';
@@ -229,6 +230,25 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
   filtrarPorOrigen(origen: string) {
     this.origenActual = origen;
+    this.actualizarTodo();
+  }
+
+  irASeccion(seccion: string) {
+    this.seccionActiva = seccion;
+    if (seccion === 'mapa') {
+      this.activarMapa();
+    }
+  }
+
+  limpiarFiltros() {
+    this.provinciaActual = '';
+    this.cantonActual = '';
+    this.anioActual = '';
+    this.enfermedadActual = '';
+    this.causaActual = '';
+    this.origenActual = '';
+    this.cantonesList = [];
+    this.filtroActual = 'Nacional';
     this.actualizarTodo();
   }
 
