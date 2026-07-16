@@ -434,6 +434,10 @@
 /* Sidebar Styles */
 .sidebar {
   background: linear-gradient(180deg, #102a43 0%, #0c2035 100%) !important;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
 }
 
 .sidebar .nav-link {
