@@ -4,15 +4,15 @@ CREATE DATABASE IF NOT EXISTS upse_dengue_dw;
 USE upse_dengue_dw;
 
 -- Drop existing tables to ensure a clean deployment (order matters due to FKs)
-DROP TABLE IF EXISTS Fact_Incidencia;
-DROP TABLE IF EXISTS Dim_Enfermedad;
-DROP TABLE IF EXISTS Dim_Infraestructura;
-DROP TABLE IF EXISTS Dim_Clima;
-DROP TABLE IF EXISTS Dim_Geografia;
-DROP TABLE IF EXISTS Dim_Tiempo;
+DROP TABLE IF EXISTS fact_incidencia;
+DROP TABLE IF EXISTS dim_enfermedad;
+DROP TABLE IF EXISTS dim_infraestructura;
+DROP TABLE IF EXISTS dim_clima;
+DROP TABLE IF EXISTS dim_geografia;
+DROP TABLE IF EXISTS dim_tiempo;
 
--- 1. Dim_Tiempo
-CREATE TABLE Dim_Tiempo (
+-- 1. dim_tiempo
+CREATE TABLE dim_tiempo (
     id_tiempo INT PRIMARY KEY, -- Formato YYYYMMDD
     fecha DATE NOT NULL,
     anio INT NOT NULL,
@@ -22,16 +22,16 @@ CREATE TABLE Dim_Tiempo (
     UNIQUE KEY (fecha)
 );
 
--- 2. Dim_Geografia
-CREATE TABLE Dim_Geografia (
+-- 2. dim_geografia
+CREATE TABLE dim_geografia (
     id_geografia INT AUTO_INCREMENT PRIMARY KEY,
     canton VARCHAR(100) NOT NULL UNIQUE,
     provincia VARCHAR(100) NOT NULL,
     poblacion INT NOT NULL
 );
 
--- 2.5 Dim_Enfermedad
-CREATE TABLE Dim_Enfermedad (
+-- 2.5 dim_enfermedad
+CREATE TABLE dim_enfermedad (
     id_enfermedad INT AUTO_INCREMENT PRIMARY KEY,
     cie10 VARCHAR(10) NOT NULL UNIQUE,
     nombre_enfermedad VARCHAR(150) NOT NULL,
@@ -39,8 +39,8 @@ CREATE TABLE Dim_Enfermedad (
     tipo_causa VARCHAR(50) NOT NULL       -- Virus, Bacteria, Hongo, Parásito, Genético, etc.
 );
 
--- 3. Dim_Clima
-CREATE TABLE Dim_Clima (
+-- 3. dim_clima
+CREATE TABLE dim_clima (
     id_clima INT AUTO_INCREMENT PRIMARY KEY,
     canton VARCHAR(100) NOT NULL,
     semana_epidem INT NOT NULL,
@@ -51,8 +51,8 @@ CREATE TABLE Dim_Clima (
     humedad_relativa DECIMAL(5,2) NOT NULL
 );
 
--- 4. Dim_Infraestructura
-CREATE TABLE Dim_Infraestructura (
+-- 4. dim_infraestructura
+CREATE TABLE dim_infraestructura (
     id_infraestructura INT AUTO_INCREMENT PRIMARY KEY,
     canton VARCHAR(100) NOT NULL,
     semana_epidem INT NOT NULL,
@@ -64,8 +64,8 @@ CREATE TABLE Dim_Infraestructura (
     pacientes_dengue INT NOT NULL
 );
 
--- 5. Fact_Incidencia
-CREATE TABLE Fact_Incidencia (
+-- 5. fact_incidencia
+CREATE TABLE fact_incidencia (
     id_hecho INT AUTO_INCREMENT PRIMARY KEY,
     id_tiempo INT NOT NULL,
     id_geografia INT NOT NULL,
@@ -78,11 +78,11 @@ CREATE TABLE Fact_Incidencia (
     alertas_mediaticas INT NOT NULL DEFAULT 0,
     pct_stock_meds DECIMAL(5,2) NOT NULL DEFAULT 0.00,
     espera_promedio_h DECIMAL(4,2) NOT NULL DEFAULT 0.00,
-    FOREIGN KEY (id_tiempo) REFERENCES Dim_Tiempo(id_tiempo),
-    FOREIGN KEY (id_geografia) REFERENCES Dim_Geografia(id_geografia),
-    FOREIGN KEY (id_clima) REFERENCES Dim_Clima(id_clima),
-    FOREIGN KEY (id_infraestructura) REFERENCES Dim_Infraestructura(id_infraestructura),
-    FOREIGN KEY (id_enfermedad) REFERENCES Dim_Enfermedad(id_enfermedad)
+    FOREIGN KEY (id_tiempo) REFERENCES dim_tiempo(id_tiempo),
+    FOREIGN KEY (id_geografia) REFERENCES dim_geografia(id_geografia),
+    FOREIGN KEY (id_clima) REFERENCES dim_clima(id_clima),
+    FOREIGN KEY (id_infraestructura) REFERENCES dim_infraestructura(id_infraestructura),
+    FOREIGN KEY (id_enfermedad) REFERENCES dim_enfermedad(id_enfermedad)
 );
 
 -- VIEWS FOR KPIs (GOVERNANCE NATIVE IN DW)
@@ -103,10 +103,10 @@ SELECT
     fi.casos_rurales,
     dg.poblacion,
     ROUND((fi.casos_confirmados / dg.poblacion) * 100000, 2) AS tasa_incidencia_100k
-FROM Fact_Incidencia fi
-JOIN Dim_Geografia dg ON fi.id_geografia = dg.id_geografia
-JOIN Dim_Tiempo dt ON fi.id_tiempo = dt.id_tiempo
-JOIN Dim_Enfermedad de ON fi.id_enfermedad = de.id_enfermedad;
+FROM fact_incidencia fi
+JOIN dim_geografia dg ON fi.id_geografia = dg.id_geografia
+JOIN dim_tiempo dt ON fi.id_tiempo = dt.id_tiempo
+JOIN dim_enfermedad de ON fi.id_enfermedad = de.id_enfermedad;
 
 -- KPI 2: Índice de Riesgo Climático Semanal
 CREATE OR REPLACE VIEW kpi_riesgo_climatico AS
@@ -121,7 +121,7 @@ SELECT
         WHEN dc.precipitacion_mm > 5.00 OR dc.temp_maxima_c > 24.00 THEN 'MEDIO'
         ELSE 'BAJO'
     END AS indice_riesgo_climatico
-FROM Dim_Clima dc;
+FROM dim_clima dc;
 
 -- KPI 3: Disponibilidad Farmacéutica
 CREATE OR REPLACE VIEW kpi_disponibilidad_farmaceutica AS
@@ -131,9 +131,9 @@ SELECT
     dt.anio,
     dt.semana_epidem,
     ROUND(fi.pct_stock_meds, 2) AS pct_disponibilidad_medicamentos
-FROM Fact_Incidencia fi
-JOIN Dim_Geografia dg ON fi.id_geografia = dg.id_geografia
-JOIN Dim_Tiempo dt ON fi.id_tiempo = dt.id_tiempo;
+FROM fact_incidencia fi
+JOIN dim_geografia dg ON fi.id_geografia = dg.id_geografia
+JOIN dim_tiempo dt ON fi.id_tiempo = dt.id_tiempo;
 
 -- KPI 4: Cobertura de Infraestructura Médica (Casos por cada centro activo / capacidad)
 CREATE OR REPLACE VIEW kpi_ocupacion_hospitalaria AS
@@ -144,7 +144,7 @@ SELECT
     di.camas_totales,
     di.camas_ocupadas,
     ROUND((di.camas_ocupadas / di.camas_totales) * 100, 2) AS tasa_ocupacion_pct
-FROM Dim_Infraestructura di;
+FROM dim_infraestructura di;
 
 -- KPI 5: Tasa de Síntomas No Clínicos y Tiempo de Espera Promedio
 CREATE OR REPLACE VIEW kpi_tiempos_espera AS
@@ -154,6 +154,6 @@ SELECT
     dt.anio,
     dt.semana_epidem,
     ROUND(fi.espera_promedio_h, 2) AS tiempo_espera_promedio_horas
-FROM Fact_Incidencia fi
-JOIN Dim_Geografia dg ON fi.id_geografia = dg.id_geografia
-JOIN Dim_Tiempo dt ON fi.id_tiempo = dt.id_tiempo;
+FROM fact_incidencia fi
+JOIN dim_geografia dg ON fi.id_geografia = dg.id_geografia
+JOIN dim_tiempo dt ON fi.id_tiempo = dt.id_tiempo;

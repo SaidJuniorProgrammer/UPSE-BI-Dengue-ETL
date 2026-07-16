@@ -74,7 +74,7 @@ def generate_dim_tiempo(conn):
         current_date += delta
         
     sql = """
-        INSERT INTO Dim_Tiempo (id_tiempo, fecha, anio, semana_epidem, mes, nombre_mes)
+        INSERT INTO dim_tiempo (id_tiempo, fecha, anio, semana_epidem, mes, nombre_mes)
         VALUES (%s, %s, %s, %s, %s, %s)
         ON DUPLICATE KEY UPDATE anio=VALUES(anio)
     """
@@ -108,7 +108,7 @@ def load_dim_geografia(conn, json_data):
             unique_geos[canton] = (canton, provincia, pop)
             
     sql = """
-        INSERT INTO Dim_Geografia (canton, provincia, poblacion)
+        INSERT INTO dim_geografia (canton, provincia, poblacion)
         VALUES (%s, %s, %s)
         ON DUPLICATE KEY UPDATE provincia=VALUES(provincia), poblacion=VALUES(poblacion)
     """
@@ -131,7 +131,7 @@ def load_dim_enfermedad(conn, json_data):
             )
             
     sql = """
-        INSERT INTO Dim_Enfermedad (cie10, nombre_enfermedad, categoria_origen, tipo_causa)
+        INSERT INTO dim_enfermedad (cie10, nombre_enfermedad, categoria_origen, tipo_causa)
         VALUES (%s, %s, %s, %s)
         ON DUPLICATE KEY UPDATE nombre_enfermedad=VALUES(nombre_enfermedad)
     """
@@ -144,19 +144,19 @@ def build_fact_incidencia(conn, json_data):
     print("[ETL] Construyendo Fact_Incidencia (Multipatología)...")
     
     with conn.cursor() as cursor:
-        cursor.execute("SELECT id_geografia, canton FROM Dim_Geografia")
+        cursor.execute("SELECT id_geografia, canton FROM dim_geografia")
         geo_map = {row['canton'].upper(): row['id_geografia'] for row in cursor.fetchall()}
         
-        cursor.execute("SELECT id_enfermedad, cie10 FROM Dim_Enfermedad")
+        cursor.execute("SELECT id_enfermedad, cie10 FROM dim_enfermedad")
         disease_map = {row['cie10']: row['id_enfermedad'] for row in cursor.fetchall()}
         
-        cursor.execute("SELECT id_clima, canton, semana_epidem, anio FROM Dim_Clima")
+        cursor.execute("SELECT id_clima, canton, semana_epidem, anio FROM dim_clima")
         clima_map = {(row['canton'].upper(), row['semana_epidem'], row['anio']): row['id_clima'] for row in cursor.fetchall()}
         
-        cursor.execute("SELECT id_infraestructura, canton, semana_epidem, anio FROM Dim_Infraestructura")
+        cursor.execute("SELECT id_infraestructura, canton, semana_epidem, anio FROM dim_infraestructura")
         infra_map = {(row['canton'].upper(), row['semana_epidem'], row['anio']): row['id_infraestructura'] for row in cursor.fetchall()}
         
-        cursor.execute("SELECT MIN(id_tiempo) as min_t, semana_epidem, anio FROM Dim_Tiempo GROUP BY semana_epidem, anio")
+        cursor.execute("SELECT MIN(id_tiempo) as min_t, semana_epidem, anio FROM dim_tiempo GROUP BY semana_epidem, anio")
         time_map = {(row['semana_epidem'], row['anio']): row['min_t'] for row in cursor.fetchall()}
 
     fact_records = []
@@ -189,7 +189,7 @@ def build_fact_incidencia(conn, json_data):
         unique_missing_clima = list(set(missing_clima))
         print(f"   [INFO] Generando {len(unique_missing_clima)} registros de clima de respaldo...")
         clima_insert_sql = """
-            INSERT INTO Dim_Clima (canton, semana_epidem, anio, precipitacion_mm, temp_maxima_c, temp_minima_c, humedad_relativa)
+            INSERT INTO dim_clima (canton, semana_epidem, anio, precipitacion_mm, temp_maxima_c, temp_minima_c, humedad_relativa)
             VALUES (%s, %s, %s, %s, %s, %s, %s)
         """
         clima_records = []
@@ -202,7 +202,7 @@ def build_fact_incidencia(conn, json_data):
         
         # Reload clima_map
         with conn.cursor() as cursor:
-            cursor.execute("SELECT id_clima, canton, semana_epidem, anio FROM Dim_Clima")
+            cursor.execute("SELECT id_clima, canton, semana_epidem, anio FROM dim_clima")
             clima_map = {(row['canton'].upper(), row['semana_epidem'], row['anio']): row['id_clima'] for row in cursor.fetchall()}
 
     # Insert missing infra
@@ -210,7 +210,7 @@ def build_fact_incidencia(conn, json_data):
         unique_missing_infra = list(set(missing_infra))
         print(f"   [INFO] Generando {len(unique_missing_infra)} registros de infraestructura de respaldo...")
         infra_insert_sql = """
-            INSERT INTO Dim_Infraestructura (canton, semana_epidem, anio, nivel_saturacion, camas_totales, camas_ocupadas, medicos_disponibles, pacientes_dengue)
+            INSERT INTO dim_infraestructura (canton, semana_epidem, anio, nivel_saturacion, camas_totales, camas_ocupadas, medicos_disponibles, pacientes_dengue)
             VALUES (%s, %s, %s, %s, %s, %s, %s, 0)
         """
         infra_records = []
@@ -226,7 +226,7 @@ def build_fact_incidencia(conn, json_data):
         
         # Reload infra_map
         with conn.cursor() as cursor:
-            cursor.execute("SELECT id_infraestructura, canton, semana_epidem, anio FROM Dim_Infraestructura")
+            cursor.execute("SELECT id_infraestructura, canton, semana_epidem, anio FROM dim_infraestructura")
             infra_map = {(row['canton'].upper(), row['semana_epidem'], row['anio']): row['id_infraestructura'] for row in cursor.fetchall()}
 
     # Build facts list
@@ -259,13 +259,13 @@ def build_fact_incidencia(conn, json_data):
         fact_records.append((id_tiempo, id_geo, id_clima, id_infra, id_enfermedad, casos_val, urbanos, rurales, alertas_val, stock_val, espera_val))
 
     sql_fact = """
-        INSERT INTO Fact_Incidencia (id_tiempo, id_geografia, id_clima, id_infraestructura, id_enfermedad, casos_confirmados, casos_urbanos, casos_rurales, alertas_mediaticas, pct_stock_meds, espera_promedio_h)
+        INSERT INTO fact_incidencia (id_tiempo, id_geografia, id_clima, id_infraestructura, id_enfermedad, casos_confirmados, casos_urbanos, casos_rurales, alertas_mediaticas, pct_stock_meds, espera_promedio_h)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
     with conn.cursor() as cursor:
         cursor.executemany(sql_fact, fact_records)
     conn.commit()
-    print(f"   [SUCCESS] Fact_Incidencia poblada con {len(fact_records)} registros multipatológicos.")
+    print(f"   [SUCCESS] fact_incidencia poblada con {len(fact_records)} registros multipatológicos.")
 
 def main():
     print("=======================================================================")
