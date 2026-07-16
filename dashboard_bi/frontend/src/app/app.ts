@@ -349,7 +349,10 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   private async obtenerLeaflet(): Promise<any> {
     if (!this.leafletModule) {
       const module = await import('leaflet');
-      const leaflet = (module as any).default || module;
+      let leaflet: any = module;
+      if (!leaflet.map && (module as any).default && (module as any).default.map) {
+        leaflet = (module as any).default;
+      }
       this.leafletModule = leaflet;
       if (leaflet && leaflet.Icon && leaflet.Icon.Default) {
         delete (leaflet.Icon.Default.prototype as any)._getIconUrl;
