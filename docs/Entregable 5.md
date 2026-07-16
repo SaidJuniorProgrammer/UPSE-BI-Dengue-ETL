@@ -1,8 +1,20 @@
-# Plataforma de Inteligencia de Negocios para el Monitoreo Epidemiológico Multipatología Nacional en Ecuador
+# UNIVERSIDAD ESTATAL PENÍNSULA DE SANTA ELENA
+## FACULTAD DE SISTEMAS Y TELECOMUNICACIONES
+### CARRERA DE TECNOLOGÍAS DE LA INFORMACIÓN
+
+**PROYECTO INTEGRADOR DE INTELIGENCIA DE NEGOCIOS**
+
+**Tema:** Plataforma de Inteligencia de Negocios para el Monitoreo Epidemiológico Multipatología Nacional en Ecuador  
+**Autor:** Gino  
+**Tutor:** Docente Asignado UPSE  
+**Fecha:** Julio 2026  
+**Lugar:** La Libertad - Santa Elena - Ecuador  
+
+---
 
 ## 2. Abstract
 
-La fragmentación y dispersión de datos clínicos, meteorológicos y de capacidad sanitaria impiden una respuesta coordinada ante brotes infecciosos y crónicos. Este proyecto presenta el diseño y despliegue de una plataforma de Inteligencia de Negocios (BI) basada en una arquitectura web distribuida multi-capa para el monitoreo epidemiológico nacional de más de 100 patologías en Ecuador. Se implementó un Data Warehouse (DW) relacional en estrella con ingesta de datos automatizada y soporte multivariable: demografía rural y urbana, origen patogénico (Virus, Bacteria, Hongo, Parásito, Genético) y modo de adquisición. Una API RESTful en Node.js expone de forma agregada los indicadores sanitarios de los 220+ cantones y 24 provincias ecuatorianas, los cuales son consumidos por un Frontend reactivo de alto impacto visual en Angular. El sistema integra un menú de control por Sidebar, gráficos interactivos de líneas temporales, radar de estrés hospitalario, diagramas de rosca de composición etiológica y mapas dinámicos coropléticos. Los resultados demuestran que la consolidación analítica agiliza la toma de decisiones, facilitando la detección de brotes críticos por medio de semáforos inteligentes de alerta temprana y la redistribución eficiente de recursos clínicos.
+La fragmentación y de datos clínicos, meteorológicos y de capacidad sanitaria impiden una respuesta coordinada ante brotes infecciosos y crónicos. Este proyecto presenta el diseño y despliegue de una plataforma de Inteligencia de Negocios (BI) basada en una arquitectura web distribuida de múltiples capas para el monitoreo epidemiológico nacional de más de 100 patologías en Ecuador. Se implementó un Data Warehouse (DW) relacional en estrella con ingesta de datos automatizada y soporte multivariable: demografía rural y urbana, origen patogénico (Virus, Bacteria, Hongo, Parásito, Genético) y modo de adquisición. Una API RESTful en Node.js expone de forma agregada los indicadores sanitarios de los 220+ cantones y 24 provincias ecuatorianas, los cuales son consumidos por un Frontend reactivo de alto impacto visual en Angular. El sistema integra un menú de control por Sidebar, gráficos interactivos de líneas temporales, radar de estrés hospitalario, diagramas de rosca de composición etiológica y mapas dinámicos coropléticos. Los resultados demuestran que la consolidación analítica agiliza la toma de decisiones, facilitando la detección de brotes críticos por medio de semáforos inteligentes de alerta temprana y la redistribución eficiente de recursos clínicos.
 
 **Palabras clave:** Inteligencia de Negocios, Data Warehouse, Multipatología, Infecciones Epidémicas, Node.js, Angular, Semáforo de Alerta Temprana.
 
@@ -24,11 +36,11 @@ El diseño dimensional de Ralph Kimball promueve optimizar los tiempos de lectur
 
 ### 4.3. Arquitecturas Modernas: SPA y APIs RESTful
 
-Para soportar miles de consultas geográficas simultáneas, se adopta una arquitectura desacoplada. Node.js actúa como el motor del backend debido a su capacidad de procesamiento asíncrono y no bloqueante de consultas agregadas [9]. En la interfaz cliente, Angular (SPA) permite a los analistas sanitarios conmutar secciones en tiempo real (Visión General, Patologías, Etiología, Infraestructura, Mapa) sin recargar la página, agilizando el flujo de trabajo de campo.en tiempo real que es fundamental para el monitoreo interactivo de KPIs [10].
+Para soportar miles de consultas geográficas simultáneas, se adopta una arquitectura desacoplada. Node.js actúa como el motor del backend debido a su capacidad de procesamiento asíncrono y no bloqueante de consultas agregadas [9]. En la interfaz cliente, la adopción de arquitecturas Single Page Application (SPA) mediante frameworks como Angular reduce la carga del servidor [5], permitiendo una renderización dinámica en tiempo real que es fundamental para el monitoreo interactivo de KPIs [10].
 
-### 4.4. Dinámica Epidemiológica del Dengue en la Costa Ecuatoriana
+### 4.4. Correlación Epidemiológica y Variables Meteorológicas a Escala Nacional
 
-El ciclo de reproducción del vector *Aedes aegypti* está intrínsecamente ligado a variaciones meteorológicas. Investigaciones específicas realizadas en la región costera del Ecuador han demostrado una fuerte correlación estadística positiva y retardada entre los altos niveles de precipitación y la incidencia de epidemias de dengue [11]. Modelar estas variables climáticas junto con la capacidad de infraestructura clínica a través de herramientas de visualización de datos [12] es fundamental para la emisión de alertas tempranas.
+La distribución geográfica y ciclos de transmisión de las patologías infecciosas (tales como dengue, malaria y leishmaniasis) están intrínsecamente ligados a variaciones de temperatura, humedad y lluvias acumuladas [11]. El desarrollo de sistemas georreferenciados para la vigilancia epidemiológica [6] en conjunto con herramientas modernas de modelado dimensional y visualización a nivel cantonal [12] es una metodología validada para emitir alertas tempranas de contingencia en la red de salud.
 
 ## 5. Metodología e Infraestructura
 
