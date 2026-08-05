@@ -48,6 +48,8 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   enfermedadActual: string = '';
   causaActual: string = '';
   origenActual: string = '';
+  mostrarAvanzados: boolean = false;
+  casosTendenciaPct: number = 0;
 
   // Catálogos
   enfermedades: any[] = [];
@@ -98,6 +100,10 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
           boxHeight: 10,
         },
       },
+      tooltip: {
+        mode: 'index',
+        intersect: false
+      }
     },
     scales: {
       x: {
@@ -105,8 +111,20 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         grid: { color: 'rgba(5, 58, 144, 0.08)' },
       },
       y: {
+        type: 'linear',
+        display: true,
+        position: 'left',
+        title: { display: true, text: 'Casos Confirmados', color: '#667085' },
         ticks: { color: '#667085' },
         grid: { color: 'rgba(5, 58, 144, 0.08)' },
+      },
+      y1: {
+        type: 'linear',
+        display: true,
+        position: 'right',
+        title: { display: true, text: 'Precipitación (mm)', color: '#667085' },
+        ticks: { color: '#667085' },
+        grid: { drawOnChartArea: false },
       },
     },
   };
@@ -114,6 +132,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
   public barChartData: ChartData<'bar'> = { datasets: [], labels: [] };
   public barChartOptions: ChartOptions<'bar'> = {
+    indexAxis: 'y',
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -124,11 +143,11 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     scales: {
       x: {
         ticks: { color: '#667085' },
-        grid: { display: false },
+        grid: { color: 'rgba(5, 58, 144, 0.08)' },
       },
       y: {
         ticks: { color: '#667085' },
-        grid: { color: 'rgba(5, 58, 144, 0.08)' },
+        grid: { display: false },
       },
     },
   };
@@ -291,7 +310,35 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     this.origenActual = '';
     this.cantonesList = [];
     this.filtroActual = 'Nacional';
+    this.mostrarAvanzados = false;
     this.actualizarTodo();
+  }
+
+  alternarAvanzados() {
+    this.mostrarAvanzados = !this.mostrarAvanzados;
+  }
+
+  limpiarFiltro(tipo: string) {
+    if (tipo === 'provincia') {
+      this.provinciaActual = '';
+      this.cantonActual = '';
+      this.cantonesList = [];
+    } else if (tipo === 'canton') {
+      this.cantonActual = '';
+    } else if (tipo === 'anio') {
+      this.anioActual = '';
+    } else if (tipo === 'enfermedad') {
+      this.enfermedadActual = '';
+    } else if (tipo === 'causa') {
+      this.causaActual = '';
+    } else if (tipo === 'origen') {
+      this.origenActual = '';
+    }
+    this.actualizarTodo();
+  }
+
+  exportarPDF() {
+    window.print();
   }
 
   activarMapa(): void {
@@ -343,8 +390,24 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     return total > 0 ? Math.round((Number(this.kpis.total_casos_rurales) || 0) / total * 100) : 0;
   }
 
+  get enfermedadesFiltradas(): any[] {
+    return this.enfermedades.filter((e) => {
+      const matchCausa = !this.causaActual || e.tipo_causa === this.causaActual;
+      const matchOrigen = !this.origenActual || e.categoria_origen === this.origenActual;
+      return matchCausa && matchOrigen;
+    });
+  }
+
   cargarGraficos(filters: DashboardFilters) {
     this.dashboardService.getGraficoTemporal(filters).subscribe((data: any[]) => {
+      if (data && data.length >= 2) {
+        const last = Number(data[data.length - 1].casos) || 0;
+        const prev = Number(data[data.length - 2].casos) || 0;
+        this.casosTendenciaPct = prev > 0 ? Math.round(((last - prev) / prev) * 100) : 0;
+      } else {
+        this.casosTendenciaPct = 0;
+      }
+
       this.lineChartData = {
         labels: data.map((d) => `${d.anio} - Sem ${d.semana_epidem} (${d.mes.substring(0, 3)})`),
         datasets: [
@@ -357,6 +420,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
             tension: 0.35,
             pointRadius: 2,
             pointHoverRadius: 4,
+            yAxisID: 'y',
           },
           {
             data: data.map((d) => d.lluvia),
@@ -367,6 +431,8 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
             tension: 0.35,
             pointRadius: 2,
             pointHoverRadius: 4,
+            yAxisID: 'y1',
+            borderDash: [5, 5],
           },
           {
             data: data.map((d) => d.alertas),
@@ -377,6 +443,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
             tension: 0.35,
             pointRadius: 2,
             pointHoverRadius: 4,
+            borderDash: [2, 2],
           },
         ],
       };

@@ -69,21 +69,28 @@
           <span *ngIf="seccionActiva === 'alertas'">Alertas Sanitarias y Umbrales Críticos</span>
           <span *ngIf="seccionActiva === 'metodologia'">Metodología y Origen de Datos</span>
         </h2>
-        <p class="text-muted mb-0 small" *ngIf="seccionActiva !== 'metodologia'">Filtro activo: <strong>{{ filtroActual }}</strong></p>
+        <p class="text-muted mb-0 small" *ngIf="seccionActiva !== 'metodologia'">
+          Filtro activo: <strong>{{ filtroActual }}</strong> | Período: 2024-2026 | Actualizado: Hoy
+        </p>
         <p class="text-muted mb-0 small" *ngIf="seccionActiva === 'metodologia'">Transparencia metodológica y procedencia de datos del proyecto.</p>
       </div>
 
-      <!-- Climatic Risk badge -->
-      <span class="badge px-3 py-2 rounded-pill shadow-sm border fw-bold status-pill"
-        style="cursor: help;"
-        title="Umbrales: ALTO si Precipitación > 20mm y Temp Máx > 26°C. MEDIO si Precipitación > 5mm o Temp Máx > 24°C. BAJO de lo contrario."
-        [ngClass]="{
-          'status-high': kpis.riesgo_climatico === 'ALTO',
-          'status-medium': kpis.riesgo_climatico === 'MEDIO',
-          'status-low': kpis.riesgo_climatico === 'BAJO'
-        }">
-        <i class="bi bi-thermometer-sun me-1"></i> Riesgo Clima: {{ kpis.riesgo_climatico || 'BAJO' }}
-      </span>
+      <div class="d-flex align-items-center gap-3">
+        <button class="btn btn-outline-primary btn-sm rounded-pill px-3 shadow-sm" (click)="exportarPDF()">
+          <i class="bi bi-printer me-1"></i> Imprimir Reporte
+        </button>
+        <!-- Climatic Risk badge -->
+        <span class="badge px-3 py-2 rounded-pill shadow-sm border fw-bold status-pill"
+          style="cursor: help;"
+          title="Umbrales: ALTO si Precipitación > 20mm y Temp Máx > 26°C. MEDIO si Precipitación > 5mm o Temp Máx > 24°C. BAJO de lo contrario."
+          [ngClass]="{
+            'status-high': kpis.riesgo_climatico === 'ALTO',
+            'status-medium': kpis.riesgo_climatico === 'MEDIO',
+            'status-low': kpis.riesgo_climatico === 'BAJO'
+          }">
+          <i class="bi bi-thermometer-sun me-1"></i> Riesgo Clima: {{ kpis.riesgo_climatico || 'BAJO' }}
+        </span>
+      </div>
     </header>
 
     <!-- Filters Section -->
@@ -92,34 +99,57 @@
         <h6 class="fw-bold mb-0 text-primary d-flex align-items-center gap-2">
           <i class="bi bi-funnel-fill"></i> Filtros de Análisis
         </h6>
-        <button class="btn btn-outline-danger btn-sm rounded-pill px-3" (click)="limpiarFiltros()">
-          <i class="bi bi-x-circle me-1"></i> Limpiar Filtros
-        </button>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-primary btn-sm rounded-pill px-3" (click)="alternarAvanzados()" *ngIf="seccionActiva !== 'etiologia'">
+            <i class="bi" [ngClass]="mostrarAvanzados ? 'bi-funnel' : 'bi-funnel-fill'"></i>
+            {{ mostrarAvanzados ? 'Ocultar Filtros' : 'Más Filtros' }}
+          </button>
+          <button class="btn btn-outline-danger btn-sm rounded-pill px-3" (click)="limpiarFiltros()">
+            <i class="bi bi-x-circle me-1"></i> Limpiar Filtros
+          </button>
+        </div>
       </div>
       
       <div class="row g-2">
         <!-- Provincia -->
-        <div class="col-md-4 col-lg-2">
+        <div class="col-md-3">
           <label class="form-label text-muted fw-semibold small mb-1">Provincia</label>
-          <select class="form-select border rounded-pill shadow-none px-3" [value]="provinciaActual" (change)="filtrarPorProvincia($any($event.target).value)">
+          <select class="form-select border rounded-pill shadow-none px-3 transition-all" 
+            [value]="provinciaActual" 
+            (change)="filtrarPorProvincia($any($event.target).value)"
+            [class.border-primary]="provinciaActual !== ''"
+            [class.border-2]="provinciaActual !== ''"
+            [class.fw-bold]="provinciaActual !== ''">
             <option value="">-- Todas --</option>
             <option *ngFor="let prov of provinciasList" [value]="prov">{{ prov }}</option>
           </select>
         </div>
 
-        <!-- Cantón -->
-        <div class="col-md-4 col-lg-2">
+        <!-- Cantón (Cascada) -->
+        <div class="col-md-3">
           <label class="form-label text-muted fw-semibold small mb-1">Cantón</label>
-          <select class="form-select border rounded-pill shadow-none px-3" [value]="cantonActual" (change)="filtrarPorCanton($any($event.target).value)" [disabled]="!provinciaActual">
+          <select class="form-select border rounded-pill shadow-none px-3 transition-all" 
+            [value]="cantonActual" 
+            (change)="filtrarPorCanton($any($event.target).value)" 
+            [disabled]="!provinciaActual"
+            [class.border-primary]="cantonActual !== ''"
+            [class.border-2]="cantonActual !== ''"
+            [class.fw-bold]="cantonActual !== ''"
+            [style.cursor]="!provinciaActual ? 'not-allowed' : 'default'">
             <option value="">-- Todos --</option>
             <option *ngFor="let cant of cantonesList" [value]="cant">{{ cant }}</option>
           </select>
         </div>
 
         <!-- Año -->
-        <div class="col-md-4 col-lg-1.5">
+        <div class="col-md-2">
           <label class="form-label text-muted fw-semibold small mb-1">Año</label>
-          <select class="form-select border rounded-pill shadow-none px-3" [value]="anioActual" (change)="filtrarPorAnio($any($event.target).value)">
+          <select class="form-select border rounded-pill shadow-none px-3 transition-all" 
+            [value]="anioActual" 
+            (change)="filtrarPorAnio($any($event.target).value)"
+            [class.border-primary]="anioActual !== ''"
+            [class.border-2]="anioActual !== ''"
+            [class.fw-bold]="anioActual !== ''">
             <option value="">-- Todos --</option>
             <option value="2024">2024</option>
             <option value="2025">2025</option>
@@ -128,18 +158,31 @@
         </div>
 
         <!-- Enfermedad -->
-        <div class="col-md-6 col-lg-2.5">
+        <div class="col-md-4">
           <label class="form-label text-muted fw-semibold small mb-1">Enfermedad</label>
-          <select class="form-select border rounded-pill shadow-none px-3" [value]="enfermedadActual" (change)="filtrarPorEnfermedad($any($event.target).value)">
+          <select class="form-select border rounded-pill shadow-none px-3 transition-all" 
+            [value]="enfermedadActual" 
+            (change)="filtrarPorEnfermedad($any($event.target).value)"
+            [class.border-primary]="enfermedadActual !== ''"
+            [class.border-2]="enfermedadActual !== ''"
+            [class.fw-bold]="enfermedadActual !== ''">
             <option value="">-- Todas --</option>
             <option *ngFor="let enf of enfermedades" [value]="enf.nombre_enfermedad">{{ enf.nombre_enfermedad }} ({{ enf.cie10 }})</option>
           </select>
         </div>
+      </div>
 
+      <!-- Filtros Avanzados (Colapsables y excluidos de la pestaña de etiología) -->
+      <div class="row g-2 mt-2 pt-2 border-top" *ngIf="mostrarAvanzados && seccionActiva !== 'etiologia'">
         <!-- Etiología -->
-        <div class="col-md-3 col-lg-2">
+        <div class="col-md-6">
           <label class="form-label text-muted fw-semibold small mb-1">Etiología</label>
-          <select class="form-select border rounded-pill shadow-none px-3" [value]="causaActual" (change)="filtrarPorCausa($any($event.target).value)">
+          <select class="form-select border rounded-pill shadow-none px-3 transition-all" 
+            [value]="causaActual" 
+            (change)="filtrarPorCausa($any($event.target).value)"
+            [class.border-primary]="causaActual !== ''"
+            [class.border-2]="causaActual !== ''"
+            [class.fw-bold]="causaActual !== ''">
             <option value="">-- Todas --</option>
             <option value="Virus">Virus</option>
             <option value="Bacteria">Bacteria</option>
@@ -150,9 +193,14 @@
         </div>
 
         <!-- Origen -->
-        <div class="col-md-3 col-lg-2">
+        <div class="col-md-6">
           <label class="form-label text-muted fw-semibold small mb-1">Origen</label>
-          <select class="form-select border rounded-pill shadow-none px-3" [value]="origenActual" (change)="filtrarPorOrigen($any($event.target).value)">
+          <select class="form-select border rounded-pill shadow-none px-3 transition-all" 
+            [value]="origenActual" 
+            (change)="filtrarPorOrigen($any($event.target).value)"
+            [class.border-primary]="origenActual !== ''"
+            [class.border-2]="origenActual !== ''"
+            [class.fw-bold]="origenActual !== ''">
             <option value="">-- Todos --</option>
             <option value="Adquirida">Adquirida</option>
             <option value="Hereditaria">Hereditaria</option>
@@ -162,19 +210,62 @@
       </div>
     </div>
 
+    <!-- Active Filters Pills -->
+    <div class="d-flex flex-wrap gap-2 mb-4 align-items-center" *ngIf="(provinciaActual || cantonActual || anioActual || enfermedadActual || (causaActual && seccionActiva !== 'etiologia') || (origenActual && seccionActiva !== 'etiologia')) && seccionActiva !== 'alertas' && seccionActiva !== 'metodologia'">
+      <span class="text-muted small fw-semibold">Filtros activos:</span>
+      <span class="badge bg-light text-primary border rounded-pill px-3 py-1.5 d-flex align-items-center gap-2" *ngIf="provinciaActual">
+        Provincia: {{ provinciaActual }}
+        <i class="bi bi-x-circle-fill cursor-pointer text-danger" (click)="limpiarFiltro('provincia')"></i>
+      </span>
+      <span class="badge bg-light text-primary border rounded-pill px-3 py-1.5 d-flex align-items-center gap-2" *ngIf="cantonActual">
+        Cantón: {{ cantonActual }}
+        <i class="bi bi-x-circle-fill cursor-pointer text-danger" (click)="limpiarFiltro('canton')"></i>
+      </span>
+      <span class="badge bg-light text-primary border rounded-pill px-3 py-1.5 d-flex align-items-center gap-2" *ngIf="anioActual">
+        Año: {{ anioActual }}
+        <i class="bi bi-x-circle-fill cursor-pointer text-danger" (click)="limpiarFiltro('anio')"></i>
+      </span>
+      <span class="badge bg-light text-primary border rounded-pill px-3 py-1.5 d-flex align-items-center gap-2" *ngIf="enfermedadActual">
+        Enfermedad: {{ enfermedadActual }}
+        <i class="bi bi-x-circle-fill cursor-pointer text-danger" (click)="limpiarFiltro('enfermedad')"></i>
+      </span>
+      <span class="badge bg-light text-primary border rounded-pill px-3 py-1.5 d-flex align-items-center gap-2" *ngIf="causaActual && seccionActiva !== 'etiologia'">
+        Etiología: {{ causaActual }}
+        <i class="bi bi-x-circle-fill cursor-pointer text-danger" (click)="limpiarFiltro('causa')"></i>
+      </span>
+      <span class="badge bg-light text-primary border rounded-pill px-3 py-1.5 d-flex align-items-center gap-2" *ngIf="origenActual && seccionActiva !== 'etiologia'">
+        Origen: {{ origenActual }}
+        <i class="bi bi-x-circle-fill cursor-pointer text-danger" (click)="limpiarFiltro('origen')"></i>
+      </span>
+    </div>
+
     <!-- SECCIÓN 1: VISIÓN GENERAL -->
     <div *ngIf="seccionActiva === 'resumen'">
       <!-- KPIs -->
       <div class="row g-4 mb-4">
         <!-- Casos -->
         <div class="col-xl-3 col-md-6">
-          <div class="card custom-card border-0 shadow-sm h-100 metric-card metric-card-navy p-2">
+          <div class="card custom-card border-0 shadow-sm h-100 metric-card metric-card-navy p-2" 
+            (click)="irASeccion('patologias')" 
+            style="cursor: pointer;"
+            title="Haz clic para ver distribución de patologías">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-2">
                 <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px">Casos Confirmados</h6>
                 <div class="metric-icon metric-icon-navy"><i class="bi bi-virus"></i></div>
               </div>
-              <h2 class="fw-bold text-dark mb-1">{{ kpis.total_casos || 0 }}</h2>
+              <h2 class="fw-bold text-dark mb-1 d-flex align-items-center gap-2">
+                {{ kpis.total_casos || 0 }}
+                <span class="badge text-xs px-2 py-0.5 rounded-pill" 
+                  [ngClass]="{
+                    'bg-light-success text-success': casosTendenciaPct <= 0,
+                    'bg-light-danger text-danger': casosTendenciaPct > 0
+                  }"
+                  style="font-size: 0.75rem;"
+                  title="Cambio porcentual respecto a la semana anterior de la serie temporal">
+                  {{ casosTendenciaPct > 0 ? '↑' : '↓' }} {{ casosTendenciaPct }}%
+                </span>
+              </h2>
               <div class="d-flex justify-content-between align-items-center mb-2">
                 <small class="text-muted text-xs">Acumulado</small>
                 <span class="badge metric-badge text-xs fw-semibold px-2 py-0.5 rounded-pill">
@@ -197,13 +288,27 @@
 
         <!-- Espera Clínica -->
         <div class="col-xl-3 col-md-6">
-          <div class="card custom-card border-0 shadow-sm h-100 metric-card metric-card-blue p-2">
+          <div class="card custom-card border-0 shadow-sm h-100 metric-card metric-card-blue p-2"
+            (click)="irASeccion('infraestructura')"
+            style="cursor: pointer;"
+            title="Haz clic para ver infraestructura">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-2">
                 <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px">Espera Clínica</h6>
                 <div class="metric-icon metric-icon-blue"><i class="bi bi-clock-history"></i></div>
               </div>
-              <h2 class="fw-bold text-dark mb-1">{{ kpis.espera_promedio || 0 }} <span class="fs-6 text-muted fw-normal">hrs</span></h2>
+              <h2 class="fw-bold text-dark mb-1 d-flex align-items-center gap-2">
+                {{ kpis.espera_promedio || 0 }} <span class="fs-6 text-muted fw-normal">hrs</span>
+                <span class="badge rounded-circle p-1"
+                  [ngClass]="{
+                    'bg-success': (kpis.espera_promedio || 0) < 2,
+                    'bg-warning': (kpis.espera_promedio || 0) >= 2 && (kpis.espera_promedio || 0) <= 4,
+                    'bg-danger': (kpis.espera_promedio || 0) > 4
+                  }"
+                  style="width: 10px; height: 10px; display: inline-block;"
+                  title="Semáforo de saturación en emergencias">
+                </span>
+              </h2>
               <small class="text-muted text-xs">Tiempo promedio de atención</small>
             </div>
           </div>
@@ -217,7 +322,18 @@
                 <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px">Stock Medicinas</h6>
                 <div class="metric-icon metric-icon-green"><i class="bi bi-prescription2"></i></div>
               </div>
-              <h2 class="fw-bold text-dark mb-1">{{ kpis.disponibilidad_farmacias || 0 }}%</h2>
+              <h2 class="fw-bold text-dark mb-1 d-flex align-items-center gap-2">
+                {{ kpis.disponibilidad_farmacias || 0 }}%
+                <span class="badge rounded-circle p-1"
+                  [ngClass]="{
+                    'bg-success': (kpis.disponibilidad_farmacias || 0) >= 80,
+                    'bg-warning': (kpis.disponibilidad_farmacias || 0) >= 60 && (kpis.disponibilidad_farmacias || 0) < 80,
+                    'bg-danger': (kpis.disponibilidad_farmacias || 0) < 60
+                  }"
+                  style="width: 10px; height: 10px; display: inline-block;"
+                  title="Semáforo de stock de medicinas">
+                </span>
+              </h2>
               <small class="text-muted text-xs">Disponibilidad en farmacias</small>
             </div>
           </div>
@@ -225,13 +341,27 @@
 
         <!-- Ocupación Camas -->
         <div class="col-xl-3 col-md-6">
-          <div class="card custom-card border-0 shadow-sm h-100 metric-card metric-card-navy p-2">
+          <div class="card custom-card border-0 shadow-sm h-100 metric-card metric-card-navy p-2"
+            (click)="irASeccion('infraestructura')"
+            style="cursor: pointer;"
+            title="Haz clic para ver infraestructura">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-2">
                 <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px">Ocupación Camas</h6>
                 <div class="metric-icon metric-icon-blue"><i class="bi bi-lungs"></i></div>
               </div>
-              <h2 class="fw-bold text-dark mb-1">{{ kpis.ocupacion_hospitalaria || 0 }}%</h2>
+              <h2 class="fw-bold text-dark mb-1 d-flex align-items-center gap-2">
+                {{ kpis.ocupacion_hospitalaria || 0 }}%
+                <span class="badge rounded-circle p-1"
+                  [ngClass]="{
+                    'bg-success': (kpis.ocupacion_hospitalaria || 0) < 70,
+                    'bg-warning': (kpis.ocupacion_hospitalaria || 0) >= 70 && (kpis.ocupacion_hospitalaria || 0) <= 90,
+                    'bg-danger': (kpis.ocupacion_hospitalaria || 0) > 90
+                  }"
+                  style="width: 10px; height: 10px; display: inline-block;"
+                  title="Semáforo de ocupación de camas hospitalarias">
+                </span>
+              </h2>
               <small class="text-muted text-xs">Saturación hospitalaria</small>
             </div>
           </div>
@@ -259,7 +389,15 @@
               <h5 class="fw-bold text-dark mb-0">Distribución de Incidencia Relativa por Territorio</h5>
               <p class="text-muted text-xs">Tasa de incidencia por cada 100,000 habitantes.</p>
             </div>
-            <div class="card-body p-4" style="height: 450px">
+            <!-- Empty state fallback -->
+            <div class="card-body p-4 d-flex align-items-center justify-content-center" style="height: 450px" *ngIf="!barChartData.labels || barChartData.labels.length === 0">
+              <div class="text-center text-muted">
+                <i class="bi bi-bar-chart fs-1 mb-2 d-block"></i>
+                <p class="mb-0">No hay datos de incidencia registrados para los filtros seleccionados.</p>
+              </div>
+            </div>
+            <!-- Canvas -->
+            <div class="card-body p-4" style="height: 450px" *ngIf="barChartData.labels && barChartData.labels.length > 0">
               <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="barChartType"></canvas>
             </div>
           </div>
@@ -267,8 +405,9 @@
         
         <div class="col-lg-5">
           <div class="card custom-card border-0 shadow-sm h-100 p-3 bg-white">
-            <h5 class="fw-bold text-dark mb-3"><i class="bi bi-virus me-2 text-primary"></i>Resumen del Catálogo</h5>
-            <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+            <h5 class="fw-bold text-dark mb-2"><i class="bi bi-virus me-2 text-primary"></i>Resumen del Catálogo</h5>
+            <p class="text-muted text-xs mb-3">Haz clic en una enfermedad para aplicarla como filtro y ver su distribución geográfica.</p>
+            <div class="table-responsive" style="max-height: 380px; overflow-y: auto;">
               <table class="table table-hover align-middle table-sm">
                 <thead>
                   <tr class="text-muted small">
@@ -278,13 +417,22 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let enf of enfermedades">
+                  <tr *ngFor="let enf of enfermedadesFiltradas" 
+                    (click)="filtrarPorEnfermedad(enfermedadActual === enf.nombre_enfermedad ? '' : enf.nombre_enfermedad)" 
+                    style="cursor: pointer;"
+                    [class.table-primary]="enfermedadActual === enf.nombre_enfermedad"
+                    class="transition-all">
                     <td>
                       <div class="fw-bold" style="font-size: 0.85rem;">{{ enf.nombre_enfermedad }}</div>
                       <small class="text-muted">{{ enf.cie10 }}</small>
                     </td>
                     <td><span class="badge bg-light text-dark">{{ enf.tipo_causa }}</span></td>
                     <td><span class="badge bg-light text-secondary">{{ enf.categoria_origen }}</span></td>
+                  </tr>
+                  <tr *ngIf="enfermedadesFiltradas.length === 0">
+                    <td colspan="3" class="text-center text-muted py-4">
+                      No hay patologías que coincidan con la etiología/origen seleccionados.
+                    </td>
                   </tr>
                 </tbody>
               </table>
