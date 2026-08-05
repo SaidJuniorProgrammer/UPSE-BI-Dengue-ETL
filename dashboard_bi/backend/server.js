@@ -230,13 +230,16 @@ app.get("/api/grafico-cantones", (req, res) => {
 app.get("/api/grafico-infraestructura", (req, res) => {
   let filter = getFilters(req);
   
-  const groupByField = req.query.provincia || req.query.canton ? "di.canton" : "dg.provincia";
-  
   const query = `
         SELECT 
-            ${groupByField} AS canton, 
-            di.nivel_saturacion, 
-            di.medicos_disponibles, 
+            dg.canton AS canton, 
+            dg.provincia AS provincia,
+            CASE 
+                WHEN AVG(di.camas_totales) > 0 AND AVG(di.camas_ocupadas) / AVG(di.camas_totales) > 0.90 THEN 'CRITICO'
+                WHEN AVG(di.camas_totales) > 0 AND AVG(di.camas_ocupadas) / AVG(di.camas_totales) >= 0.70 THEN 'ALTO'
+                ELSE 'ESTABLE'
+            END AS nivel_saturacion, 
+            ROUND(AVG(di.medicos_disponibles), 0) AS medicos_disponibles, 
             SUM(fi.casos_confirmados) as carga_pacientes,
             ROUND(AVG(di.camas_totales), 0) AS camas_totales,
             ROUND(AVG(di.camas_ocupadas), 0) AS camas_ocupadas
@@ -246,7 +249,7 @@ app.get("/api/grafico-infraestructura", (req, res) => {
         JOIN dim_geografia dg ON fi.id_geografia = dg.id_geografia
         JOIN dim_enfermedad de ON fi.id_enfermedad = de.id_enfermedad
         ${filter}
-        GROUP BY ${groupByField}, di.nivel_saturacion, di.medicos_disponibles
+        GROUP BY dg.canton, dg.provincia
     `;
   db.query(query, (err, results) => {
     if (err) return res.status(500).send(err);
