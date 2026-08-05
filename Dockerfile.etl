@@ -1,0 +1,17 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+# Environment variable for database connection
+ENV DB_HOST=db
+ENV DB_USER=root
+ENV DB_PASSWORD=ghil3412
+ENV DB_NAME=upse_dengue_dw
+ENV DB_PORT=3306
+
+CMD ["python", "scripts/staging/stg_all_sources.py"]

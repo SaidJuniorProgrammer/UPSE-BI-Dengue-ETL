@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: upse-dengue-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ghil3412
+      MYSQL_DATABASE: upse_dengue_dw
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./upse_dengue_dw_dump.sql:/docker-entrypoint-initdb.d/init.sql
+
+  backend:
+    build: ./dashboard_bi/backend
+    container_name: upse-dengue-backend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=ghil3412
+      - DB_NAME=upse_dengue_dw
+      - DB_PORT=3306
+      - PORT=3000
+    depends_on:
+      - db
+
+  frontend:
+    build: ./dashboard_bi/frontend
+    container_name: upse-dengue-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  etl:
+    build:
+      context: .
+      dockerfile: Dockerfile.etl
+    container_name: upse-dengue-etl
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=ghil3412
+      - DB_NAME=upse_dengue_dw
+      - DB_PORT=3306
+    depends_on:
+      - db
+    # Runs the staging ingestion at startup. Can be triggered on demand.
+    command: python scripts/staging/stg_all_sources.py
+
+volumes:
+  db-data:

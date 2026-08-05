@@ -72,3 +72,81 @@ Aplica limpieza avanzada, homologación al catálogo INEC de cantones, deduplica
 ```powershell
 python scripts/staging/stg_all_sources.py
 ```
+
+---
+
+## Modelo Analítico (Modelo Estrella)
+El Data Warehouse está estructurado utilizando un modelo dimensional estrella que optimiza los tiempos de respuesta del dashboard reduciendo la cantidad de JOINs:
+
+```mermaid
+erDiagram
+    dim_tiempo {
+        int id_tiempo PK
+        date fecha
+        int anio
+        int semana_epidem
+        int mes
+        varchar nombre_mes
+    }
+    dim_geografia {
+        int id_geografia PK
+        varchar canton
+        varchar provincia
+        int poblacion
+    }
+    dim_enfermedad {
+        int id_enfermedad PK
+        varchar cie10
+        varchar nombre_enfermedad
+        varchar categoria_origen
+        varchar tipo_causa
+    }
+    dim_clima {
+        int id_clima PK
+        varchar canton
+        int semana_epidem
+        int anio
+        decimal precipitacion_mm
+        decimal temp_maxima_c
+        decimal temp_minima_c
+        decimal humedad_relativa
+    }
+    dim_infraestructura {
+        int id_infraestructura PK
+        varchar canton
+        int semana_epidem
+        int anio
+        varchar nivel_saturacion
+        int camas_totales
+        int camas_ocupadas
+        int medicos_disponibles
+        int pacientes_dengue
+    }
+    fact_incidencia {
+        int id_hecho PK
+        int id_tiempo FK
+        int id_geografia FK
+        int id_clima FK
+        int id_infraestructura FK
+        int id_enfermedad FK
+        int casos_confirmados
+        int casos_urbanos
+        int casos_rurales
+        int alertas_mediaticas
+        decimal pct_stock_meds
+        decimal espera_promedio_h
+    }
+
+    fact_incidencia }|--|| dim_tiempo : "id_tiempo"
+    fact_incidencia }|--|| dim_geografia : "id_geografia"
+    fact_incidencia }|--|| dim_clima : "id_clima"
+    fact_incidencia }|--|| dim_infraestructura : "id_infraestructura"
+    fact_incidencia }|--|| dim_enfermedad : "id_enfermedad"
+```
+
+---
+
+## Calidad y Gobernanza de Datos
+Para asegurar la fiabilidad de las métricas presentadas, se ha implementado un framework riguroso de control de calidad. Consulta todos los detalles de validación de unicidad, reglas de imputación y estandarización geográfica en:
+* [Documento de Calidad de Datos (DATA_QUALITY.md)](docs/DATA_QUALITY.md)
+

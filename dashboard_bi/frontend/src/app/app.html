@@ -40,6 +40,11 @@
           <i class="bi bi-exclamation-triangle me-2"></i> Alertas Críticas
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link text-white cursor-pointer py-2 px-3 rounded-pill d-flex align-items-center" [class.active]="seccionActiva === 'metodologia'" (click)="irASeccion('metodologia')" style="cursor: pointer;">
+          <i class="bi bi-info-circle me-2"></i> Metodología y Fuentes
+        </a>
+      </li>
     </ul>
     
     <div class="mt-auto px-2 pt-3 border-top border-secondary">
@@ -62,12 +67,16 @@
           <span *ngIf="seccionActiva === 'infraestructura'">Infraestructura Hospitalaria</span>
           <span *ngIf="seccionActiva === 'mapa'">Mapa Territorial y Análisis Geográfico</span>
           <span *ngIf="seccionActiva === 'alertas'">Alertas Sanitarias y Umbrales Críticos</span>
+          <span *ngIf="seccionActiva === 'metodologia'">Metodología y Origen de Datos</span>
         </h2>
-        <p class="text-muted mb-0 small">Filtro activo: <strong>{{ filtroActual }}</strong></p>
+        <p class="text-muted mb-0 small" *ngIf="seccionActiva !== 'metodologia'">Filtro activo: <strong>{{ filtroActual }}</strong></p>
+        <p class="text-muted mb-0 small" *ngIf="seccionActiva === 'metodologia'">Transparencia metodológica y procedencia de datos del proyecto.</p>
       </div>
 
       <!-- Climatic Risk badge -->
       <span class="badge px-3 py-2 rounded-pill shadow-sm border fw-bold status-pill"
+        style="cursor: help;"
+        title="Umbrales: ALTO si Precipitación > 20mm y Temp Máx > 26°C. MEDIO si Precipitación > 5mm o Temp Máx > 24°C. BAJO de lo contrario."
         [ngClass]="{
           'status-high': kpis.riesgo_climatico === 'ALTO',
           'status-medium': kpis.riesgo_climatico === 'MEDIO',
@@ -78,7 +87,7 @@
     </header>
 
     <!-- Filters Section -->
-    <div class="card border-0 shadow-sm rounded-4 p-3 mb-4 bg-white" *ngIf="seccionActiva !== 'alertas'">
+    <div class="card border-0 shadow-sm rounded-4 p-3 mb-4 bg-white" *ngIf="seccionActiva !== 'alertas' && seccionActiva !== 'metodologia'">
       <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
         <h6 class="fw-bold mb-0 text-primary d-flex align-items-center gap-2">
           <i class="bi bi-funnel-fill"></i> Filtros de Análisis
@@ -403,36 +412,133 @@
       </div>
     </div>
 
-    <!-- SECCIÓN 6: ALERTAS CRÍTICAS -->
-    <div *ngIf="seccionActiva === 'alertas'">
+    <!-- SECCIÓN 7: METODOLOGÍA Y FUENTES -->
+    <div *ngIf="seccionActiva === 'metodologia'">
       <div class="row g-4">
-        <div class="col-12" *ngIf="alertasCriticas.length === 0">
-          <div class="alert alert-success rounded-4 border-0 shadow-sm p-4 text-center">
-            <i class="bi bi-check-circle-fill text-success fs-2 mb-2 d-block"></i>
-            <h5 class="fw-bold">No hay alertas sanitarias activas</h5>
-            <p class="text-muted mb-0">Todos los cantones de Ecuador se encuentran dentro de los parámetros de capacidad y control recomendados.</p>
+        <!-- Tarjeta de Arquitectura y Flujo -->
+        <div class="col-lg-6">
+          <div class="card custom-card border-0 shadow-sm h-100 p-4 bg-white">
+            <h4 class="fw-bold text-primary mb-3"><i class="bi bi-diagram-3-fill me-2"></i>Flujo Analítico e Integración</h4>
+            <p class="text-muted small">
+              Este dashboard se alimenta de un pipeline de datos (ETL) empresarial diseñado en Python. Los datos transitan por tres etapas principales:
+            </p>
+            <div class="d-grid gap-3 my-3">
+              <div class="d-flex gap-3 align-items-start">
+                <div class="bg-light-primary text-primary rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; min-width: 40px;">
+                  <span class="fw-bold">1</span>
+                </div>
+                <div>
+                  <h6 class="fw-bold mb-1">Extracción Inmutable (RAW)</h6>
+                  <p class="text-muted text-xs mb-0">Consumo diario y semanal automatizado mediante Web Scraping y APIs de 7 fuentes de datos diferentes.</p>
+                </div>
+              </div>
+              <div class="d-flex gap-3 align-items-start">
+                <div class="bg-light-success text-success rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; min-width: 40px;">
+                  <span class="fw-bold">2</span>
+                </div>
+                <div>
+                  <h6 class="fw-bold mb-1">Calidad e Imputación (STAGING)</h6>
+                  <p class="text-muted text-xs mb-0">Estandarización geográfica según catálogo del INEC, deduplicación e imputación de valores vacíos por medianas antes de exportarse a formato columnar Parquet.</p>
+                </div>
+              </div>
+              <div class="d-flex gap-3 align-items-start">
+                <div class="bg-light-info text-info rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; min-width: 40px;">
+                  <span class="fw-bold">3</span>
+                </div>
+                <div>
+                  <h6 class="fw-bold mb-1">Carga Analítica (DATA WAREHOUSE)</h6>
+                  <p class="text-muted text-xs mb-0">Ingesta en el Data Warehouse MySQL bajo un Modelo Estrella (Star Schema), con vistas nativas que calculan los KPIs mostrados en tiempo récord.</p>
+                </div>
+              </div>
+            </div>
+            <hr class="text-muted opacity-25">
+            <h5 class="fw-bold text-dark mt-2 mb-2">Explicación del Indicador "Riesgo Clima"</h5>
+            <p class="text-muted text-xs">
+              El indicador de riesgo climático que se muestra en la cabecera es calculado dinámicamente mediante lógica SQL nativa en el Data Warehouse a nivel cantonal y semanal:
+            </p>
+            <ul class="text-muted text-xs ps-3">
+              <li class="mb-1"><strong class="text-danger">RIESGO ALTO:</strong> Precipitación acumulada semanal > 20.00 mm <strong>y</strong> temperatura máxima > 26.00 °C (condiciones ideales de humedad y calor para la proliferación de larvas).</li>
+              <li class="mb-1"><strong class="text-warning">RIESGO MEDIO:</strong> Precipitación acumulada semanal > 5.00 mm <strong>o</strong> temperatura máxima > 24.00 °C.</li>
+              <li><strong class="text-success">RIESGO BAJO:</strong> Cualquier otro escenario con valores meteorológicos menores.</li>
+            </ul>
           </div>
         </div>
-        
-        <div class="col-md-6 col-lg-4" *ngFor="let alerta of alertasCriticas">
-          <div class="card border-0 shadow-sm rounded-4 p-3 bg-white border-start border-danger border-4">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-              <h6 class="fw-bold mb-0 text-dark">{{ alerta.canton }}</h6>
-              <span class="badge bg-light text-muted small">{{ alerta.provincia }}</span>
+
+        <!-- Tarjeta de Origen de Datos -->
+        <div class="col-lg-6">
+          <div class="card custom-card border-0 shadow-sm h-100 p-4 bg-white">
+            <h4 class="fw-bold text-primary mb-3"><i class="bi bi-database-fill-gear me-2"></i>Procedencia y Citación de Fuentes</h4>
+            <div class="table-responsive">
+              <table class="table table-sm table-borderless align-middle" style="font-size: 0.8rem">
+                <thead>
+                  <tr class="border-bottom text-muted">
+                    <th>Dominio / Dimensión</th>
+                    <th>Fuente de Origen</th>
+                    <th>Tipo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-bottom">
+                    <td>
+                      <strong class="text-dark d-block">Casos de Dengue</strong>
+                      <span class="text-muted text-xs">89,227 casos históricos</span>
+                    </td>
+                    <td>
+                      Ministerio de Salud Pública (MSP) Ecuador & OPS PLISA Epidemiología
+                      <div class="text-muted text-xs">Registros agregados oficiales con proyecciones y simulaciones para modelado analítico de dengue.</div>
+                    </td>
+                    <td><span class="badge bg-light text-primary">MSP / OPS</span></td>
+                  </tr>
+                  <tr class="border-bottom">
+                    <td>
+                      <strong class="text-dark d-block">Factores Climáticos</strong>
+                      <span class="text-muted text-xs">Lluvia y temperatura</span>
+                    </td>
+                    <td>
+                      Open-Meteo API & INAMHI (Instituto Nacional de Meteorología e Hidrología)
+                      <div class="text-muted text-xs">Registros y promedios diarios de temperatura y precipitación por cantón.</div>
+                    </td>
+                    <td><span class="badge bg-light text-info">API / Web</span></td>
+                  </tr>
+                  <tr class="border-bottom">
+                    <td>
+                      <strong class="text-dark d-block">Inventario Farmacéutico</strong>
+                      <span class="text-muted text-xs">Disponibilidad de medicamentos</span>
+                    </td>
+                    <td>
+                      Scraping de cadenas de farmacias (Fybeca, Pharmacy's, Sana Sana, Cruz Azul)
+                      <div class="text-muted text-xs">Monitoreo de precios en USD y existencias físicas de medicamentos críticos para el tratamiento de síntomas.</div>
+                    </td>
+                    <td><span class="badge bg-light text-warning">Web Scraping</span></td>
+                  </tr>
+                  <tr class="border-bottom">
+                    <td>
+                      <strong class="text-dark d-block">Infraestructura Asistencial</strong>
+                      <span class="text-muted text-xs">Camas, médicos y tiempos de espera</span>
+                    </td>
+                    <td>
+                      Directorio oficial del MSP y encuestas directas de percepción ciudadana
+                      <div class="text-muted text-xs">Tiempos de espera recopilados mediante Google Forms y capacidad hospitalaria reportada por distritos de salud.</div>
+                    </td>
+                    <td><span class="badge bg-light text-success">MSP / Form</span></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong class="text-dark d-block">Datos Demográficos</strong>
+                      <span class="text-muted text-xs">Población total de cantones</span>
+                    </td>
+                    <td>
+                      World Bank Open Data API (Ecuador SP.POP.TOTL)
+                      <div class="text-muted text-xs">Datos poblacionales históricos utilizados para calcular la tasa de incidencia acumulada por 100,000 habitantes.</div>
+                    </td>
+                    <td><span class="badge bg-light text-secondary">World Bank API</span></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div class="d-flex flex-column gap-2 mt-2 small text-muted">
-              <div class="d-flex justify-content-between align-items-center">
-                <span>Ocupación Camas:</span>
-                <span class="fw-bold" [class.text-danger]="alerta.ocupacion_pct > 80">{{ alerta.ocupacion_pct }}%</span>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span>Stock Medicamentos:</span>
-                <span class="fw-bold" [class.text-danger]="alerta.stock_pct < 60">{{ alerta.stock_pct }}%</span>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span>Tasa por 100k hab:</span>
-                <span class="fw-bold text-dark">{{ alerta.tasa_incidencia_100k }}</span>
-              </div>
+            <div class="alert alert-info border-0 rounded-3 mt-3 p-2 text-xs mb-0">
+              <i class="bi bi-info-circle-fill me-1"></i>
+              <strong>Nota Académica:</strong> Este portal forma parte del proyecto integrador de Inteligencia de Negocios de la UPSE. Las fuentes de datos son de origen oficial, complementadas con simulaciones de control asistencial y tiempos de espera para fines de demostración académica interactiva.
             </div>
           </div>
         </div>
@@ -440,3 +546,4 @@
     </div>
   </main>
 </div>
+
