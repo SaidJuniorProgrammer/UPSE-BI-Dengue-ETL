@@ -296,39 +296,139 @@
 
     <!-- SECCIÓN 3: INFRAESTRUCTURA -->
     <div *ngIf="seccionActiva === 'infraestructura'">
-      <div class="row g-4 justify-content-center">
-        <div class="col-lg-10">
-          <div class="card custom-card chart-card border-0 shadow-sm mb-4">
-            <div class="card-body p-4">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                  <h5 class="fw-bold text-dark mb-1">
-                    <i class="bi bi-hospital me-2 text-primary"></i>Capacidad de Camas Hospitalarias
-                  </h5>
-                  <p class="text-muted text-xs mb-0">Promedio de camas activas y ocupadas registradas.</p>
-                </div>
-                <div class="text-end">
-                  <h3 class="fw-bold text-primary mb-0">{{ ocupacionPct }}%</h3>
-                  <small class="text-muted text-xs">Ocupación global</small>
-                </div>
+      <!-- Fila de 4 Cards KPI -->
+      <div class="row g-4 mb-4">
+        <!-- Capacidad Instalada -->
+        <div class="col-xl-3 col-md-6">
+          <div class="card custom-card border-0 shadow-sm h-100 metric-card metric-card-blue p-2">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px">Capacidad Instalada</h6>
+                <div class="metric-icon metric-icon-blue"><i class="bi bi-hospital"></i></div>
               </div>
-              <div class="progress rounded-pill mb-2" style="height: 12px">
-                <div class="progress-bar rounded-pill progress-brand" role="progressbar" [style.width.%]="ocupacionPct" [attr.aria-valuenow]="ocupacionPct" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <div class="d-flex justify-content-between text-xs text-muted fw-semibold">
-                <span>Camas Ocupadas: {{ camasOcupadas }}</span>
-                <span>Capacidad Total: {{ camasTotales }}</span>
-              </div>
+              <h2 class="fw-bold text-dark mb-1">{{ camasTotales }}</h2>
+              <small class="text-muted text-xs">Camas totales asignadas</small>
             </div>
           </div>
+        </div>
 
+        <!-- Ocupación Global -->
+        <div class="col-xl-3 col-md-6">
+          <div class="card custom-card border-0 shadow-sm h-100 metric-card p-2"
+            [ngClass]="{
+              'border-start border-success border-4': ocupacionPct < 70,
+              'border-start border-warning border-4': ocupacionPct >= 70 && ocupacionPct <= 90,
+              'border-start border-danger border-4': ocupacionPct > 90
+            }">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px">Ocupación Global</h6>
+                <div class="metric-icon"
+                  [ngClass]="{
+                    'text-success bg-light-success': ocupacionPct < 70,
+                    'text-warning bg-light-warning': ocupacionPct >= 70 && ocupacionPct <= 90,
+                    'text-danger bg-light-danger': ocupacionPct > 90
+                  }"><i class="bi bi-percent"></i></div>
+              </div>
+              <h2 class="fw-bold text-dark mb-1">{{ ocupacionPct }}%</h2>
+              <small class="text-muted text-xs">
+                Estado: 
+                <strong *ngIf="ocupacionPct < 70" class="text-success">Estable</strong>
+                <strong *ngIf="ocupacionPct >= 70 && ocupacionPct <= 90" class="text-warning">Alerta</strong>
+                <strong *ngIf="ocupacionPct > 90" class="text-danger">Saturación</strong>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Médicos Operativos -->
+        <div class="col-xl-3 col-md-6">
+          <div class="card custom-card border-0 shadow-sm h-100 metric-card metric-card-navy p-2">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px">Personal Médico</h6>
+                <div class="metric-icon metric-icon-navy"><i class="bi bi-people-fill"></i></div>
+              </div>
+              <h2 class="fw-bold text-dark mb-1">{{ medicosOperativos }}</h2>
+              <small class="text-muted text-xs">Médicos operativos en zona</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hospitales/Cantones Críticos -->
+        <div class="col-xl-3 col-md-6">
+          <div class="card custom-card border-0 shadow-sm h-100 metric-card p-2"
+            [ngClass]="{
+              'border-start border-success border-4': cantonesCriticosCount === 0,
+              'border-start border-danger border-4': cantonesCriticosCount > 0
+            }">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="text-muted fw-bold mb-0 text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px">Distritos Críticos</h6>
+                <div class="metric-icon"
+                  [ngClass]="{
+                    'text-success bg-light-success': cantonesCriticosCount === 0,
+                    'text-danger bg-light-danger': cantonesCriticosCount > 0
+                  }"><i class="bi bi-exclamation-octagon-fill"></i></div>
+              </div>
+              <h2 class="fw-bold text-dark mb-1">{{ cantonesCriticosCount }}</h2>
+              <small class="text-muted text-xs">
+                Cantones con ocupación > 80%
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fila de Gráfico y Tabla -->
+      <div class="row g-4">
+        <!-- Gráfico de Dispersión (Izquierda) -->
+        <div class="col-lg-7">
           <div class="card custom-card chart-card border-0 shadow-sm">
             <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4 text-center">
-              <h4 class="fw-bold text-dark mb-0">Estrés Hospitalario Multivariable</h4>
-              <p class="text-muted text-xs mt-1">Comparativa de capacidad médica operativa contra la carga de pacientes en la red MSP.</p>
+              <h4 class="fw-bold text-dark mb-0">Dispersión de Saturación Asistencial</h4>
+              <p class="text-muted text-xs mt-1">Comparativa directa entre volumen de Pacientes Febriles (Y) y Médicos disponibles (X). Cada punto representa un cantón/provincia.</p>
             </div>
-            <div class="card-body p-4" style="height: 480px">
-              <canvas baseChart [data]="radarChartData" [options]="radarChartOptions" [type]="radarChartType"></canvas>
+            <div class="card-body p-4" style="height: 400px">
+              <canvas baseChart [data]="scatterChartData" [options]="scatterChartOptions" [type]="scatterChartType"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabla de Ranking / Criticidad (Derecha) -->
+        <div class="col-lg-5">
+          <div class="card custom-card border-0 shadow-sm h-100 p-4 bg-white">
+            <h5 class="fw-bold text-dark mb-3"><i class="bi bi-sort-down me-2 text-primary"></i>Ranking de Capacidad por Cantón</h5>
+            <p class="text-muted text-xs mb-3">Ordenado de mayor a menor porcentaje de ocupación hospitalaria.</p>
+            <div class="table-responsive" style="max-height: 330px; overflow-y: auto;">
+              <table class="table table-hover align-middle table-sm" style="font-size: 0.82rem;">
+                <thead>
+                  <tr class="text-muted small">
+                    <th>Cantón / Región</th>
+                    <th class="text-center">Ocupación %</th>
+                    <th class="text-end">Camas Libres</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of cantonesCriticosList">
+                    <td>
+                      <span class="fw-bold text-dark">{{ item.canton }}</span>
+                      <small class="text-muted d-block" style="font-size: 0.72rem;">Médicos: {{ item.medicos }}</small>
+                    </td>
+                    <td class="text-center">
+                      <span class="badge rounded-pill fw-bold"
+                        [ngClass]="{
+                          'bg-success text-white': item.ocupacion_pct < 70,
+                          'bg-warning text-dark': item.ocupacion_pct >= 70 && item.ocupacion_pct <= 90,
+                          'bg-danger text-white': item.ocupacion_pct > 90
+                        }">
+                        {{ item.ocupacion_pct }}%
+                      </span>
+                    </td>
+                    <td class="text-end fw-semibold text-muted">{{ item.camas_libres }} / {{ item.camas_totales }}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -397,15 +497,87 @@
 
     <!-- SECCIÓN 5: ETIOLOGÍA -->
     <div *ngIf="seccionActiva === 'etiologia'">
-      <div class="row g-4 justify-content-center">
-        <div class="col-lg-8">
+      <div class="row g-4">
+        <!-- Gráfico de Barras Horizontales (Izquierda) -->
+        <div class="col-lg-7">
           <div class="card custom-card chart-card border-0 shadow-sm">
             <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4 text-center">
               <h5 class="fw-bold text-dark mb-0">Distribución de Casos por Tipo de Patógeno</h5>
-              <p class="text-muted text-xs">Desglose porcentual acumulado de la etiología causante de los brotes activos en {{ filtroActual }}.</p>
+              <p class="text-muted text-xs mt-1">Comparativa de volumen absoluto de casos por etiología identificada en {{ filtroActual }}.</p>
             </div>
             <div class="card-body p-4" style="height: 380px">
-              <canvas baseChart [data]="doughnutChartData" [options]="doughnutChartOptions" [type]="doughnutChartType"></canvas>
+              <canvas baseChart [data]="etiologiaChartData" [options]="etiologiaChartOptions" [type]="etiologiaChartType"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabla Detallada de Etiología (Derecha) -->
+        <div class="col-lg-5">
+          <div class="card custom-card border-0 shadow-sm h-100 p-4 bg-white">
+            <h5 class="fw-bold text-dark mb-2"><i class="bi bi-pie-chart-fill me-2 text-primary"></i>Desglose Etiológico Detallado</h5>
+            <p class="text-muted text-xs mb-3">Resumen del volumen y tipificación biológica de patógenos.</p>
+            <div class="table-responsive">
+              <table class="table table-hover align-middle table-sm" style="font-size: 0.82rem;">
+                <thead>
+                  <tr class="text-muted small border-bottom">
+                    <th>Etiología</th>
+                    <th class="text-center">Porcentaje</th>
+                    <th class="text-end">Casos</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of etiologiasTabla" class="border-bottom">
+                    <td>
+                      <span class="fw-bold text-dark d-block">{{ item.causa }}</span>
+                      <small class="text-muted text-xs">Clase: {{ item.origen }}</small>
+                    </td>
+                    <td class="text-center">
+                      <span class="badge bg-light text-primary fw-bold" style="font-size: 0.8rem">
+                        {{ item.porcentaje }}%
+                      </span>
+                    </td>
+                    <td class="text-end fw-bold text-dark" style="font-size: 0.85rem">
+                      {{ item.casos }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 6: ALERTAS CRÍTICAS -->
+    <div *ngIf="seccionActiva === 'alertas'">
+      <div class="row g-4">
+        <div class="col-12" *ngIf="alertasCriticas.length === 0">
+          <div class="alert alert-success rounded-4 border-0 shadow-sm p-4 text-center">
+            <i class="bi bi-check-circle-fill text-success fs-2 mb-2 d-block"></i>
+            <h5 class="fw-bold">No hay alertas sanitarias activas</h5>
+            <p class="text-muted mb-0">Todos los cantones de Ecuador se encuentran dentro de los parámetros de capacidad y control recomendados.</p>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4" *ngFor="let alerta of alertasCriticas">
+          <div class="card border-0 shadow-sm rounded-4 p-3 bg-white border-start border-danger border-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h6 class="fw-bold mb-0 text-dark">{{ alerta.canton }}</h6>
+              <span class="badge bg-light text-muted small">{{ alerta.provincia }}</span>
+            </div>
+            <div class="d-flex flex-column gap-2 mt-2 small text-muted">
+              <div class="d-flex justify-content-between align-items-center">
+                <span>Ocupación Camas:</span>
+                <span class="fw-bold" [class.text-danger]="alerta.ocupacion_pct > 80">{{ alerta.ocupacion_pct }}%</span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span>Stock Medicamentos:</span>
+                <span class="fw-bold" [class.text-danger]="alerta.stock_pct < 60">{{ alerta.stock_pct }}%</span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span>Tasa por 100k hab:</span>
+                <span class="fw-bold text-dark">{{ alerta.tasa_incidencia_100k }}</span>
+              </div>
             </div>
           </div>
         </div>

@@ -75,6 +75,9 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   camasTotales: number = 0;
   camasOcupadas: number = 0;
   ocupacionPct: number = 0;
+  medicosOperativos: number = 0;
+  cantonesCriticosCount: number = 0;
+  cantonesCriticosList: any[] = [];
 
   @ViewChild('mapContainer') mapContainer?: ElementRef<HTMLDivElement>;
 
@@ -131,8 +134,8 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   };
   public barChartType: 'bar' = 'bar';
 
-  public radarChartData: ChartData<'radar'> = { datasets: [], labels: [] };
-  public radarChartOptions: ChartOptions<'radar'> = {
+  public scatterChartData: ChartData<'scatter'> = { datasets: [] };
+  public scatterChartOptions: ChartOptions<'scatter'> = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -140,38 +143,59 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         position: 'bottom',
         labels: {
           color: BRAND.navy,
+          usePointStyle: true,
+          boxWidth: 10,
+          boxHeight: 10,
         },
       },
+      tooltip: {
+        callbacks: {
+          label: (context: any) => {
+            const rawVal = context.raw as { x: number, y: number, label: string };
+            return `${rawVal.label}: ${rawVal.y} pacientes, ${rawVal.x} médicos`;
+          }
+        }
+      }
     },
     scales: {
-      r: {
-        angleLines: { color: 'rgba(5, 58, 144, 0.12)' },
-        grid: { color: 'rgba(5, 58, 144, 0.12)' },
-        pointLabels: { color: '#475467', font: { size: 12, weight: 600 } },
-        ticks: {
-          color: '#667085',
-          backdropColor: 'transparent',
-        },
+      x: {
+        title: { display: true, text: 'Médicos Operativos', color: '#667085' },
+        ticks: { color: '#667085' },
+        grid: { color: 'rgba(5, 58, 144, 0.08)' },
+      },
+      y: {
+        title: { display: true, text: 'Pacientes Febriles', color: '#667085' },
+        ticks: { color: '#667085' },
+        grid: { color: 'rgba(5, 58, 144, 0.08)' },
       },
     },
   };
-  public radarChartType: 'radar' = 'radar';
+  public scatterChartType: 'scatter' = 'scatter';
 
-  public doughnutChartData: ChartData<'doughnut'> = { datasets: [], labels: [] };
-  public doughnutChartOptions: ChartOptions<'doughnut'> = {
+  public etiologiaChartData: ChartData<'bar'> = { datasets: [] };
+  public etiologiaChartOptions: ChartOptions<'bar'> = {
+    indexAxis: 'y',
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'bottom',
-        labels: {
-          color: '#102a43',
-          font: { size: 11, weight: 600 }
-        }
+        display: false
+      }
+    },
+    scales: {
+      x: {
+        title: { display: true, text: 'Casos Confirmados', color: '#667085' },
+        ticks: { color: '#667085' },
+        grid: { color: 'rgba(5, 58, 144, 0.08)' }
+      },
+      y: {
+        ticks: { color: '#667085' },
+        grid: { display: false }
       }
     }
   };
-  public doughnutChartType: 'doughnut' = 'doughnut';
+  public etiologiaChartType: 'bar' = 'bar';
+  public etiologiasTabla: any[] = [];
   
   alertasCriticas: any[] = [];
 
@@ -382,51 +406,128 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         );
         this.ocupacionPct =
           this.camasTotales > 0 ? Math.round((this.camasOcupadas / this.camasTotales) * 100) : 0;
+        this.medicosOperativos = data.reduce((acc, curr) => acc + (Number(curr.medicos_disponibles) || 0), 0);
+
+        this.cantonesCriticosList = data.map((d) => {
+          const cTot = Number(d.camas_totales) || 0;
+          const cOcu = Number(d.camas_ocupadas) || 0;
+          const pct = cTot > 0 ? Math.round((cOcu / cTot) * 100) : 0;
+          const libres = cTot - cOcu;
+          return {
+            canton: d.canton,
+            ocupacion_pct: pct,
+            camas_libres: libres,
+            camas_totales: cTot,
+            camas_ocupadas: cOcu,
+            medicos: Number(d.medicos_disponibles) || 0,
+            nivel_saturacion: d.nivel_saturacion
+          };
+        }).sort((a, b) => b.ocupacion_pct - a.ocupacion_pct);
+
+        this.cantonesCriticosCount = this.cantonesCriticosList.filter(c => c.ocupacion_pct > 80).length;
+
+        // Prepare Scatter Plot datasets grouped by status
+        const normalPoints: any[] = [];
+        const altoPoints: any[] = [];
+        const saturadoPoints: any[] = [];
+
+        data.forEach(d => {
+          const cTot = Number(d.camas_totales) || 0;
+          const cOcu = Number(d.camas_ocupadas) || 0;
+          const pct = cTot > 0 ? Math.round((cOcu / cTot) * 100) : 0;
+          const pt = { x: Number(d.medicos_disponibles) || 0, y: Number(d.carga_pacientes) || 0, label: d.canton || 'Centro' };
+          
+          if (pct > 90) {
+            saturadoPoints.push(pt);
+          } else if (pct >= 70) {
+            altoPoints.push(pt);
+          } else {
+            normalPoints.push(pt);
+          }
+        });
+
+        this.scatterChartData = {
+          datasets: [
+            {
+              data: normalPoints,
+              label: 'Normal (<70%)',
+              backgroundColor: '#057E3F',
+              borderColor: '#ffffff',
+              pointRadius: 9,
+              pointHoverRadius: 11
+            },
+            {
+              data: altoPoints,
+              label: 'Alerta (70-90%)',
+              backgroundColor: '#ff9f43',
+              borderColor: '#ffffff',
+              pointRadius: 9,
+              pointHoverRadius: 11
+            },
+            {
+              data: saturadoPoints,
+              label: 'Crítico (>90%)',
+              backgroundColor: '#ee5253',
+              borderColor: '#ffffff',
+              pointRadius: 9,
+              pointHoverRadius: 11
+            }
+          ]
+        };
+
       } else {
         this.camasTotales = 0;
         this.camasOcupadas = 0;
         this.ocupacionPct = 0;
+        this.medicosOperativos = 0;
+        this.cantonesCriticosCount = 0;
+        this.cantonesCriticosList = [];
+        this.scatterChartData = { datasets: [] };
       }
-
-      this.radarChartData = {
-        labels: data.map((d) => d.canton || 'Centro Médico'),
-        datasets: [
-          {
-            data: data.map((d) => d.carga_pacientes),
-            label: 'Pacientes Febriles',
-            backgroundColor: 'rgba(71, 152, 228, 0.28)',
-            borderColor: BRAND.blue,
-            pointBackgroundColor: BRAND.blue,
-            pointBorderColor: '#ffffff',
-          },
-          {
-            data: data.map((d) => d.medicos_disponibles),
-            label: 'Médicos Operativos',
-            backgroundColor: 'rgba(5, 126, 63, 0.28)',
-            borderColor: BRAND.green,
-            pointBackgroundColor: BRAND.green,
-            pointBorderColor: '#ffffff',
-          },
-        ],
-      };
     });
 
     this.dashboardService.getGraficoEtiologia(filters).subscribe((data: any[]) => {
-      // Group cases by tipo_causa
       const etiologyMap: Record<string, number> = {};
+      const originsMap: Record<string, string[]> = {};
+      let totalCasos = 0;
+
       data.forEach((item) => {
         const causa = item.tipo_causa || 'Otros';
-        etiologyMap[causa] = (etiologyMap[causa] || 0) + (Number(item.casos) || 0);
+        const casos = Number(item.casos) || 0;
+        etiologyMap[causa] = (etiologyMap[causa] || 0) + casos;
+        totalCasos += casos;
+        
+        if (item.categoria_origen) {
+          if (!originsMap[causa]) originsMap[causa] = [];
+          if (!originsMap[causa].includes(item.categoria_origen)) {
+            originsMap[causa].push(item.categoria_origen);
+          }
+        }
       });
       
-      this.doughnutChartData = {
-        labels: Object.keys(etiologyMap),
+      const etiologiaList = Object.keys(etiologyMap).map(causa => {
+        const casos = etiologyMap[causa];
+        const pct = totalCasos > 0 ? Math.round((casos / totalCasos) * 100) : 0;
+        const origenes = originsMap[causa] ? originsMap[causa].join(', ') : 'Adquirida';
+        return {
+          causa,
+          casos,
+          porcentaje: pct,
+          origen: origenes
+        };
+      }).sort((a, b) => b.casos - a.casos);
+      
+      this.etiologiasTabla = etiologiaList;
+      
+      this.etiologiaChartData = {
+        labels: etiologiaList.map(e => e.causa),
         datasets: [
           {
-            data: Object.values(etiologyMap),
+            data: etiologiaList.map(e => e.casos),
             backgroundColor: [BRAND.navy, BRAND.blue, BRAND.green, '#ff9f43', '#ee5253'],
-          },
-        ],
+            borderRadius: 6
+          }
+        ]
       };
     });
   }
