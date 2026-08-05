@@ -50,6 +50,9 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   origenActual: string = '';
   mostrarAvanzados: boolean = false;
   casosTendenciaPct: number = 0;
+  mapaBase: string = 'osm';
+  searchQuery: string = '';
+  panelCapasOculto: boolean = false;
 
   // Catálogos
   enfermedades: any[] = [];
@@ -339,6 +342,40 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
   exportarPDF() {
     window.print();
+  }
+
+  cambiarMapaBase(base: string) {
+    this.mapaBase = base;
+    if (this.mapaActivo) {
+      void this.renderizarMapa();
+    }
+  }
+
+  buscarCanton(cantonNombre: string) {
+    this.searchQuery = cantonNombre;
+    if (!cantonNombre) return;
+    const found = this.mapaDatos.find(
+      (d) => d.canton.toLowerCase().includes(cantonNombre.toLowerCase())
+    );
+    if (found && this.mapInstance) {
+      this.mapInstance.setView([found.lat, found.lng], 10);
+    }
+  }
+
+  get activeFiltersSummary(): string {
+    const parts = [this.filtroActual];
+    if (this.anioActual) parts.push(`Año: ${this.anioActual}`);
+    if (this.enfermedadActual) parts.push(this.enfermedadActual);
+    return parts.join(' | ');
+  }
+
+  togglePanelCapas() {
+    this.panelCapasOculto = !this.panelCapasOculto;
+    if (this.mapInstance) {
+      setTimeout(() => {
+        this.mapInstance.invalidateSize();
+      }, 150);
+    }
   }
 
   activarMapa(): void {
@@ -688,10 +725,20 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       preferCanvas: true,
     });
 
+    let tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    let attrib = '&copy; OpenStreetMap contributors | Capas analíticas UPSE BI';
+    if (this.mapaBase === 'satellite') {
+      tileUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+      attrib = 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
+    } else if (this.mapaBase === 'dark') {
+      tileUrl = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+      attrib = '&copy; CartoDB | Capas analíticas UPSE BI';
+    }
+
     leaflet
-      .tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      .tileLayer(tileUrl, {
         maxZoom: 18,
-        attribution: '&copy; OpenStreetMap contributors | Capas analíticas UPSE BI',
+        attribution: attrib,
       })
       .addTo(map);
 

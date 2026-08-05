@@ -558,7 +558,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of cantonesCriticosList">
+                  <tr *ngFor="let item of cantonesCriticosList"
+                    (click)="filtrarPorCanton(cantonActual === item.canton ? '' : item.canton)"
+                    style="cursor: pointer;"
+                    [class.table-primary]="cantonActual === item.canton"
+                    class="transition-all">
                     <td>
                       <span class="fw-bold text-dark">{{ item.canton }}</span>
                       <small class="text-muted d-block" style="font-size: 0.72rem;">Médicos: {{ item.medicos }}</small>
@@ -586,7 +590,8 @@
     <!-- SECCIÓN 4: MAPA TERRITORIAL -->
     <div *ngIf="seccionActiva === 'mapa'">
       <div class="row g-4">
-        <div class="col-lg-4">
+        <!-- Capas Analíticas (Panel colapsable) -->
+        <div class="col-lg-4" *ngIf="!panelCapasOculto">
           <div class="card custom-card chart-card border-0 shadow-sm h-100">
             <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4">
               <h5 class="fw-bold text-dark mb-0">Capas Analíticas</h5>
@@ -609,33 +614,82 @@
                 <span class="badge layer-badge">Red MSP</span>
               </button>
 
-              <div class="map-legend mt-2">
-                <div class="map-legend-title">Leyenda</div>
-                <div class="legend-row"><span class="legend-swatch legend-swatch-navy"></span> Casos confirmados</div>
-                <div class="legend-row"><span class="legend-swatch legend-swatch-blue"></span> Lluvia acumulada</div>
-                <div class="legend-row"><span class="legend-swatch legend-swatch-green"></span> Ocupación hospitalaria</div>
+              <!-- Enriched legend and Bubble scale -->
+              <div class="map-legend mt-2 pt-2 border-top">
+                <div class="map-legend-title mb-2">Tamaño de la Burbuja</div>
+                <div class="d-flex align-items-center gap-2 mb-1">
+                  <span class="d-inline-block rounded-circle bg-secondary-subtle border border-secondary" style="width: 8px; height: 8px;"></span>
+                  <span class="small text-muted" style="font-size: 0.75rem;">Bajo (Magnitud reducida)</span>
+                </div>
+                <div class="d-flex align-items-center gap-2 mb-1">
+                  <span class="d-inline-block rounded-circle bg-secondary-subtle border border-secondary" style="width: 16px; height: 16px;"></span>
+                  <span class="small text-muted" style="font-size: 0.75rem;">Medio (Magnitud moderada)</span>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                  <span class="d-inline-block rounded-circle bg-secondary-subtle border border-secondary" style="width: 24px; height: 24px;"></span>
+                  <span class="small text-muted" style="font-size: 0.75rem;">Alto (Magnitud elevada)</span>
+                </div>
+              </div>
+
+              <div class="map-legend mt-2 pt-2 border-top">
+                <div class="map-legend-title mb-1">Guía de Colores</div>
+                <div class="legend-row small"><span class="legend-swatch legend-swatch-navy"></span> Azul Oscuro: Casos Confirmados</div>
+                <div class="legend-row small"><span class="legend-swatch legend-swatch-blue"></span> Azul Claro: Lluvia Acumulada (mm)</div>
+                <div class="legend-row small"><span class="legend-swatch legend-swatch-green"></span> Verde: Ocupación Hospitalaria (%)</div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col-lg-8">
+        <!-- Mapa -->
+        <div class="col-lg-8" [class.col-lg-12]="panelCapasOculto">
           <div class="card custom-card chart-card border-0 shadow-sm h-100">
-            <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
               <div>
                 <h4 class="fw-bold text-dark mb-0">Mapa analítico nacional</h4>
                 <p class="text-muted text-xs mt-1 mb-0">Centroides con capas activables de casos, lluvia e infraestructura.</p>
               </div>
-              <div class="map-summary-inline">
-                <span><strong>{{ mapaResumen.totalCasos }}</strong> casos</span>
-                <span><strong>{{ mapaResumen.lluviaPromedio }}</strong> mm lluvia</span>
-                <span><strong>{{ mapaResumen.ocupacionPromedio }}</strong>% ocupación</span>
+              <div class="d-flex gap-2 flex-wrap align-items-center">
+                <!-- Canton Search -->
+                <div class="input-group input-group-sm rounded-pill overflow-hidden shadow-sm" style="max-width: 180px;">
+                  <input type="text" class="form-control border-end-0 px-3 bg-light" placeholder="Buscar cantón..." [value]="searchQuery" (input)="buscarCanton($any($event.target).value)">
+                  <span class="input-group-text bg-light border-start-0 px-2"><i class="bi bi-search text-muted"></i></span>
+                </div>
+                
+                <!-- Base Map Select -->
+                <div class="btn-group btn-group-sm rounded-pill overflow-hidden shadow-sm border" role="group">
+                  <button class="btn btn-light py-1 text-xs" [class.active]="mapaBase === 'osm'" (click)="cambiarMapaBase('osm')">Estándar</button>
+                  <button class="btn btn-light py-1 text-xs" [class.active]="mapaBase === 'satellite'" (click)="cambiarMapaBase('satellite')">Satélite</button>
+                  <button class="btn btn-light py-1 text-xs" [class.active]="mapaBase === 'dark'" (click)="cambiarMapaBase('dark')">Oscuro</button>
+                </div>
+
+                <!-- Toggle Panel Button -->
+                <button class="btn btn-sm btn-outline-secondary rounded-pill px-3 shadow-sm" (click)="togglePanelCapas()">
+                  <i class="bi" [ngClass]="panelCapasOculto ? 'bi-layout-sidebar-inset' : 'bi-layout-sidebar-inset-reverse'"></i>
+                  {{ panelCapasOculto ? 'Capas' : 'Ocultar' }}
+                </button>
               </div>
             </div>
+            
             <div class="card-body p-4">
-              <div class="map-container" #mapContainer style="height: 400px; min-height: 400px; border-radius: 12px;"></div>
-              <div class="map-caption mt-3">
-                Punto crítico actual: <strong>{{ mapaResumen.cantonCritico }}</strong>
+              <!-- Map summary statistics -->
+              <div class="map-summary-inline justify-content-start gap-4 mb-3 border bg-light bg-opacity-50 p-2.5 rounded-3">
+                <span class="small text-muted"><i class="bi bi-virus text-primary me-1"></i><strong>{{ mapaResumen.totalCasos }}</strong> casos</span>
+                <span class="small text-muted"><i class="bi bi-cloud-rain text-info me-1"></i><strong>{{ mapaResumen.lluviaPromedio }}</strong> mm lluvia</span>
+                <span class="small text-muted"><i class="bi bi-lungs text-success me-1"></i><strong>{{ mapaResumen.ocupacionPromedio }}</strong>% ocupación</span>
+              </div>
+
+              <!-- Map container and Overlay -->
+              <div style="position: relative;">
+                <div class="map-container" #mapContainer style="height: 400px; min-height: 400px; border-radius: 12px; z-index: 1;"></div>
+                <div class="position-absolute bg-white bg-opacity-75 rounded-pill px-3 py-1 shadow-sm small border fw-semibold text-primary" style="bottom: 15px; left: 15px; z-index: 1000; font-size: 0.72rem;">
+                  <i class="bi bi-funnel me-1"></i> {{ activeFiltersSummary }}
+                </div>
+              </div>
+
+              <div class="map-caption mt-3 d-flex justify-content-between align-items-center">
+                <span>Punto crítico actual: <strong>{{ mapaResumen.cantonCritico }}</strong></span>
+                <span class="text-xs text-muted" *ngIf="mapaDatos.length > 0">Visualizando {{ mapaDatos.length }} cantones activos</span>
               </div>
             </div>
           </div>
